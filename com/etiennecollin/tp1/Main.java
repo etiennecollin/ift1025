@@ -3,21 +3,25 @@ package com.etiennecollin.tp1;
 import com.etiennecollin.tp1.guildcommands.GuildCommand;
 import com.etiennecollin.tp1.guildcommands.GuildCommandSystem;
 
+/**
+ * Main class for the TP1 project and entry point to the program.
+ */
 public class Main {
     /**
-     * Args: array with
-     * guild:<montant initial>,<armures initiales>
+     * The entry point of the application. Initializes the `GuildCommandSystem` with the provided
+     * arguments and executes the commands in a loop until there are no more commands to process.
      *
-     * @param args
+     * @param args array of arguments passed to the program > guild:<initialMoneyAmount>,<initialArmorAmount>
      */
     public static void main(String[] args) {
+        // Store the arguments to be processed
         GuildCommandSystem guildCommandSystem = new GuildCommandSystem(args);
-
-        Guilde maGuilde = makeGuilde(guildCommandSystem.nextCommand());
+        // Create guild with first command
+        Guild myGuild = makeGuild(guildCommandSystem.nextCommand());
 
         while (guildCommandSystem.hasNextCommand()) {
             GuildCommand command = guildCommandSystem.nextCommand();
-            switch (command.getName()) {
+            switch (command.getCommandName()) {
                 case "buy-hero" -> {
                     // TODO1
                 }
@@ -34,10 +38,16 @@ public class Main {
         }
     }
 
-
-    public static Guilde makeGuilde(GuildCommand command) {
-        int montantInitial = command.nextInt();
-        int nbArmures = command.nextInt();
-        return new Guilde(montantInitial, nbArmures);
+    /**
+     * Helper method to create a new instance of the `Guild` class with the initial amount and
+     * the initial number of armors.
+     *
+     * @param command `GuildCommand` object that holds the information about the creation of a new guild.
+     * @return a new instance of the `Guild` class
+     */
+    public static Guild makeGuild(GuildCommand command) {
+        int initialMoneyAmount = command.nextArgInt();
+        int initialArmorAmount = command.nextArgInt();
+        return new Guild(initialMoneyAmount, initialArmorAmount);
     }
 }

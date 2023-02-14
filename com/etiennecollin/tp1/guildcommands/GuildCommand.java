@@ -1,29 +1,70 @@
 package com.etiennecollin.tp1.guildcommands;
 
+/**
+ * GuildCommand is a class that takes a single command as input, and provides methods
+ * to retrieve and parse the command arguments.
+ */
 public class GuildCommand {
 
-    private final String[] nextValues;
-    private String name;
+    /**
+     * The list of arguments for the command.
+     */
+    private final String[] commandArgs;
+
+    /**
+     * The name of the command.
+     */
+    private final String commandName;
+
+    /**
+     * The index of the current argument being processed.
+     */
     private int index = 0;
 
+    /**
+     * Constructs a new instance of GuildCommand with the given command.
+     *
+     * @param command The command.
+     */
     public GuildCommand(String command) {
-        name = command.split(":")[0];
-        nextValues = (command.split(":")[1]).split(",");
+        commandName = command.split(":")[0];
+        commandArgs = (command.split(":")[1]).split(",");
     }
 
-    public int nextInt() {
-        return Integer.parseInt(nextValues[index++]);
+    /**
+     * Returns the name of the command.
+     *
+     * @return The name of the command.
+     */
+    public String getCommandName() {
+        return commandName;
     }
 
-    public String nextString() {
-        return nextValues[index++];
+    /**
+     * Returns the next argument as an integer.
+     *
+     * @return The next argument as an integer.
+     */
+    public int nextArgInt() {
+        return Integer.parseInt(commandArgs[index++]);
     }
 
-    public String getName() {
-        return name;
+    /**
+     * Returns the next argument as a double.
+     *
+     * @return The next argument as a double.
+     */
+    public double nextArgDouble() {
+        return Double.parseDouble(commandArgs[index++]);
     }
 
-    public double nextDouble() {
-        return Double.parseDouble(nextValues[index++]);
+    /**
+     * Returns the next argument as a string.
+     *
+     * @return The next argument as a string.
+     */
+    public String nextArgString() {
+
+        return commandArgs[index++];
     }
 }

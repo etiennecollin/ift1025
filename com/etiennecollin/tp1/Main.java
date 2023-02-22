@@ -17,11 +17,11 @@ public class Main {
         // Store the arguments to be processed
         GuildCommandSystem guildCommandSystem = new GuildCommandSystem(args);
         // Create guild with first command
-        Guild myGuild = makeGuild(guildCommandSystem.nextCommand());
+        Guild myGuild = makeGuild(guildCommandSystem.currentCommand());
 
         while (guildCommandSystem.hasNextCommand()) {
             GuildCommand command = guildCommandSystem.nextCommand();
-            switch (command.getCommandName()) {
+            switch (command.getName()) {
                 case "buy-hero" -> {
                     // TODO1
                 }
@@ -46,7 +46,7 @@ public class Main {
      * @return a new instance of the `Guild` class
      */
     public static Guild makeGuild(GuildCommand command) {
-        int initialMoneyAmount = command.nextArgInt();
+        double initialMoneyAmount = command.nextArgDouble();
         int initialArmorAmount = command.nextArgInt();
         return new Guild(initialMoneyAmount, initialArmorAmount);
     }

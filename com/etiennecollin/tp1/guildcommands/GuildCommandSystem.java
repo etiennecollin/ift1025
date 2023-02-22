@@ -31,7 +31,16 @@ public class GuildCommandSystem {
      * @return True if there are more commands to be processed, and false otherwise.
      */
     public boolean hasNextCommand() {
-        return index < command.length;
+        return index < (command.length - 1);
+    }
+
+    /**
+     * Returns the current command in the list as a GuildCommand instance.
+     *
+     * @return The current command in the list as a GuildCommand instance.
+     */
+    public GuildCommand currentCommand() {
+        return new GuildCommand(command[index]);
     }
 
     /**
@@ -40,6 +49,6 @@ public class GuildCommandSystem {
      * @return The next command in the list as a GuildCommand instance.
      */
     public GuildCommand nextCommand() {
-        return new GuildCommand(command[index + 1]);
+        return new GuildCommand(command[++index]);
     }
 }

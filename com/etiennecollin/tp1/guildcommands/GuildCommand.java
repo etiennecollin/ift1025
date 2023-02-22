@@ -14,7 +14,7 @@ public class GuildCommand {
     /**
      * The name of the command.
      */
-    private final String commandName;
+    private final String name; // Initially wasn't final
 
     /**
      * The index of the current argument being processed.
@@ -27,8 +27,8 @@ public class GuildCommand {
      * @param command The command.
      */
     public GuildCommand(String command) {
-        commandName = command.split(":")[0];
-        commandArgs = (command.split(":")[1]).split(",");
+        this.name = command.split(":")[0];
+        this.commandArgs = (command.split(":")[1]).split(",");
     }
 
     /**
@@ -36,8 +36,8 @@ public class GuildCommand {
      *
      * @return The name of the command.
      */
-    public String getCommandName() {
-        return commandName;
+    public String getName() {
+        return this.name;
     }
 
     /**

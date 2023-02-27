@@ -64,7 +64,6 @@ public class GuildCommand {
      * @return The next argument as a string.
      */
     public String nextArgString() {
-
         return commandArgs[index++];
     }
 }

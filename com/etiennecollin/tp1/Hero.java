@@ -1,6 +1,6 @@
 package com.etiennecollin.tp1;
 
-public abstract class Heros {
+public abstract class Hero {
 
     // attributes
     private String heroName;
@@ -11,7 +11,7 @@ public abstract class Heros {
 
 
     // methods
-    public abstract void buyArmor(int numOfArmors, int armorUnitCost);
+    public abstract void buyArmor(int buyAmount, int armorCost);
 
 
 }

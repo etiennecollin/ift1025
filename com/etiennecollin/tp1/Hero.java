@@ -1,6 +1,6 @@
 package com.etiennecollin.tp1;
 
-public abstract class Heros {
+public abstract class Hero {
 
     // attributes
     protected String heroName;
@@ -8,7 +8,6 @@ public abstract class Heros {
     protected double costInCash;
     protected int costInArmor;
     protected double health;
-
 
     // getters and setters
     public String getHeroName() {
@@ -51,11 +50,11 @@ public abstract class Heros {
         this.health = health;
     }
 
-
     // methods
     public abstract void doQuest(int category, int healthCost, int cashReward, int armorReward);
+
     public abstract void trainHero(String heroName);
 
-
+    public abstract void buyArmor(int buyAmount, int armorCost);
 
 }

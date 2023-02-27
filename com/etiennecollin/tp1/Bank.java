@@ -3,10 +3,14 @@ import com.etiennecollin.tp1.hero.*;
 
 public class Bank {
 
+    // attributes
     private double cashBalance; // cash left in bank account
     private int armorBalance; // armor left in bank account
 
+    // constructor
 
+
+    // getters and setters
     public double getCashBalance() {
         return cashBalance;
     }
@@ -15,7 +19,7 @@ public class Bank {
         this.cashBalance = cashBalance;
     }
 
-    public double getArmorBalance() {
+    public int getArmorBalance() {
         return armorBalance;
     }
 

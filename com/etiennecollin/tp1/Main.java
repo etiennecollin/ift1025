@@ -31,16 +31,20 @@ public class Main {
                     myGuild.buyHero(heroName, heroCategory, costInCash, costInArmor, heroHealth);
                 }
                 case "buy-armor" -> {
-                    // TODO
-                    myGuild.buyArmor();
+                    int numOfArmors = command.nextArgInt();
+                    int costPerArmor = command.nextArgInt();
+                    myGuild.buyArmor(numOfArmors, costPerArmor);
                 }
                 case "do-quest" -> {
-                    // TODO
-                    myGuild.doQuest();
+                    int questCategory = command.nextArgInt();
+                    double healthCost = command.nextArgDouble();
+                    int cashReward = command.nextArgInt();
+                    int armorReward = command.nextArgInt();
+                    myGuild.doQuest(questCategory, healthCost, cashReward, armorReward);
                 }
                 case "train-hero" -> {
-                    // TODO
-                    myGuild.trainHero();
+                    String heroName = command.nextArgString();
+                    myGuild.trainHero(heroName);
                 }
             }
         }
@@ -59,3 +63,6 @@ public class Main {
         return new Guild(initialCashBalance, initialArmorBalance);
     }
 }
+
+
+// NOTE : do not forget to redefine the toString method for objects

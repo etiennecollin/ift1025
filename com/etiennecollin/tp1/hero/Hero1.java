@@ -1,13 +1,24 @@
-package com.etiennecollin.tp1;
+package com.etiennecollin.tp1.hero;
 
-public class Hero1 extends Heros {
+public class Hero1 extends Hero {
     public Hero1(String heroName, int category, double costInCash, int costInArmor, double health) {
         this.heroName = heroName;
         this.category = category;
         this.costInCash = costInCash;
         this.costInArmor = costInArmor;
         this.health = health;
-public class Hero1 extends Hero {
+    }
+
+    @Override
+    public void doQuest(int category, int healthCost, int cashReward, int armorReward) {
+
+    }
+
+    @Override
+    public void trainHero(String heroName) {
+
+    }
+
     @Override
     public void buyArmor(int buyAmount, int armorCost) {
 

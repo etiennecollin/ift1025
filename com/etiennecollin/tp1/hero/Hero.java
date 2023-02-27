@@ -1,4 +1,4 @@
-package com.etiennecollin.tp1;
+package com.etiennecollin.tp1.hero;
 
 public abstract class Hero {
 

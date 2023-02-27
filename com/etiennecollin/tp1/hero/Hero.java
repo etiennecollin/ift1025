@@ -4,10 +4,10 @@ public abstract class Hero {
 
     // attributes
     protected String heroName;
-    protected int category;
+    protected int heroCategory;
     protected double costInCash;
     protected int costInArmor;
-    protected double health;
+    protected double heroHealth;
 
     // getters and setters
     public String getHeroName() {
@@ -18,12 +18,12 @@ public abstract class Hero {
         this.heroName = heroName;
     }
 
-    public int getCategory() {
-        return this.category;
+    public int getHeroCategory() {
+        return this.heroCategory;
     }
 
-    public void setCategory(int category) {
-        this.category = category;
+    public void setHeroCategory(int heroCategory) {
+        this.heroCategory = heroCategory;
     }
 
     public double getCostInCash() {
@@ -42,19 +42,12 @@ public abstract class Hero {
         this.costInArmor = costInArmor;
     }
 
-    public double getHealth() {
-        return this.health;
+    public double getHeroHealth() {
+        return this.heroHealth;
     }
 
-    public void setHealth(double health) {
-        this.health = health;
+    public void setHeroHealth(double health) {
+        this.heroHealth = health;
     }
-
-    // methods
-    public abstract void doQuest(int category, int healthCost, int cashReward, int armorReward);
-
-    public abstract void trainHero(String heroName);
-
-    public abstract void buyArmor(int buyAmount, int armorCost);
 
 }

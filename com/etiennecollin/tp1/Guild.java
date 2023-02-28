@@ -33,6 +33,7 @@ public class Guild {
         if (bank.getCashBalance() >= hero.getCostInCash() && bank.getArmorBalance() >= hero.getCostInArmor()) {
             heroes.add(hero);
             bank.setCashBalance(bank.getCashBalance() - hero.getCostInCash());
+            bank.setArmorBalance(bank.getArmorBalance() - hero.getCostInArmor()); // TODO: check if this is correct
         } else {
             System.out.println("Error: not enough money or armor to buy hero");
         }
@@ -54,15 +55,15 @@ public class Guild {
 
     public void trainHero(String heroName) {
         for (int i = 0; i < heroes.size(); i++) {
-
             if (heroName == heroes.get(i).getHeroName()) {
                 int heroCategory = heroes.get(i).getHeroCategory();
-                double costInCash = 20 * Math.log(heroCategory + 10);
+                double upgradeCostInCash = 20 * Math.log(heroCategory + 10);
                 int upgradeCostInArmor = (int) Math.ceil(Math.log(heroCategory + 10));
 
-                if (bank.getCashBalance() >= costInCash) {
+                if (bank.getCashBalance() >= upgradeCostInCash) {
                     heroes.get(i).setHeroCategory(heroCategory + 1);
-                    bank.setCashBalance(bank.getCashBalance() - costInCash);
+                    bank.setCashBalance(bank.getCashBalance() - upgradeCostInCash);
+                    bank.setArmorBalance(bank.getArmorBalance() - upgradeCostInArmor); // TODO: check if this is correct
                 } else {
                     System.out.println("Error: not enough money to upgrade " + heroName);
                 }
@@ -74,6 +75,5 @@ public class Guild {
 
         }
     }
-
 
 }

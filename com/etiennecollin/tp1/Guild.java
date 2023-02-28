@@ -3,11 +3,17 @@ package com.etiennecollin.tp1;
 import com.etiennecollin.tp1.hero.*;
 import java.util.ArrayList;
 import java.lang.Math;
+import java.util.LinkedList;
 
 public class Guild {
 
     // attributes
-    ArrayList<Hero> heroes = new ArrayList<>();
+    LinkedList<Hero> heroesLVL0 = new LinkedList<>();
+    LinkedList<Hero> heroesLVL1 = new LinkedList<>();
+    LinkedList<Hero> heroesLVL2 = new LinkedList<>();
+    LinkedList<Hero> heroesLVL3 = new LinkedList<>();
+    LinkedList<Hero> heroesLVL4 = new LinkedList<>();
+    LinkedList[] heroes = {heroesLVL0, heroesLVL1, heroesLVL2, heroesLVL3, heroesLVL4};
     Bank bank = new Bank();
 
     // constructor
@@ -30,8 +36,8 @@ public class Guild {
             }
         }
 
-        if (bank.getCashBalance() >= hero.getCostInCash() && bank.getArmorBalance() >= hero.getCostInArmor()) {
-            heroes.add(hero);
+        if (hero != null && bank.getCashBalance() >= hero.getCostInCash() && bank.getArmorBalance() >= hero.getCostInArmor()) {
+            heroes[heroCategory].add(hero);
             bank.setCashBalance(bank.getCashBalance() - hero.getCostInCash());
             bank.setArmorBalance(bank.getArmorBalance() - hero.getCostInArmor()); // TODO: check if this is correct
         } else {
@@ -54,25 +60,28 @@ public class Guild {
     }
 
     public void trainHero(String heroName) {
-        for (int i = 0; i < heroes.size(); i++) {
-            if (heroName == heroes.get(i).getHeroName()) {
-                int heroCategory = heroes.get(i).getHeroCategory();
-                double upgradeCostInCash = 20 * Math.log(heroCategory + 10);
-                int upgradeCostInArmor = (int) Math.ceil(Math.log(heroCategory + 10));
+        for (int i = 0; i <= 4; i++){
+            for (int j = 0; j < heroes[i].size(); j++) {
+                if (heroName == heroes[i].get(j).getHeroName()) {
+                    int heroCategory = heroes[i].get(j).getHeroCategory();
+                    double upgradeCostInCash = 20 * Math.log(heroCategory + 10);
+                    int upgradeCostInArmor = (int) Math.ceil(Math.log(heroCategory + 10));
 
-                if (bank.getCashBalance() >= upgradeCostInCash) {
-                    heroes.get(i).setHeroCategory(heroCategory + 1);
-                    bank.setCashBalance(bank.getCashBalance() - upgradeCostInCash);
-                    bank.setArmorBalance(bank.getArmorBalance() - upgradeCostInArmor); // TODO: check if this is correct
+                    if (bank.getCashBalance() >= upgradeCostInCash) {
+                        heroes[i].get(j).setHeroCategory(heroCategory + 1);
+                        bank.setCashBalance(bank.getCashBalance() - upgradeCostInCash);
+                        bank.setArmorBalance(bank.getArmorBalance() - upgradeCostInArmor); // TODO: check if this is correct
+                    } else {
+                        System.out.println("Error: not enough money to upgrade " + heroName);
+                    }
+                    return;
+
                 } else {
-                    System.out.println("Error: not enough money to upgrade " + heroName);
+                    System.out.println("The hero named " + heroName + " is not in the list of heroes");
                 }
-                break;
 
-            } else {
-                System.out.println("The hero named " + heroName + " is not in the list of heroes");
+
             }
-
         }
     }
 

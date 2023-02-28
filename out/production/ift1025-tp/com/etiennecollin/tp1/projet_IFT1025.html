@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>projet_IFT1025</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css"/>
+</head>
+
+<body class="stackedit">
+<header style="text-align: center">
+  <img src="https://com.medecine.umontreal.ca/wp-content/themes/departements/images/logo/logo-udem.png">
+</header>
+<div class="stackedit__html"><h1 id="projet--lanalyse-dondes-cérébrales">Projet : Gestion d'une guilde</h1>
+  <p>Ce projet est à faire <strong>seul</strong> ou en équipe de <strong>deux</strong>. <strong>Aucune</strong> équipe
+    de 3 ne sera tolérée pour ce projet. Si lors de la remise il y a trois noms inscrits et que nous n’y étions pas au
+    courant, <strong>vous serez pénalisés</strong> sur votre note finale.
+  </p>
+  <h2 id="resume">Mise en situation.</h2>
+  <p>
+    Le son du cocher vous prévenant de votre arrivée imminente vous tire des bras de Morphée. Cela fait maintenant 3
+    jours que vous voyagez et ce n'est qu'à présent que vous réalisez que ce travail dont vous rêvez depuis tout.e
+    petit.e est enfin à porter de main. Plus que jamais, vous sentez que vous êtes prêt.e à affronter ce que la vie
+    vous réserve. Vous avez toujours voulu être programmeur informatique à la glorieuse
+    <i>Guilde des Programmes Unis</i> (<i>GPU</i>) et rien ne peut plus vous en empêcher!
+    <br>
+    ...
+    <br>
+    Une fois installé.e, vous vous rendez au GPU afin de commencer votre première journée. C'est à ce moment que vous
+    apprenez que votre mandat sera difficile, car le <strong>système de communication</strong> entre votre succursale et
+    le siège social est à refaire complètement. Celui-ci s'occupe de traiter les commandes du siège social, c'est-à-dire
+    <strong>l'embauche de Héros</strong>, <strong>l'entraînement de Héros</strong>, <strong>l'affectation de
+    quêtes</strong>,
+    <strong>la répartition du butin</strong> et <strong>l'achat d'armures</strong>. Si cela n'était pas suffisant, vous
+    apprenez que vous n'avez que 3 semaines pour rendre un produit fini! Vous avez déjà trop sacrifié.e pour cet emploi,
+    impossible de faire marche arrière. Il vous faudra affronter vos peurs et vous surpasser, mais vous êtes confiant.e.
+    Vous vous retroussez les manches et vous poursuivez la lecture du dossier.
+  </p>
+  <h2 id="fonctionnement-final-de-lapplication">Fonctionnement final de l’application</h2>
+  <p>L’application devra lire et traiter les instructions définies dans <a href="#instructions">instructions</a>.</p>
+
+  <h2 id="instructions">Les instructions</h2>
+  <ol>
+    <li><code>buy-hero</code>
+      <ul>
+        Format de l'instruction:
+        <li style="list-style: lower-alpha">Nom du héro {string}</li>
+        <li style="list-style: lower-alpha">Catégorie (common=0, uncommon=1, rare=2, epic=3, legendary=4) {int}</li>
+        <li style="list-style: lower-alpha">Coût en argent {double}</li>
+        <li style="list-style: lower-alpha">Coût en armures {int}</li>
+        <li style="list-style: lower-alpha">Points de vie {double}</li>
+      </ul>
+    </li>
+    <br>
+    <li><code>buy-armure</code>
+      <ul>
+        Format de l'instruction:
+        <li style="list-style: lower-alpha">Nombre d'armures achetées {int}</li>
+        <li style="list-style: lower-alpha">Prix par armure {int}</li>
+      </ul>
+    </li>
+    <br>
+    <li><code>do-quest</code>
+      <ul>
+        Format de l'instruction:
+        <li style="list-style: lower-alpha">Catégorie (common=0, uncommon=1, rare=2, epic=3, legendary=4) {int}</li>
+        <li style="list-style: lower-alpha">Coût en points de vie {double}</li>
+        <li style="list-style: lower-alpha">Récompense en argent {int}</li>
+        <li style="list-style: lower-alpha">Récompense en armures {int}</li>
+      </ul>
+    </li>
+    <br>
+    <li><code>train-hero</code>
+      <ul>
+        Format de l'instruction:
+        <li style="list-style: lower-alpha">Nom du héro {string}</li>
+      </ul>
+    </li>
+  </ol>
+  <h2 id="aperçu">Aperçu</h2>
+  <p>Dès le début, le programme doit être exécuté avec des commandes passées en paramètre c.-à-d.: <ins>args</ins>
+    <br>De plus, plusieurs types de commandes peuvent être passé et avec <strong><ins>plusieurs</ins></strong>
+     variables! Le programme<br>devra reconnaitre le niveau de difficulté de la quête et envoyer le bon héros.
+    Finalement, le programme<br>devra permettre l'amélioration des héros en échange d'armure et d'argent.</p>
+  <p>Voici un exemple d'utilisation:</p>
+  <ol>
+    <li>buy-hero:Arthur,3,<b>50.19</b>,5,10.5</li>
+    <li>buy-armor:2,5</li>
+    <li>do-quest:2,<b>1.5</b>,6,3</li>
+    <li>train-hero:Arthur</li>
+    <li>Une quête ne peut être résolu que par un héros du même niveau.<br>
+      &emsp;&emsp;<strong><ins>Si on ne remplit pas ce critère, on choisit le héros qui le suit
+      en ordre de puissance.</ins><br>&emsp;&emsp;<ins>Donc si on n'a pas un niveau 3, on prend le niveau 4 suivant.
+      </ins></strong></li>
+  </ol>
+  &emsp;&emsp;<ins><strong>Nottez que les paramètres dans les
+    commandes sont sérarés par des virgules.</strong></ins>
+  <p>Lorsqu'on achète un héros, il faut donc remplir certaines contraintes comme le coût en argent et en armure.</p>
+  <p>Acheter de l'armure est un critère primordial. En effet, à moins d'avoir complété une quête avec succès,<br>
+    il n'existerait pas d'autres moyennes pour en procurer. Le prix des armures/unité sera l'objet d'une des<br>
+    paramètres que le programme devra savoir gérer.</p>
+  <p>Le programme doit obligatoirement accepter les quêtes qu'on lui passe. De plus, le niveau des héros envoyés
+    devra être le même que la quête. S'il existe des héros remplissant ce critère, ils doivent être envoyés en
+    priorité. S'il n'existe pas de héros de même niveau, c'est alors qu'on peut aller chercher un héros qui suit
+    le niveau en rang. Le programme donc devra faire un triage au sein d'une <b>liste</b> de héros.</p>
+  <p>De plus, à chaque fois qu'un héros est envoyé en quête, il perd un peu de ses points de vie. S'il tombe
+    en dessous ou égal à zéro, la quête échoue et le héros est enlevé de la liste.</p>
+  <p>Lorsqu'on améliore un héros, le programme devra le chercher selon l'ID qu'on met en paramètre. Si le héros
+    en question n'existe pas alors on renvoie un message d'erreur pour le signaler à l'utilisateur. Par la suite,
+    il faut vérifier qu'on a assez d'argent et d'armure en inventaire pour pouvoir l'améliorer sinon on renvoie
+    message d'erreur pour le signaler.</p>
+  <h2 id="structure-du-programme">Structure du programme</h2>
+  <p>Avant de commencer à programmer, il faudra mettre en place la structure de votre programme. Pour ce devoir, nous
+    vous imposerons plus de liberté dans la structure de celui-ci. Pourquoi ? Parce qu’il est important que vous soyez
+    en mesure d’écrire un code structuré par vous-même.</p>
+  <p>Nous vous demandons uniquement d’avoir quelques fichiers et quelques fonctions. Vous devrez enovoyer ces fichier
+    <b>.java</b> pour votre remise:</p>
+  <ul>
+    <li>Un fichier pour votre code de départ (<code>Main.java</code>)</li>
+    <li>Un fichier de gestion qui gère l'inventaire (<code>Bank</code>)</li>
+    <li>Deux fichier de gestion pour les commandes (<code>GuildCommand.java & GuildCommandSystem.java</code>)</li>
+    <li>Un fichier pour chaque niveau de héros</li>
+    <li>Un fichier permettant le lancement des quêtes(<code>Quete.java</code>)</li>
+    <li>Un fichier qui regroupe toutes les informations en lien avec le guild(<code>Guild.java</code>)</li>
+  </ul>
+  &emsp;<ins><strong>Nottez que vos classes ne devraient pas êtres lourds si vous subdivisez bien
+    votre programme.</strong></ins>
+  <h2 id="fonctionnement">Fonctionnement</h2>
+  <p>Lorsqu'on démarre le programme, on le fait avec des arguments en paramètre(args). Ces arguments sont
+    automatiquement mis en tableau. Le programme devra prendre chacune de ces commandes et l'exécuter avec
+    le résultat attendu.</p>
+  <ins><h3>Exemple:</h3></ins>
+  <h4>exemple 1</h4>
+  <pre><code>
+    Input:<br>
+    guild:100.0,10 buy-hero:Berserker,2,52.5,6,30.5 do-quest:2,5.3,60,3<br><br>
+    Output:<br>
+    Guild Bank account: 107.5 gold & 7 armours
+    Heroes:
+    -Berserker: level=2, HP=25.2
+  </code></pre>
+  <h4>exemple 2</h4>
+  <pre><code>
+    Input:<br>
+    guild:100.0,10 buy-hero:Berserker,2,52.5,6,30.5 buy-hero:Zorro,1,36.2,2,15.0 do-quest:2,5.3,60,3 train-hero:Zorro<br><br>
+    Output:<br>
+    Guild Bank account: 23.3 gold & 2 armours
+    Heroes:
+    -Berserker: level=2, HP=25.2
+    -Zorro: level=2 HP=22.5
+  </code></pre>
+  <h4>exemple 3</h4>
+  <pre><code>
+    Input:<br>
+    guild:100.0,10 buy-hero:Rogue,3,73.5,7,40.7 train-hero:Rogue do-quest:2,5.3,60,3 train-hero:Zorro<br><br>
+    Output:<br>
+    Guild Bank account: 86.5 gold & 6 armours
+    Heroes:
+    -Rogue: level=3, HP=36.9
+    Erreur:
+    -Il vous manque de l'argent et/ou des armures pour améliorer Rogue.
+    -Le héros au nom de Zorro n'apparêt pas dans la liste
+  </code></pre>
+  Pour calculer le prix que prend une amélioration, il faut calculer: <b>20*ln(niveau + 10)</b><br>
+  Un calcul semblable est effectué pour les armures où on calcule le "roof" de : <b>ln(niveau + 10)</b><br>
+  Pour calculer les points de vie du héros, on fait: <b>maxHP*1.5</b> de plus, ça permet au héros
+  de regagner des ponts de vie.<br>
+  Finalement, pour calculer les points de vie perdu <ins>si le héros ne correspond pas au niveau de la quête:</ins>
+    <b>vie_enlevée - (niveau_actuelle - niveau_origine) * 1.5</b>
+
+  <h2 id="plagiat">Plagiat</h2>
+  <p>Sachez que le plagiat entraine directement la note de <strong>0</strong> et mène à une <strong>note dans votre
+    dossier</strong>. Tout partage de code ou copie de code qui n’est pas le vôtre, qu’il soit sous forme de texte, de
+    photo ou tout autre format, est considéré comme du plagiat. Lors de la correction, nous allons utiliser plusieurs
+    méthodes pour détecter le plagiat. Ne vous essayez pas, les conséquences seront sévères.</p>
+  <p>Vous pouvez consulter <a href="https://integrite.umontreal.ca/accueil/">le site de l’université</a> pour plus
+    d’informations</p>
+  <h2 id="remise">Remise</h2>
+  <p>Remettez tout votre code, pour les 4 itérations ainsi que les données dans le même dossier sous format compressé
+    .zip avec les noms des membres de l’équipe comme ceci: <code>projet_PrenomNom1_PrenomNom2.zip</code> (où
+    PrenomNom1
+    est votre nom ex: <em>MathisLaroche</em> et PrenomNom2 est celui de votre coéquipier.ère ex: <em>Enric
+      Soldevila</em>). Remettez-le tout sur studium sous le devoir qui est affiché.</p>
+  <p>Pour compresser le fichier:</p>
+  <ul>
+    <li>MacOS: vous devriez avoir le bouton compresser lorsques vous sélectionnez les fichiers à compresser (<a
+            href="https://support.apple.com/en-mz/guide/mac-help/mchlp2528/mac">https://support.apple.com/en-mz/guide/mac-help/mchlp2528/mac</a>).
+    </li>
+    <li>Windows: je recommande WinRAR qui est un logiciel gratuit très répandu (<a
+            href="https://www.win-rar.com/start.html?&amp;L=10">https://www.win-rar.com/start.html?&amp;L=10</a> oui
+      leur site fait vieux, mais il s’agit du bon site).
+    </li>
+  </ul>
+  <p>Si vous avez des questions sur des instructions du devoir, n’hésitez pas à les poser sur le forum ! Il est
+    possible
+    que je fasse des modifications à l’énoncé pour clarifier les consignes, je vous le ferai savoir si c’est le
+    cas.</p>
+  <h2 id="correction">Correction</h2>
+  <p>Les exercices sont à faire en équipe de <strong>2</strong>. Pour vous évaluer, nous allons nous fier à ces
+    critères
+    de correction :</p>
+  <ul>
+    <li>
+      <p>50% <strong>Fonctionnement du code</strong> Votre code va être testé avec plusieurs valeurs d’entrée. Si
+        certaines réponses ne sont pas valides, vous allez perdre des points. En revanche, si votre code fonctionne à
+        merveille, vous allez avoir tous vos points ! Je vous conseille de bien tester votre programme.</p>
+    </li>
+    <li>
+      <p>10% <strong>Compilation :</strong> Votre programme arrive-t-il à passer la compilation ? Vous devez vous
+        assurer que le code qu'on vous passe fonctionne avec le reste de votre programme tout restant inchangé.
+        En effet, le squelette du programme qu'on vous fournit est sur quoi devra se baser le reste de votre code.</p>
+    </li>
+    <li>
+      <p>40% <strong>Beauté du code</strong> Plus votre code est simple et facile à lire, plus vous allez avoir de
+        points ! Voici des éléments qui contribuent à la beauté d’un code :</p>
+      <ul>
+        <li>Est-ce que vos noms de variable sont descriptifs de leur utilisation ?</li>
+        <li>Est-ce que vous aérez vos expressions (par exemple, mettre des espaces avant et après un <code>=</code>) ?
+        </li>
+        <li>Utilisez-vous des variables inutiles ? Évitez-vous la répétition de code ?</li>
+        <li>Est-ce que votre code est concis ?</li>
+        <li>Votre code est-il facilement adaptable à d’autres situations ? (Par exemple, peut-on rapidement changer le
+          nombre de vies de départ…)
+        </li>
+      </ul>
+    </li>
+    <li>
+      <p>5% <strong>Points bonus</strong> Points bonus pour le rajout d’un élément WOW</p>
+    </li>
+  </ul>
+  <p style="text-align: center">Le travail doit être remis le 5 mars à minuit (11:59 pm) au plus tard!</p>
+</div>
+</body>
+
+</html>

@@ -56,11 +56,36 @@ public class Guild {
     }
 
     public void doQuest(int questCategory, double healthCost, int cashReward, int armorReward) {
-        // TODO
+        int heroCategory = questCategory;
+
+        // First, tries to find a hero of the right level. If there is no hero of the right level, tries to find hero of higher level.
+        // Second, tries to find a hero of lower level
+
+        while (heroCategory >= 0 && heroCategory <= 4) {
+            if (!heroes[heroCategory].isEmpty()) {
+                Hero hero = (Hero) heroes[heroCategory].getFirst();
+                if (healthCost > hero.getHeroHealth()) {
+                    double healthLost = healthCost - (questCategory - hero.getHeroCategory()) * 1.5;
+                    hero.setHeroHealth(hero.getHeroHealth() - healthLost);
+                    bank.setCashBalance(bank.getCashBalance() + cashReward);
+                    bank.setArmorBalance(bank.getArmorBalance() + armorReward);
+                } else {
+                    heroes[heroCategory].removeFirst();
+                    System.out.println("The hero died during his quest");
+                }
+                return;
+            } else if (heroCategory >= questCategory)
+                heroCategory++;
+
+            if (heroCategory > 4 || heroCategory < questCategory)
+                heroCategory = questCategory--;
+        }
+
+        System.out.println("No heroes are available for the quest");
     }
 
     public void trainHero(String heroName) {
-        for (int i = 0; i <= 4; i++){
+        for (int i = 0; i <= 4; i++) {
             for (int j = 0; j < heroes[i].size(); j++) {
                 if (heroName == ((Hero) heroes[i].get(j)).getHeroName()) {
                     int heroCategory = ((Hero) heroes[i].get(j)).getHeroCategory();
@@ -79,12 +104,11 @@ public class Guild {
                 } else {
                     System.out.println("The hero named " + heroName + " is not in the list of heroes");
                 }
-
-
             }
         }
     }
-
 }
+
+
 
 // shouldn't it be better to use 5 double linked lists (instead of one arrayList), one for each hero level that implements a stack?

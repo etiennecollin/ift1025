@@ -77,3 +77,5 @@ public class Guild {
     }
 
 }
+
+// shouldn't it be better to use 5 double linked lists (instead of one arrayList), one for each hero level that implements a stack?

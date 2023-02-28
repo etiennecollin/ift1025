@@ -62,13 +62,13 @@ public class Guild {
     public void trainHero(String heroName) {
         for (int i = 0; i <= 4; i++){
             for (int j = 0; j < heroes[i].size(); j++) {
-                if (heroName == heroes[i].get(j).getHeroName()) {
-                    int heroCategory = heroes[i].get(j).getHeroCategory();
+                if (heroName == ((Hero) heroes[i].get(j)).getHeroName()) {
+                    int heroCategory = ((Hero) heroes[i].get(j)).getHeroCategory();
                     double upgradeCostInCash = 20 * Math.log(heroCategory + 10);
                     int upgradeCostInArmor = (int) Math.ceil(Math.log(heroCategory + 10));
 
                     if (bank.getCashBalance() >= upgradeCostInCash) {
-                        heroes[i].get(j).setHeroCategory(heroCategory + 1);
+                        ((Hero) heroes[i].get(j)).setHeroCategory(heroCategory + 1);
                         bank.setCashBalance(bank.getCashBalance() - upgradeCostInCash);
                         bank.setArmorBalance(bank.getArmorBalance() - upgradeCostInArmor); // TODO: check if this is correct
                     } else {

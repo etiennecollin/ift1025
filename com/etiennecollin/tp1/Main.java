@@ -2,11 +2,17 @@ package com.etiennecollin.tp1;
 
 import com.etiennecollin.tp1.guildcommands.GuildCommand;
 import com.etiennecollin.tp1.guildcommands.GuildCommandSystem;
+import com.etiennecollin.tp1.hero.Hero;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Main class for the TP1 project and entry point to the program.
  */
 public class Main {
+    private static final ArrayList<String> exceptions = new ArrayList<>();
+
     /**
      * The entry point of the application. Initializes the `GuildCommandSystem` with the provided
      * arguments and executes the commands in a loop until there are no more commands to process.
@@ -14,12 +20,13 @@ public class Main {
      * @param args Array of arguments passed to the program > guild:<initialMoneyAmount>,<initialArmorAmount>
      */
     public static void main(String[] args) {
-        try {
-            // Store the arguments to be processed
-            GuildCommandSystem guildCommandSystem = new GuildCommandSystem(args);
-            // Create guild with first command
-            Guild myGuild = makeGuild(guildCommandSystem.currentCommand());
-            while (guildCommandSystem.hasNextCommand()) {
+        // Store the arguments to be processed
+        GuildCommandSystem guildCommandSystem = new GuildCommandSystem(args);
+        // Create guild with first command
+        Guild guild = makeGuild(guildCommandSystem.currentCommand());
+
+        while (guildCommandSystem.hasNextCommand()) {
+            try {
                 // Get next command
                 GuildCommand command = guildCommandSystem.nextCommand();
                 switch (command.getName()) {
@@ -29,29 +36,30 @@ public class Main {
                         double costInCash = command.nextArgDouble();
                         int costInArmor = command.nextArgInt();
                         double health = command.nextArgDouble();
-                        myGuild.buyHero(name, category, costInCash, costInArmor, health);
+                        guild.buyHero(name, category, costInCash, costInArmor, health);
                     }
                     case "buy-armor" -> {
                         int numOfArmors = command.nextArgInt();
                         int costPerArmor = command.nextArgInt();
-                        myGuild.buyArmor(numOfArmors, costPerArmor);
+                        guild.buyArmor(numOfArmors, costPerArmor);
                     }
                     case "do-quest" -> {
                         int questCategory = command.nextArgInt();
                         double healthCost = command.nextArgDouble();
                         int cashReward = command.nextArgInt();
                         int armorReward = command.nextArgInt();
-                        myGuild.doQuest(questCategory, healthCost, cashReward, armorReward);
+                        guild.doQuest(questCategory, healthCost, cashReward, armorReward);
                     }
                     case "train-hero" -> {
                         String name = command.nextArgString();
-                        myGuild.trainHero(name);
+                        guild.trainHero(name);
                     }
                 }
+            } catch (Exception e) {
+                exceptions.add(e.getMessage());
             }
-        } catch (Exception e) {
-            System.out.println("Exception: " + e.getMessage());
         }
+        displayOutput(guild);
     }
 
     /**
@@ -60,11 +68,47 @@ public class Main {
      *
      * @param command `GuildCommand` object that holds the information about the creation of a new guild.
      *
-     * @return a new instance of the `Guild` class
+     * @return A new instance of the `Guild` class.
      */
-    public static Guild makeGuild(GuildCommand command) {
+    private static Guild makeGuild(GuildCommand command) {
         double initialCashBalance = command.nextArgDouble();
         int initialArmorBalance = command.nextArgInt();
         return new Guild(initialCashBalance, initialArmorBalance);
+    }
+
+    /**
+     * Displays information about the guild and its heroes.
+     *
+     * @param guild The guild of which we want the information.
+     */
+    private static void displayOutput(Guild guild) {
+        Bank bank = guild.getBank();
+        LinkedList[] categories = guild.getHeroCategories();
+
+        // Display Guild info
+        System.out.println();
+        System.out.println("Guild bank: " + bank.getCashBalance() + " gold & " + bank.getArmorBalance() + " armors");
+
+        // Generate string with list of heroes
+        String heroList = "";
+        for (LinkedList<Hero> category : categories) {
+            for (Hero hero : category) {
+                heroList = heroList.concat(("    " + hero.getName() + ": category=" + hero.getCategory() + ", HP=" + hero.getHealth() + "\n"));
+            }
+        }
+
+        // Display heroes in guild if there are any
+        if (!heroList.equals("")) {
+            System.out.println("Heroes:");
+            System.out.println(heroList);
+        }
+
+        // Displays exceptions if any happened
+        if (!exceptions.isEmpty()) {
+            System.out.println("Exceptions:");
+            for (String exception : exceptions) {
+                System.out.println("    " + exception);
+            }
+        }
     }
 }

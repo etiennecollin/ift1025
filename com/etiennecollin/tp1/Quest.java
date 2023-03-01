@@ -89,7 +89,7 @@ public class Quest {
             }
 
             // Update hero health
-            double healthLost = healthCost - (questCategory - hero.getCategory()) * 1.5;
+            double healthLost = healthCost - (hero.getCategory() - questCategory) * 1.5;
             hero.setHealth(hero.getHealth() - healthLost);
         } else {
             // Remove hero that has died

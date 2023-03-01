@@ -8,7 +8,7 @@ public class GuildCommandSystem {
     /**
      * The list of commands passed as an input
      */
-    String[] command;
+    final String[] command;
     /**
      * The index of the current command being processed.
      */

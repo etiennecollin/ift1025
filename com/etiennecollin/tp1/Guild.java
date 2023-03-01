@@ -11,13 +11,13 @@ import java.util.LinkedList;
  * The guild also has a bank containing cash and armor resources.
  */
 public class Guild {
-    protected LinkedList<Hero> heroesCategory0 = new LinkedList<>();
-    protected LinkedList<Hero> heroesCategory1 = new LinkedList<>();
-    protected LinkedList<Hero> heroesCategory2 = new LinkedList<>();
-    protected LinkedList<Hero> heroesCategory3 = new LinkedList<>();
-    protected LinkedList<Hero> heroesCategory4 = new LinkedList<>();
-    protected LinkedList[] categories = {heroesCategory0, heroesCategory1, heroesCategory2, heroesCategory3, heroesCategory4};
-    protected Bank bank = new Bank();
+    protected final LinkedList<Hero> heroesCategory0 = new LinkedList<>();
+    protected final LinkedList<Hero> heroesCategory1 = new LinkedList<>();
+    protected final LinkedList<Hero> heroesCategory2 = new LinkedList<>();
+    protected final LinkedList<Hero> heroesCategory3 = new LinkedList<>();
+    protected final LinkedList<Hero> heroesCategory4 = new LinkedList<>();
+    protected final LinkedList[] categories = {heroesCategory0, heroesCategory1, heroesCategory2, heroesCategory3, heroesCategory4};
+    protected final Bank bank = new Bank();
 
     /**
      * The Guild constructor creates a new guild and initializes it with a bank.

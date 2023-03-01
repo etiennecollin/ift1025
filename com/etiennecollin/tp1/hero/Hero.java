@@ -97,6 +97,11 @@ public abstract class Hero {
      * @param health The health to set for the hero.
      */
     public void setHealth(double health) {
-        this.health = health;
+        this.health = Double.parseDouble(String.format("%.2f", health));
+    }
+
+    @Override
+    public String toString() {
+        return "Hero{" + "name='" + name + '\'' + ", category=" + category + ", costInCash=" + costInCash + ", costInArmor=" + costInArmor + ", health=" + health + '}';
     }
 }

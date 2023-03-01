@@ -14,7 +14,7 @@ public class Bank {
      *
      * @param cost The cost to be checked against the cash balance.
      *
-     * @return true if the cash balance is greater than or equal to the cost, false otherwise.
+     * @return True if the cash balance is greater than or equal to the cost, false otherwise.
      */
     public boolean isCashBalanceValid(double cost) {
         return this.getCashBalance() >= cost;
@@ -23,7 +23,7 @@ public class Bank {
     /**
      * Returns the current cash balance in the bank account.
      *
-     * @return the current cash balance in the bank account.
+     * @return The current cash balance in the bank account.
      */
     public double getCashBalance() {
         return cashBalance;
@@ -43,7 +43,7 @@ public class Bank {
      *
      * @param cost The cost to be checked against the armor balance.
      *
-     * @return true if the armor balance is greater than or equal to the cost, false otherwise.
+     * @return True if the armor balance is greater than or equal to the cost, false otherwise.
      */
     public boolean isArmorBalanceValid(int cost) {
         return this.getArmorBalance() >= cost;
@@ -52,7 +52,7 @@ public class Bank {
     /**
      * Returns the current armor balance in the bank account.
      *
-     * @return the current armor balance in the bank account.
+     * @return The current armor balance in the bank account.
      */
     public int getArmorBalance() {
         return armorBalance;
@@ -70,7 +70,7 @@ public class Bank {
     /**
      * Returns a string representation of the bank object.
      *
-     * @return a string representation of the bank object.
+     * @return A string representation of the bank object.
      */
     @Override
     public String toString() {

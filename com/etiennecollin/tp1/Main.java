@@ -5,7 +5,6 @@ import com.etiennecollin.tp1.guildcommands.GuildCommandSystem;
 
 /**
  * Main class for the TP1 project and entry point to the program.
- * TODO : do not forget to redefine the toString method for objects
  */
 public class Main {
     /**

@@ -14,10 +14,10 @@ public class Hero1 extends Hero {
      * @param health      The initial health of the hero
      */
     public Hero1(String name, int category, double costInCash, int costInArmor, double health) {
-        this.name = name.toLowerCase();
-        this.category = category;
-        this.costInCash = costInCash;
-        this.costInArmor = costInArmor;
-        this.health = health;
+        this.setName(name);
+        this.setCategory(category);
+        this.setCostInCash(costInCash);
+        this.setCostInArmor(costInArmor);
+        this.setHealth(health);
     }
 }

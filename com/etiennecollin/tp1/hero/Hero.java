@@ -4,43 +4,34 @@ package com.etiennecollin.tp1.hero;
  * Hero is an abstract class representing a character in a game.
  */
 public abstract class Hero {
-    protected String name;
-    protected int category;
-    protected double costInCash;
-    protected int costInArmor;
-    protected double health;
-
-    /**
-     * Returns the display name of the hero, which is the name with the first letter capitalized.
-     *
-     * @return the display name of the hero.
-     */
-    public String getDisplayName() {
-        return this.name.substring(0, 1).toUpperCase() + this.name.substring(1);
-    }
+    private String name;
+    private int category;
+    private double costInCash;
+    private int costInArmor;
+    private double health;
 
     /**
      * Returns the name of the hero.
      *
-     * @return the name of the hero.
+     * @return The name of the hero.
      */
     public String getName() {
         return this.name;
     }
 
     /**
-     * Sets the name of the hero. The name will be converted to lowercase.
+     * Sets the name of the hero.
      *
      * @param name The name to set for the hero.
      */
     public void setName(String name) {
-        this.name = name.toLowerCase();
+        this.name = name;
     }
 
     /**
      * Returns the category of the hero.
      *
-     * @return the category of the hero.
+     * @return The category of the hero.
      */
     public int getCategory() {
         return this.category;
@@ -58,7 +49,7 @@ public abstract class Hero {
     /**
      * Returns the cost of the hero in cash.
      *
-     * @return the cost of the hero in cash.
+     * @return The cost of the hero in cash.
      */
     public double getCostInCash() {
         return this.costInCash;
@@ -76,7 +67,7 @@ public abstract class Hero {
     /**
      * Returns the cost of the hero in armor.
      *
-     * @return the cost of the hero in armor.
+     * @return The cost of the hero in armor.
      */
     public int getCostInArmor() {
         return this.costInArmor;
@@ -94,7 +85,7 @@ public abstract class Hero {
     /**
      * Returns the health of the hero.
      *
-     * @return the health of the hero.
+     * @return The health of the hero.
      */
     public double getHealth() {
         return this.health;

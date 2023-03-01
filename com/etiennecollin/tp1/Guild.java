@@ -11,13 +11,13 @@ import java.util.LinkedList;
  * The guild also has a bank containing cash and armor resources.
  */
 public class Guild {
-    protected final LinkedList<Hero> heroesCategory0 = new LinkedList<>();
-    protected final LinkedList<Hero> heroesCategory1 = new LinkedList<>();
-    protected final LinkedList<Hero> heroesCategory2 = new LinkedList<>();
-    protected final LinkedList<Hero> heroesCategory3 = new LinkedList<>();
-    protected final LinkedList<Hero> heroesCategory4 = new LinkedList<>();
-    protected final LinkedList[] categories = {heroesCategory0, heroesCategory1, heroesCategory2, heroesCategory3, heroesCategory4};
-    protected final Bank bank = new Bank();
+    private final Bank bank = new Bank();
+    private final LinkedList<Hero> heroesCategory0 = new LinkedList<>();
+    private final LinkedList<Hero> heroesCategory1 = new LinkedList<>();
+    private final LinkedList<Hero> heroesCategory2 = new LinkedList<>();
+    private final LinkedList<Hero> heroesCategory3 = new LinkedList<>();
+    private final LinkedList<Hero> heroesCategory4 = new LinkedList<>();
+    private final LinkedList[] heroCategories = {heroesCategory0, heroesCategory1, heroesCategory2, heroesCategory3, heroesCategory4};
 
     /**
      * The Guild constructor creates a new guild and initializes it with a bank.
@@ -31,7 +31,26 @@ public class Guild {
     }
 
     /**
-     * The buyHero method adds a new hero to the guild if it doesn't already exist in the guild and if the guild can afford it.
+     * Returns the hero categories of the current guild.
+     *
+     * @return The hero categories of the current guild.
+     */
+    public LinkedList[] getHeroCategories() {
+        return heroCategories;
+    }
+
+    /**
+     * Returns the bank object of the current guild.
+     *
+     * @return The bank object of the current guild.
+     */
+    public Bank getBank() {
+        return bank;
+    }
+
+    /**
+     * The buyHero method adds a new hero to the guild if it doesn't already exist in the guild and if the guild can
+     * afford it.
      *
      * @param name        A String representing the name of the new hero.
      * @param category    An integer representing the category of the new hero.
@@ -39,13 +58,14 @@ public class Guild {
      * @param costInArmor An integer representing the cost in armor of the new hero.
      * @param health      A double representing the initial health of the new hero.
      *
-     * @throws Exception if the hero already exists in the guild, if the hero category is invalid, or if the guild can't afford the hero.
+     * @throws Exception If the hero already exists in the guild, if the hero category is invalid, or if the guild
+     *                   can't afford the hero.
      */
     public void buyHero(String name, int category, double costInCash, int costInArmor, double health) throws Exception {
         // Check if hero already exists
         Hero hero = findHeroWithName(name);
         if (hero != null) {
-            throw new Exception("The hero named " + hero.getDisplayName() + " is already part of this guild");
+            throw new Exception("The hero named " + hero.getName() + " is already part of this guild");
         }
         // Declare hero with proper category
         switch (category) {
@@ -60,10 +80,10 @@ public class Guild {
         }
         // Check if guild has enough resources to afford hero
         if (!this.bank.isCashBalanceValid(costInCash) || !this.bank.isArmorBalanceValid(costInArmor)) {
-            throw new Exception("Not enough money or armor to buy hero " + hero.getDisplayName());
+            throw new Exception("Not enough money or armor to buy hero " + hero.getName());
         }
         // All checks passed, add hero and deduce its price from this.bank
-        this.categories[category].add(hero);
+        this.heroCategories[category].add(hero);
         this.bank.setCashBalance(this.bank.getCashBalance() - costInCash);
         this.bank.setArmorBalance(this.bank.getArmorBalance() - costInArmor);
     }
@@ -73,12 +93,12 @@ public class Guild {
      *
      * @param name The name of the hero to search for.
      *
-     * @return the hero object with the specified name, or null if the hero was not found.
+     * @return The hero object with the specified name, or null if the hero was not found.
      */
     private Hero findHeroWithName(String name) {
-        for (LinkedList<Hero> category : this.categories) {
+        for (LinkedList<Hero> category : this.heroCategories) {
             for (Hero hero : category) {
-                if (name.toLowerCase().equals(hero.getName())) {
+                if (name.equals(hero.getName())) {
                     // Hero was found
                     return hero;
                 }
@@ -94,7 +114,7 @@ public class Guild {
      * @param numOfArmors  The number of armors to purchase.
      * @param costPerArmor The cost per armor in cash.
      *
-     * @throws Exception if the guild does not have enough cash to afford the armor.
+     * @throws Exception If the guild does not have enough cash to afford the armor.
      */
     public void buyArmor(int numOfArmors, int costPerArmor) throws Exception {
         int totalCost = numOfArmors * costPerArmor;
@@ -115,51 +135,50 @@ public class Guild {
      * @param cashReward    The amount of cash reward for completing the quest.
      * @param armorReward   The amount of armor reward for completing the quest.
      *
-     * @throws Exception if no hero is available to complete the quest or if the hero dies during the quest.
+     * @throws Exception If no hero is available to complete the quest or if the hero dies during the quest.
      */
     public void doQuest(int questCategory, double healthCost, int cashReward, int armorReward) throws Exception {
+        Hero hero = findHeroForQuest(questCategory);
+        Quest quest = new Quest(questCategory, healthCost, cashReward, armorReward);
+        quest.complete(hero, this);
+    }
+
+    /**
+     * Tries to find a hero from the guild to complete a quest with the specified category.
+     *
+     * @param questCategory The category of hero required to complete the quest.
+     *
+     * @throws Exception If no hero is available to complete the quest.
+     */
+    private Hero findHeroForQuest(int questCategory) throws Exception {
         // Check if guild has a hero with the proper category
         Hero hero = findHeroWithCategory(questCategory);
-        // A hero with the optimal level was not found, try to find another one
+        // If a hero with the optimal level was not found, try to find another one
         if (hero == null) {
             // Go through the 4 possible remaining categories
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < heroCategories.length; i++) {
                 // Try to find a hero with a higher level
-                if (questCategory + i >= 0 && questCategory + i < categories.length) {
+                if (questCategory + i >= 0 && questCategory + i < heroCategories.length) {
                     hero = findHeroWithCategory(questCategory + i);
                     // Check if a hero was found
                     if (hero != null) {
-                        break;
+                        return hero;
                     }
                 }
                 // Try to find a hero with a lower level
-                if (questCategory - i >= 0 && questCategory - i < categories.length) {
+                if (questCategory - i >= 0 && questCategory - i < heroCategories.length) {
                     hero = findHeroWithCategory(questCategory - i);
                     // Check if a hero was found
                     if (hero != null) {
-                        break;
+                        return hero;
                     }
                 }
             }
-            // Check if no hero was found
-            if (hero == null) {
-                throw new Exception("No heroes are available for the quest");
-            }
+            // No hero was found
+            throw new Exception("No heroes are available for the quest");
         }
-        // A hero was found, complete the quest
-        if (healthCost < hero.getHealth()) {
-            // Update hero health
-            double healthLost = healthCost - (questCategory - hero.getCategory()) * 1.5;
-            hero.setHealth(hero.getHealth() - healthLost);
-            // Update bank with rewards
-            this.bank.setCashBalance(this.bank.getCashBalance() + cashReward);
-            this.bank.setArmorBalance(this.bank.getArmorBalance() + armorReward);
-        } else {
-            // Remove hero that has died
-            String deadHeroName = hero.getDisplayName();
-            this.categories[questCategory].removeFirst();
-            throw new Exception("The hero " + deadHeroName + " died during their quest");
-        }
+        // If a hero with the optimal level was found, return it
+        return hero;
     }
 
     /**
@@ -170,26 +189,28 @@ public class Guild {
      * @return The hero belonging to the specified category, or null if no hero was found.
      */
     private Hero findHeroWithCategory(int category) {
-        if (!this.categories[category].isEmpty()) {
+        if (!this.heroCategories[category].isEmpty()) {
             // Hero was found
-            return (Hero) this.categories[category].getFirst();
+            return (Hero) this.heroCategories[category].getFirst();
         }
         // Hero was not found
         return null;
     }
 
     /**
-     * Trains the hero with the specified name, increasing their category and health, and decreasing the guild's cash and armor balances.
+     * Trains the hero with the specified name, increasing their category and health, and decreasing the guild's cash
+     * and armor balances.
      *
-     * @param heroName The name of the hero to train.
+     * @param name The name of the hero to train.
      *
-     * @throws Exception if the hero is not part of the guild, or if the guild does not have enough resources to afford the training.
+     * @throws Exception If the hero is not part of the guild, or if the guild does not have enough resources to
+     *                   afford the training.
      */
-    public void trainHero(String heroName) throws Exception {
+    public void trainHero(String name) throws Exception {
         // Find hero in guild
-        Hero hero = findHeroWithName(heroName);
+        Hero hero = findHeroWithName(name);
         if (hero == null) {
-            throw new Exception("The hero named " + heroName + " is not part of this guild");
+            throw new Exception("The hero named " + name + " is not part of this guild");
         }
         // Set training parameters
         int heroCategory = hero.getCategory();
@@ -199,7 +220,7 @@ public class Guild {
         int upgradeCostInArmor = (int) Math.ceil(Math.log(heroCategory + 10));
         // Check if guild has enough resources to afford training
         if (!this.bank.isCashBalanceValid(upgradeCostInCash) || !this.bank.isArmorBalanceValid(upgradeCostInArmor)) {
-            throw new Exception("Not enough money or armor to upgrade hero " + hero.getDisplayName());
+            throw new Exception("Not enough money or armor to upgrade hero " + hero.getName());
         }
         // All checks passed, train hero
         hero.setCategory(heroCategory + 1);
@@ -211,10 +232,10 @@ public class Guild {
     /**
      * Returns a string representation of the guild, including its categories of heroes, and its bank.
      *
-     * @return a string representation of the guild.
+     * @return A string representation of the guild.
      */
     @Override
     public String toString() {
-        return "Guild{" + "heroesCategory0=" + heroesCategory0 + ", heroesCategory1=" + heroesCategory1 + ", " + "heroesCategory2=" + heroesCategory2 + ", heroesCategory3=" + heroesCategory3 + ", heroesCategory4=" + heroesCategory4 + ", categories=" + Arrays.toString(categories) + ", bank=" + bank + '}';
+        return "Guild{" + "heroesCategory0=" + heroesCategory0 + ", heroesCategory1=" + heroesCategory1 + ", " + "heroesCategory2=" + heroesCategory2 + ", heroesCategory3=" + heroesCategory3 + ", heroesCategory4=" + heroesCategory4 + ", categories=" + Arrays.toString(heroCategories) + ", bank=" + bank + '}';
     }
 }

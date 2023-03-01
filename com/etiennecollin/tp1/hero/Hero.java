@@ -4,7 +4,6 @@ package com.etiennecollin.tp1.hero;
  * Hero is an abstract class representing a character in a game.
  */
 public abstract class Hero {
-    // attributes
     protected String name;
     protected int category;
     protected double costInCash;

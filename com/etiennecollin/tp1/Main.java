@@ -5,48 +5,53 @@ import com.etiennecollin.tp1.guildcommands.GuildCommandSystem;
 
 /**
  * Main class for the TP1 project and entry point to the program.
+ * TODO : do not forget to redefine the toString method for objects
  */
 public class Main {
     /**
      * The entry point of the application. Initializes the `GuildCommandSystem` with the provided
      * arguments and executes the commands in a loop until there are no more commands to process.
      *
-     * @param args array of arguments passed to the program > guild:<initialMoneyAmount>,<initialArmorAmount>
+     * @param args Array of arguments passed to the program > guild:<initialMoneyAmount>,<initialArmorAmount>
      */
     public static void main(String[] args) {
-        // Store the arguments to be processed
-        GuildCommandSystem guildCommandSystem = new GuildCommandSystem(args);
-        // Create guild with first command
-        Guild myGuild = makeGuild(guildCommandSystem.currentCommand());
-
-        while (guildCommandSystem.hasNextCommand()) {
-            GuildCommand command = guildCommandSystem.nextCommand();
-            switch (command.getName()) {
-                case "buy-hero" -> {
-                    String heroName = command.nextArgString();
-                    int heroCategory = command.nextArgInt();
-                    double costInCash = command.nextArgDouble();
-                    int costInArmor = command.nextArgInt();
-                    double heroHealth = command.nextArgDouble();
-                    myGuild.buyHero(heroName, heroCategory, costInCash, costInArmor, heroHealth);
-                }
-                case "buy-armor" -> {
-                    int numOfArmors = command.nextArgInt();
-                    int costPerArmor = command.nextArgInt();
-                    myGuild.buyArmor(numOfArmors, costPerArmor);
-                }
-                case "do-quest" -> {
-                    int questCategory = command.nextArgInt();
-                    double healthCost = command.nextArgDouble();
-                    int cashReward = command.nextArgInt();
-                    int armorReward = command.nextArgInt();
-                    myGuild.doQuest(questCategory, healthCost, cashReward, armorReward);
-                }
-                case "train-hero" -> {
-                    String heroName = command.nextArgString();
-                    myGuild.trainHero(heroName);
+        try {
+            // Store the arguments to be processed
+            GuildCommandSystem guildCommandSystem = new GuildCommandSystem(args);
+            // Create guild with first command
+            Guild myGuild = makeGuild(guildCommandSystem.currentCommand());
+            while (guildCommandSystem.hasNextCommand()) {
+                // Get next command
+                GuildCommand command = guildCommandSystem.nextCommand();
+                switch (command.getName()) {
+                    case "buy-hero" -> {
+                        String name = command.nextArgString();
+                        int category = command.nextArgInt();
+                        double costInCash = command.nextArgDouble();
+                        int costInArmor = command.nextArgInt();
+                        double health = command.nextArgDouble();
+                        myGuild.buyHero(name, category, costInCash, costInArmor, health);
+                    }
+                    case "buy-armor" -> {
+                        int numOfArmors = command.nextArgInt();
+                        int costPerArmor = command.nextArgInt();
+                        myGuild.buyArmor(numOfArmors, costPerArmor);
+                    }
+                    case "do-quest" -> {
+                        int questCategory = command.nextArgInt();
+                        double healthCost = command.nextArgDouble();
+                        int cashReward = command.nextArgInt();
+                        int armorReward = command.nextArgInt();
+                        myGuild.doQuest(questCategory, healthCost, cashReward, armorReward);
+                    }
+                    case "train-hero" -> {
+                        String name = command.nextArgString();
+                        myGuild.trainHero(name);
+                    }
                 }
             }
+        } catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
         }
     }
 
@@ -55,6 +60,7 @@ public class Main {
      * the initial number of armors.
      *
      * @param command `GuildCommand` object that holds the information about the creation of a new guild.
+     *
      * @return a new instance of the `Guild` class
      */
     public static Guild makeGuild(GuildCommand command) {
@@ -63,6 +69,3 @@ public class Main {
         return new Guild(initialCashBalance, initialArmorBalance);
     }
 }
-
-
-// NOTE : do not forget to redefine the toString method for objects

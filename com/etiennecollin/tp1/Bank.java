@@ -1,29 +1,79 @@
 package com.etiennecollin.tp1;
-import com.etiennecollin.tp1.hero.*;
 
+/**
+ * This class represents a bank object that manages a cash and armor balance.
+ */
 public class Bank {
+    // The current cash balance in the bank account.
+    private double cashBalance;
+    // The current armor balance in the bank account.
+    private int armorBalance;
 
-    // attributes
-    private double cashBalance; // cash left in bank account
-    private int armorBalance; // armor left in bank account
+    /**
+     * Returns whether the current cash balance in the bank account is greater than or equal to the given cost.
+     *
+     * @param cost The cost to be checked against the cash balance.
+     *
+     * @return true if the cash balance is greater than or equal to the cost, false otherwise.
+     */
+    public boolean isCashBalanceValid(double cost) {
+        return this.getCashBalance() >= cost;
+    }
 
-    // constructor
-
-
-    // getters and setters
+    /**
+     * Returns the current cash balance in the bank account.
+     *
+     * @return the current cash balance in the bank account.
+     */
     public double getCashBalance() {
         return cashBalance;
     }
 
+    /**
+     * Sets the current cash balance in the bank account to the given value.
+     *
+     * @param cashBalance The new cash balance to be set.
+     */
     public void setCashBalance(double cashBalance) {
         this.cashBalance = cashBalance;
     }
 
+    /**
+     * Returns whether the current armor balance in the bank account is greater than or equal to the given cost.
+     *
+     * @param cost The cost to be checked against the armor balance.
+     *
+     * @return true if the armor balance is greater than or equal to the cost, false otherwise.
+     */
+    public boolean isArmorBalanceValid(int cost) {
+        return this.getArmorBalance() >= cost;
+    }
+
+    /**
+     * Returns the current armor balance in the bank account.
+     *
+     * @return the current armor balance in the bank account.
+     */
     public int getArmorBalance() {
         return armorBalance;
     }
 
+    /**
+     * Sets the current armor balance in the bank account to the given value.
+     *
+     * @param armorBalance The new armor balance to be set.
+     */
     public void setArmorBalance(int armorBalance) {
         this.armorBalance = armorBalance;
+    }
+
+    /**
+     * Returns a string representation of the bank object.
+     *
+     * @return a string representation of the bank object.
+     */
+    @Override
+    public String toString() {
+        return "Bank{" + "cashBalance=" + cashBalance + ", armorBalance=" + armorBalance + '}';
     }
 }

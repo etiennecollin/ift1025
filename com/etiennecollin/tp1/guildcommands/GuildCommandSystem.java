@@ -4,13 +4,11 @@ package com.etiennecollin.tp1.guildcommands;
  * GuildCommandSystem is a class that takes a list of commands as input, and provides methods
  * to retrieve and parse the commands one by one.
  */
-
 public class GuildCommandSystem {
     /**
      * The list of commands passed as an input
      */
     String[] command;
-
     /**
      * The index of the current command being processed.
      */

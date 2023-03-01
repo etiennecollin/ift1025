@@ -12,12 +12,12 @@ import java.util.LinkedList;
  */
 public class Guild {
     private final Bank bank = new Bank();
-    private final LinkedList<Hero> heroesCategory0 = new LinkedList<>();
-    private final LinkedList<Hero> heroesCategory1 = new LinkedList<>();
-    private final LinkedList<Hero> heroesCategory2 = new LinkedList<>();
-    private final LinkedList<Hero> heroesCategory3 = new LinkedList<>();
-    private final LinkedList<Hero> heroesCategory4 = new LinkedList<>();
-    private final LinkedList[] heroCategories = {heroesCategory0, heroesCategory1, heroesCategory2, heroesCategory3, heroesCategory4};
+    private LinkedList<Hero> heroesCategory0 = new LinkedList<>();
+    private LinkedList<Hero> heroesCategory1 = new LinkedList<>();
+    private LinkedList<Hero> heroesCategory2 = new LinkedList<>();
+    private LinkedList<Hero> heroesCategory3 = new LinkedList<>();
+    private LinkedList<Hero> heroesCategory4 = new LinkedList<>();
+    private LinkedList[] heroCategories = {heroesCategory0, heroesCategory1, heroesCategory2, heroesCategory3, heroesCategory4};
 
     /**
      * The Guild constructor creates a new guild and initializes it with a bank.
@@ -220,10 +220,12 @@ public class Guild {
         int upgradeCostInArmor = (int) Math.ceil(Math.log(heroCategory + 10));
         // Check if guild has enough resources to afford training
         if (!this.bank.isCashBalanceValid(upgradeCostInCash) || !this.bank.isArmorBalanceValid(upgradeCostInArmor)) {
-            throw new Exception("Not enough money or armor to upgrade hero " + hero.getName());
+            throw new Exception("Not enough money or armor to train hero " + hero.getName());
         }
         // All checks passed, train hero
         hero.setCategory(heroCategory + 1);
+        heroCategories[heroCategory].remove(hero);
+        heroCategories[heroCategory + 1].add(hero);
         hero.setHealth(heroUpgradedHealth);
         this.bank.setCashBalance(this.bank.getCashBalance() - upgradeCostInCash);
         this.bank.setArmorBalance(this.bank.getArmorBalance() - upgradeCostInArmor);
@@ -236,6 +238,6 @@ public class Guild {
      */
     @Override
     public String toString() {
-        return "Guild{" + "heroesCategory0=" + heroesCategory0 + ", heroesCategory1=" + heroesCategory1 + ", " + "heroesCategory2=" + heroesCategory2 + ", heroesCategory3=" + heroesCategory3 + ", heroesCategory4=" + heroesCategory4 + ", categories=" + Arrays.toString(heroCategories) + ", bank=" + bank + '}';
+        return "Guild{" + "\n bank=" + bank + ",\n heroesCategory0=" + heroesCategory0 + ",\n heroesCategory1=" + heroesCategory1 + ",\n heroesCategory2=" + heroesCategory2 + ",\n heroesCategory3=" + heroesCategory3 + ",\n heroesCategory4=" + heroesCategory4 + ",\n heroCategories=" + Arrays.toString(heroCategories) + '}';
     }
 }

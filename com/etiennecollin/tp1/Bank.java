@@ -16,7 +16,7 @@ public class Bank {
      *
      * @return True if the cash balance is greater than or equal to the cost, false otherwise.
      */
-    public boolean isCashBalanceValid(double cost) {
+    public boolean isCashCostValid(double cost) {
         return this.getCashBalance() >= cost;
     }
 
@@ -45,7 +45,7 @@ public class Bank {
      *
      * @return True if the armor balance is greater than or equal to the cost, false otherwise.
      */
-    public boolean isArmorBalanceValid(int cost) {
+    public boolean isArmorCostValid(int cost) {
         return this.getArmorBalance() >= cost;
     }
 

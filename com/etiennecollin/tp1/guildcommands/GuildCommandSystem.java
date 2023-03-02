@@ -5,13 +5,9 @@ package com.etiennecollin.tp1.guildcommands;
  * to retrieve and parse the commands one by one.
  */
 public class GuildCommandSystem {
-    /**
-     * The list of commands passed as an input
-     */
+    // The list of commands passed as an input
     final String[] command;
-    /**
-     * The index of the current command being processed.
-     */
+    // The index of the current command being processed.
     int index = 0;
 
     /**

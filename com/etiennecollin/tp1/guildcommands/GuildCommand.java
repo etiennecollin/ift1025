@@ -5,17 +5,11 @@ package com.etiennecollin.tp1.guildcommands;
  * to retrieve and parse the command arguments.
  */
 public class GuildCommand {
-    /**
-     * The list of arguments for the command.
-     */
+    // The list of arguments for the command.
     private final String[] commandArgs;
-    /**
-     * The name of the command.
-     */
-    private final String name; // Initially wasn't final
-    /**
-     * The index of the current argument being processed.
-     */
+    // The name of the command.
+    private final String name;
+    // The index of the current argument being processed.
     private int index = 0;
 
     /**

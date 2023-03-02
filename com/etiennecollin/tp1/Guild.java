@@ -56,12 +56,12 @@ public class Guild {
      * @param category    An integer representing the category of the new hero.
      * @param costInCash  A double representing the cost in cash of the new hero.
      * @param costInArmor An integer representing the cost in armor of the new hero.
-     * @param health      A double representing the initial health of the new hero.
+     * @param maxHealth   A double representing the maximum health of the new hero.
      *
      * @throws Exception If the hero already exists in the guild, if the hero category is invalid, or if the guild
      *                   can't afford the hero.
      */
-    public void buyHero(String name, int category, double costInCash, int costInArmor, double health) throws Exception {
+    public void buyHero(String name, int category, double costInCash, int costInArmor, double maxHealth) throws Exception {
         // Check if hero already exists
         Hero hero = findHeroWithName(name);
         if (hero != null) {
@@ -69,17 +69,17 @@ public class Guild {
         }
         // Declare hero with proper category
         switch (category) {
-            case 0 -> hero = new Hero0(name, category, costInCash, costInArmor, health);
-            case 1 -> hero = new Hero1(name, category, costInCash, costInArmor, health);
-            case 2 -> hero = new Hero2(name, category, costInCash, costInArmor, health);
-            case 3 -> hero = new Hero3(name, category, costInCash, costInArmor, health);
-            case 4 -> hero = new Hero4(name, category, costInCash, costInArmor, health);
+            case 0 -> hero = new Hero0(name, category, costInCash, costInArmor, maxHealth);
+            case 1 -> hero = new Hero1(name, category, costInCash, costInArmor, maxHealth);
+            case 2 -> hero = new Hero2(name, category, costInCash, costInArmor, maxHealth);
+            case 3 -> hero = new Hero3(name, category, costInCash, costInArmor, maxHealth);
+            case 4 -> hero = new Hero4(name, category, costInCash, costInArmor, maxHealth);
             default -> {
                 throw new Exception("Invalid hero category for 'buy-hero'. Category is an integer in range [0, 4]");
             }
         }
         // Check if guild has enough resources to afford hero
-        if (!bank.isCashBalanceValid(costInCash) || !bank.isArmorBalanceValid(costInArmor)) {
+        if (!bank.isCashCostValid(costInCash) || !bank.isArmorCostValid(costInArmor)) {
             throw new Exception("Not enough money or armor to buy hero " + hero.getName());
         }
         // All checks passed, add hero and deduce its price from bank
@@ -119,7 +119,7 @@ public class Guild {
     public void buyArmor(int numOfArmors, int costPerArmor) throws Exception {
         int totalCost = numOfArmors * costPerArmor;
         // Check if guild has enough resources to afford armor
-        if (!bank.isCashBalanceValid(totalCost)) {
+        if (!bank.isCashCostValid(totalCost)) {
             throw new Exception("Not enough cash to buy " + numOfArmors + " armor");
         }
         // All checks passed, buy armor
@@ -203,14 +203,13 @@ public class Guild {
      *
      * @param name The name of the hero to train.
      *
-     * @throws Exception If the hero is not part of the guild, or if the guild does not have enough resources to
-     *                   afford the training.
+     * @throws Exception If the hero is not part of the guild, or if the hero is already at the maximum category level, or if the guild does not have enough resources to afford the training.
      */
     public void trainHero(String name) throws Exception {
         // Find hero in guild
         Hero hero = findHeroWithName(name);
         if (hero == null) {
-            throw new Exception("The hero named " + name + " is not part of this guild");
+            throw new Exception("The hero named " + name + " is not part of the guild");
         }
 
         // Check if hero is already max category
@@ -220,12 +219,12 @@ public class Guild {
         }
 
         // Set training parameters
-        double heroUpgradedHealth = hero.getHealth() * 1.5;
+        double heroUpgradedMaxHealth = hero.getMaxHealth() * 1.5;
         double upgradeCostInCash = 20 * Math.log(heroCategory + 10);
         int upgradeCostInArmor = (int) Math.ceil(Math.log(heroCategory + 10));
 
         // Check if guild has enough resources to afford training
-        if (!bank.isCashBalanceValid(upgradeCostInCash) || !bank.isArmorBalanceValid(upgradeCostInArmor)) {
+        if (!bank.isCashCostValid(upgradeCostInCash) || !bank.isArmorCostValid(upgradeCostInArmor)) {
             throw new Exception("Not enough money or armor to train hero " + hero.getName());
         }
 
@@ -234,8 +233,9 @@ public class Guild {
         heroCategories[heroCategory].remove(hero);
         heroCategories[heroCategory + 1].add(hero);
 
-        // Upgrade hero health
-        hero.setHealth(heroUpgradedHealth);
+        // Upgrade hero maximum health and restore health
+        hero.setMaxHealth(heroUpgradedMaxHealth);
+        hero.setHealth(heroUpgradedMaxHealth);
 
         // Make guild pay training costs
         bank.setCashBalance(bank.getCashBalance() - upgradeCostInCash);

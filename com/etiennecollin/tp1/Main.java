@@ -35,8 +35,8 @@ public class Main {
                         int category = command.nextArgInt();
                         double costInCash = command.nextArgDouble();
                         int costInArmor = command.nextArgInt();
-                        double health = command.nextArgDouble();
-                        guild.buyHero(name, category, costInCash, costInArmor, health);
+                        double maxHealth = command.nextArgDouble();
+                        guild.buyHero(name, category, costInCash, costInArmor, maxHealth);
                     }
                     case "buy-armor" -> {
                         int numOfArmors = command.nextArgInt();
@@ -89,18 +89,20 @@ public class Main {
         System.out.println();
         System.out.println("Guild bank: " + bank.getCashBalance() + " gold & " + bank.getArmorBalance() + " armors");
 
-        // Generate string with list of heroes
-        String heroList = "";
+        // Generate a list of heroes
+        ArrayList<String> heroList = new ArrayList<>();
         for (LinkedList<Hero> category : categories) {
             for (Hero hero : category) {
-                heroList = heroList.concat(("    " + hero.getName() + ": category=" + hero.getCategory() + ", HP=" + hero.getHealth() + "\n"));
+                heroList.add(hero.getName() + ": category=" + hero.getCategory() + ", health=" + hero.getHealth());
             }
         }
 
         // Display heroes in guild if there are any
-        if (!heroList.equals("")) {
+        if (!heroList.isEmpty()) {
             System.out.println("Heroes:");
-            System.out.println(heroList);
+            for (String hero : heroList) {
+                System.out.println("    " + hero);
+            }
         }
 
         // Displays exceptions if any happened

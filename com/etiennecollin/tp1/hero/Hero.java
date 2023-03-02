@@ -8,6 +8,7 @@ public abstract class Hero {
     private int category;
     private double costInCash;
     private int costInArmor;
+    private double maxHealth;
     private double health;
 
     /**
@@ -83,6 +84,24 @@ public abstract class Hero {
     }
 
     /**
+     * Returns the maximum health of the hero.
+     *
+     * @return The maximum health of the hero.
+     */
+    public double getMaxHealth() {
+        return this.maxHealth;
+    }
+
+    /**
+     * Sets the maximum health of the hero.
+     *
+     * @param maxHealth The maximum health to set for the hero.
+     */
+    public void setMaxHealth(double maxHealth) {
+        this.maxHealth = Double.parseDouble(String.format("%.2f", maxHealth));
+    }
+
+    /**
      * Returns the health of the hero.
      *
      * @return The health of the hero.
@@ -102,6 +121,6 @@ public abstract class Hero {
 
     @Override
     public String toString() {
-        return "Hero{" + "name='" + name + '\'' + ", category=" + category + ", costInCash=" + costInCash + ", costInArmor=" + costInArmor + ", health=" + health + '}';
+        return "Hero{" + "name='" + name + '\'' + ", category=" + category + ", costInCash=" + costInCash + ", costInArmor=" + costInArmor + ", maxHealth=" + maxHealth + ", health=" + health + '}';
     }
 }

@@ -80,7 +80,7 @@ public class Quest {
             Challenge challenge = new Challenge(hero);
 
             if (challenge.wasSuccessful()) {
-                System.out.println("Success! The chest opened.");
+                System.out.println("Success! The chest opened. It contains " + cashReward + " gold & " + armorReward + " armors.");
                 // Update bank with rewards
                 bank.setCashBalance(bank.getCashBalance() + cashReward);
                 bank.setArmorBalance(bank.getArmorBalance() + armorReward);

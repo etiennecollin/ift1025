@@ -12,12 +12,12 @@ import java.util.LinkedList;
  */
 public class Guild {
     private final Bank bank = new Bank();
-    private LinkedList<Hero> heroesCategory0 = new LinkedList<>();
-    private LinkedList<Hero> heroesCategory1 = new LinkedList<>();
-    private LinkedList<Hero> heroesCategory2 = new LinkedList<>();
-    private LinkedList<Hero> heroesCategory3 = new LinkedList<>();
-    private LinkedList<Hero> heroesCategory4 = new LinkedList<>();
-    private LinkedList[] heroCategories = {heroesCategory0, heroesCategory1, heroesCategory2, heroesCategory3, heroesCategory4};
+    private final LinkedList<Hero> heroesCategory1 = new LinkedList<>();
+    private final LinkedList<Hero> heroesCategory2 = new LinkedList<>();
+    private final LinkedList<Hero> heroesCategory3 = new LinkedList<>();
+    private final LinkedList<Hero> heroesCategory4 = new LinkedList<>();
+    private final LinkedList<Hero> heroesCategory0 = new LinkedList<>();
+    private final LinkedList[] heroCategories = {heroesCategory0, heroesCategory1, heroesCategory2, heroesCategory3, heroesCategory4};
 
     /**
      * The Guild constructor creates a new guild and initializes it with a bank.
@@ -26,8 +26,8 @@ public class Guild {
      * @param initialArmorBalance An integer representing the initial armor balance of the guild's bank.
      */
     public Guild(double initialCashBalance, int initialArmorBalance) {
-        this.bank.setCashBalance(initialCashBalance);
-        this.bank.setArmorBalance(initialArmorBalance);
+        bank.setCashBalance(initialCashBalance);
+        bank.setArmorBalance(initialArmorBalance);
     }
 
     /**
@@ -79,13 +79,13 @@ public class Guild {
             }
         }
         // Check if guild has enough resources to afford hero
-        if (!this.bank.isCashBalanceValid(costInCash) || !this.bank.isArmorBalanceValid(costInArmor)) {
+        if (!bank.isCashBalanceValid(costInCash) || !bank.isArmorBalanceValid(costInArmor)) {
             throw new Exception("Not enough money or armor to buy hero " + hero.getName());
         }
-        // All checks passed, add hero and deduce its price from this.bank
-        this.heroCategories[category].add(hero);
-        this.bank.setCashBalance(this.bank.getCashBalance() - costInCash);
-        this.bank.setArmorBalance(this.bank.getArmorBalance() - costInArmor);
+        // All checks passed, add hero and deduce its price from bank
+        heroCategories[category].add(hero);
+        bank.setCashBalance(bank.getCashBalance() - costInCash);
+        bank.setArmorBalance(bank.getArmorBalance() - costInArmor);
     }
 
     /**
@@ -96,7 +96,7 @@ public class Guild {
      * @return The hero object with the specified name, or null if the hero was not found.
      */
     private Hero findHeroWithName(String name) {
-        for (LinkedList<Hero> category : this.heroCategories) {
+        for (LinkedList<Hero> category : heroCategories) {
             for (Hero hero : category) {
                 if (name.equals(hero.getName())) {
                     // Hero was found
@@ -119,12 +119,12 @@ public class Guild {
     public void buyArmor(int numOfArmors, int costPerArmor) throws Exception {
         int totalCost = numOfArmors * costPerArmor;
         // Check if guild has enough resources to afford armor
-        if (!this.bank.isCashBalanceValid(totalCost)) {
+        if (!bank.isCashBalanceValid(totalCost)) {
             throw new Exception("Not enough cash to buy " + numOfArmors + " armor");
         }
         // All checks passed, buy armor
-        this.bank.setArmorBalance(this.bank.getArmorBalance() + numOfArmors);
-        this.bank.setCashBalance(this.bank.getCashBalance() - totalCost);
+        bank.setArmorBalance(bank.getArmorBalance() + numOfArmors);
+        bank.setCashBalance(bank.getCashBalance() - totalCost);
     }
 
     /**
@@ -189,9 +189,9 @@ public class Guild {
      * @return The hero belonging to the specified category, or null if no hero was found.
      */
     private Hero findHeroWithCategory(int category) {
-        if (!this.heroCategories[category].isEmpty()) {
+        if (!heroCategories[category].isEmpty()) {
             // Hero was found
-            return (Hero) this.heroCategories[category].getFirst();
+            return (Hero) heroCategories[category].getFirst();
         }
         // Hero was not found
         return null;
@@ -212,23 +212,34 @@ public class Guild {
         if (hero == null) {
             throw new Exception("The hero named " + name + " is not part of this guild");
         }
-        // Set training parameters
+
+        // Check if hero is already max category
         int heroCategory = hero.getCategory();
+        if (heroCategory >= heroCategories.length - 1) {
+            throw new Exception("The hero named " + name + " cannot be trained as it is already category " + heroCategory);
+        }
+
+        // Set training parameters
         double heroUpgradedHealth = hero.getHealth() * 1.5;
-        // Upgrade costs
         double upgradeCostInCash = 20 * Math.log(heroCategory + 10);
         int upgradeCostInArmor = (int) Math.ceil(Math.log(heroCategory + 10));
+
         // Check if guild has enough resources to afford training
-        if (!this.bank.isCashBalanceValid(upgradeCostInCash) || !this.bank.isArmorBalanceValid(upgradeCostInArmor)) {
+        if (!bank.isCashBalanceValid(upgradeCostInCash) || !bank.isArmorBalanceValid(upgradeCostInArmor)) {
             throw new Exception("Not enough money or armor to train hero " + hero.getName());
         }
-        // All checks passed, train hero
+
+        // All checks passed, change hero category
         hero.setCategory(heroCategory + 1);
         heroCategories[heroCategory].remove(hero);
         heroCategories[heroCategory + 1].add(hero);
+
+        // Upgrade hero health
         hero.setHealth(heroUpgradedHealth);
-        this.bank.setCashBalance(this.bank.getCashBalance() - upgradeCostInCash);
-        this.bank.setArmorBalance(this.bank.getArmorBalance() - upgradeCostInArmor);
+
+        // Make guild pay training costs
+        bank.setCashBalance(bank.getCashBalance() - upgradeCostInCash);
+        bank.setArmorBalance(bank.getArmorBalance() - upgradeCostInArmor);
     }
 
     /**

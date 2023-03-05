@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2023. Etienne Collin #20237904 & Justin Villeneuve #20132792
+ */
+
 package com.etiennecollin.tp1;
 
 import com.etiennecollin.tp1.hero.*;
@@ -22,7 +26,6 @@ public class Guild {
      * In the worst case, we would have had to check all the elements of the array list 5 times (because there are 5 hero levels).
      * It would have also been possible to sort the elements of the arrayList before searching for an element, but this
      * would have been inefficient because sorting complexity is O(n).
-     *
      */
     private final LinkedList<Hero> heroesCategory1 = new LinkedList<>();
     private final LinkedList<Hero> heroesCategory2 = new LinkedList<>();

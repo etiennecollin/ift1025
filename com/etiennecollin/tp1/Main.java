@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2023. Etienne Collin #20237904 & Justin Villeneuve #20132792
+ */
+
 package com.etiennecollin.tp1;
 
 import com.etiennecollin.tp1.guildcommands.GuildCommand;

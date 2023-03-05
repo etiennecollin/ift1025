@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2023. Etienne Collin #20237904 & Justin Villeneuve #20132792
+ */
+
 package com.etiennecollin.tp1.hero;
 
 /**
@@ -11,7 +15,7 @@ public class Hero3 extends Hero {
      * @param category    The category of the hero.
      * @param costInCash  The cost of the hero in cash.
      * @param costInArmor The cost of the hero in armor.
-     * @param maxHealth      The maximum health of the hero.
+     * @param maxHealth   The maximum health of the hero.
      */
     public Hero3(String name, int category, double costInCash, int costInArmor, double maxHealth) {
         this.setName(name);

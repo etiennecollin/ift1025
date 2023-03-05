@@ -79,7 +79,8 @@ public class Quest {
 
         // Check if hero has enough health
         if (healthCost < hero.getHealth()) {
-            // Give a challenge to the hero to open the chest containing the rewards
+            // A challenge was added just for fun and for the "wow-factor"
+            // Gives a challenge to the hero to open the chest containing the rewards
             System.out.println(hero.getName() + " approaches the end of the quest, but the chest containing the loot is locked. There seems to be a mathematical equation written on the chest; can you solve it?");
             Challenge challenge = new Challenge(hero);
 

@@ -12,6 +12,15 @@ import java.util.LinkedList;
  */
 public class Guild {
     private final Bank bank = new Bank();
+    /**
+     * We implemented a main heroCategories array which contains LinkedLists (used as stacks) for heroes of each category.
+     * As the index of each stack in the main array match the category of hero they contain,
+     * finding heroes with the right category is extremely efficient. Because of this implementation,
+     * the time complexity is O(1) for the hero-category-related operations as the lookup in the main array is O(1) and
+     * the add(), getFirst() and removeFirst() operations in the linked lists are also O(1).
+     * If we implemented a single main list, we would have had to sort it constantly when adding heroes and when they die
+     * and the lookup time complexity would have been O(n). This would have been inefficient.
+     */
     private final LinkedList<Hero> heroesCategory1 = new LinkedList<>();
     private final LinkedList<Hero> heroesCategory2 = new LinkedList<>();
     private final LinkedList<Hero> heroesCategory3 = new LinkedList<>();

@@ -24,6 +24,9 @@ public class Main {
      * @param args Array of arguments passed to the program > guild:<initialMoneyAmount>,<initialArmorAmount>
      */
     public static void main(String[] args) {
+        // Enables or disables challenges in quests by bypassing them or not (added for "wow-factor")
+        Challenge.setIsBypassed(false);
+
         // Store the arguments to be processed
         GuildCommandSystem guildCommandSystem = new GuildCommandSystem(args);
         // Create guild with first command

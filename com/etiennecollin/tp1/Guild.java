@@ -241,7 +241,7 @@ public class Guild {
 
         // Check if guild has enough resources to afford training
         if (!bank.isCashCostValid(upgradeCostInCash) || !bank.isArmorCostValid(upgradeCostInArmor)) {
-            throw new Exception("Not enough money or armor to train hero " + hero.getName());
+            throw new Exception("Not enough money or armor to train the hero " + hero.getName());
         }
 
         // All checks passed, change hero category

@@ -29,6 +29,7 @@ public class Main {
 
         // Store the arguments to be processed
         GuildCommandSystem guildCommandSystem = new GuildCommandSystem(args);
+
         // Create guild with first command
         Guild guild = makeGuild(guildCommandSystem.currentCommand());
 

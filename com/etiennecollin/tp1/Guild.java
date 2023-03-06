@@ -118,10 +118,12 @@ public class Guild {
      */
     public void buyArmor(int numOfArmors, int costPerArmor) throws Exception {
         int totalCost = numOfArmors * costPerArmor;
+
         // Check if guild has enough resources to afford armor
         if (!bank.isCashCostValid(totalCost)) {
             throw new Exception("Not enough cash to buy " + numOfArmors + " armor");
         }
+
         // All checks passed, buy armor
         bank.setArmorBalance(bank.getArmorBalance() + numOfArmors);
         bank.setCashBalance(bank.getCashBalance() - totalCost);
@@ -153,6 +155,7 @@ public class Guild {
     private Hero findHeroForQuest(int questCategory) throws Exception {
         // Check if guild has a hero with the proper category
         Hero hero = findHeroWithCategory(questCategory);
+
         // If a hero with the optimal level was not found, try to find another one
         if (hero == null) {
             // Go through the 4 possible remaining categories
@@ -165,6 +168,7 @@ public class Guild {
                         return hero;
                     }
                 }
+
                 // Try to find a hero with a lower level
                 if (questCategory - i >= 0 && questCategory - i < heroCategories.length) {
                     hero = findHeroWithCategory(questCategory - i);

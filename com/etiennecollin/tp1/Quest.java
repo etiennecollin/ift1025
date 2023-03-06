@@ -30,42 +30,6 @@ public class Quest {
     }
 
     /**
-     * Returns the quest category.
-     *
-     * @return The quest category.
-     */
-    public int getQuestCategory() {
-        return questCategory;
-    }
-
-    /**
-     * Sets the quest category.
-     *
-     * @param questCategory The quest category.
-     */
-    public void setQuestCategory(int questCategory) {
-        this.questCategory = questCategory;
-    }
-
-    /**
-     * Returns the health cost of the quest.
-     *
-     * @return The health cost of the quest.
-     */
-    public double getHealthCost() {
-        return healthCost;
-    }
-
-    /**
-     * Sets the health cost of the quest.
-     *
-     * @param healthCost The health cost of the quest.
-     */
-    public void setHealthCost(double healthCost) {
-        this.healthCost = healthCost;
-    }
-
-    /**
      * Completes the quest with the specified hero and guild.
      *
      * @param hero  The hero completing the quest.
@@ -79,18 +43,21 @@ public class Quest {
 
         // Check if hero has enough health
         if (healthCost < hero.getHealth()) {
-            // A challenge was added just for fun and for the "wow-factor"
-            // Gives a challenge to the hero to open the chest containing the rewards
-            System.out.println(hero.getName() + " approaches the end of the quest, but the chest containing the loot is locked. There seems to be a mathematical equation written on the chest; can you solve it?");
-            Challenge challenge = new Challenge(hero);
+            // Check if challenges added for "wow-factor" are bypassed
+            if (!Challenge.getIsBypassed()) {
+                // Give a challenge to the hero to open the chest containing the rewards
+                System.out.println(hero.getName() + " approaches the end of the quest, but the chest containing the loot is locked. There seems to be a mathematical equation written on the chest; can you solve it?");
+                Challenge challenge = new Challenge(hero);
 
-            if (challenge.wasSuccessful()) {
-                System.out.println("Success! The chest opened. It contains " + cashReward + " gold & " + armorReward + " armors.");
-                // Update bank with rewards
-                bank.setCashBalance(bank.getCashBalance() + cashReward);
-                bank.setArmorBalance(bank.getArmorBalance() + armorReward);
+                // Only give quest rewards if challenge succeeded
+                if (challenge.wasSuccessful()) {
+                    System.out.println("Success! The chest opened. It contains " + cashReward + " gold & " + armorReward + " armors.");
+                    giveRewards(bank);
+                } else {
+                    System.out.println("Wrong answer! The chest did not open.");
+                }
             } else {
-                System.out.println("Challenge failed! The chest did not open.");
+                giveRewards(bank);
             }
 
             // Update hero health
@@ -102,6 +69,16 @@ public class Quest {
             heroCategories[questCategory].removeFirst();
             throw new Exception("The hero " + deadHeroName + " died during their quest");
         }
+    }
+
+    /**
+     * Updates a bank with quest rewards.
+     *
+     * @param bank The to which the rewards are added.
+     */
+    private void giveRewards(Bank bank) {
+        bank.setCashBalance(bank.getCashBalance() + cashReward);
+        bank.setArmorBalance(bank.getArmorBalance() + armorReward);
     }
 
     /**
@@ -138,5 +115,51 @@ public class Quest {
      */
     public void setArmorReward(int armorReward) {
         this.armorReward = armorReward;
+    }
+
+    /**
+     * Returns the quest category.
+     *
+     * @return The quest category.
+     */
+    public int getQuestCategory() {
+        return questCategory;
+    }
+
+    /**
+     * Sets the quest category.
+     *
+     * @param questCategory The quest category.
+     */
+    public void setQuestCategory(int questCategory) {
+        this.questCategory = questCategory;
+    }
+
+    /**
+     * Returns the health cost of the quest.
+     *
+     * @return The health cost of the quest.
+     */
+    public double getHealthCost() {
+        return healthCost;
+    }
+
+    /**
+     * Sets the health cost of the quest.
+     *
+     * @param healthCost The health cost of the quest.
+     */
+    public void setHealthCost(double healthCost) {
+        this.healthCost = healthCost;
+    }
+
+    /**
+     * Returns a string representation of the quest object.
+     *
+     * @return A string representation of the quest object.
+     */
+    @Override
+    public String toString() {
+        return "Quest{" + "questCategory=" + questCategory + ", healthCost=" + healthCost + ", cashReward=" + cashReward + ", armorReward=" + armorReward + '}';
     }
 }

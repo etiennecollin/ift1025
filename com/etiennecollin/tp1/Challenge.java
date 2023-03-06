@@ -61,6 +61,15 @@ public class Challenge {
     }
 
     /**
+     * Gets the bypassed state of challenges.
+     *
+     * @return The bypassed state of challenges.
+     */
+    public static boolean getIsBypassed() {
+        return isBypassed;
+    }
+
+    /**
      * Enables or disables challenges in quests by bypassing them or not.
      *
      * @param state True to bypass challenges and false to allow them.
@@ -76,5 +85,15 @@ public class Challenge {
      */
     public boolean wasSuccessful() {
         return wasSuccessful;
+    }
+
+    /**
+     * Returns a string representation of the challenge object.
+     *
+     * @return A string representation of the challenge object.
+     */
+    @Override
+    public String toString() {
+        return "Challenge{" + "wasSuccessful=" + wasSuccessful + '}';
     }
 }

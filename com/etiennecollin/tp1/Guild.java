@@ -47,24 +47,6 @@ public class Guild {
     }
 
     /**
-     * Returns the hero categories of the current guild.
-     *
-     * @return The hero categories of the current guild.
-     */
-    public LinkedList[] getHeroCategories() {
-        return heroCategories;
-    }
-
-    /**
-     * Returns the bank object of the current guild.
-     *
-     * @return The bank object of the current guild.
-     */
-    public Bank getBank() {
-        return bank;
-    }
-
-    /**
      * The buyHero method adds a new hero to the guild if it doesn't already exist in the guild and if the guild can
      * afford it.
      *
@@ -83,6 +65,7 @@ public class Guild {
         if (hero != null) {
             throw new Exception("The hero named " + hero.getName() + " is already part of this guild");
         }
+
         // Declare hero with proper category
         switch (category) {
             case 0 -> hero = new Hero0(name, category, costInCash, costInArmor, maxHealth);
@@ -90,14 +73,15 @@ public class Guild {
             case 2 -> hero = new Hero2(name, category, costInCash, costInArmor, maxHealth);
             case 3 -> hero = new Hero3(name, category, costInCash, costInArmor, maxHealth);
             case 4 -> hero = new Hero4(name, category, costInCash, costInArmor, maxHealth);
-            default -> {
-                throw new Exception("Invalid hero category for 'buy-hero'. Category is an integer in range [0, 4]");
-            }
+            default ->
+                    throw new Exception("Invalid hero category for 'buy-hero'. Category is an integer in range [0, 4]");
         }
+
         // Check if guild has enough resources to afford hero
         if (!bank.isCashCostValid(costInCash) || !bank.isArmorCostValid(costInArmor)) {
             throw new Exception("Not enough money or armor to buy hero " + hero.getName());
         }
+
         // All checks passed, add hero and deduce its price from bank
         heroCategories[category].add(hero);
         bank.setCashBalance(bank.getCashBalance() - costInCash);
@@ -256,6 +240,24 @@ public class Guild {
         // Make guild pay training costs
         bank.setCashBalance(bank.getCashBalance() - upgradeCostInCash);
         bank.setArmorBalance(bank.getArmorBalance() - upgradeCostInArmor);
+    }
+
+    /**
+     * Returns the hero categories of the current guild.
+     *
+     * @return The hero categories of the current guild.
+     */
+    public LinkedList[] getHeroCategories() {
+        return heroCategories;
+    }
+
+    /**
+     * Returns the bank object of the current guild.
+     *
+     * @return The bank object of the current guild.
+     */
+    public Bank getBank() {
+        return bank;
     }
 
     /**

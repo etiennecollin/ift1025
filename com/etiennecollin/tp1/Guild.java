@@ -33,7 +33,7 @@ public class Guild {
     private final LinkedList<Hero> heroesCategory3 = new LinkedList<>();
     private final LinkedList<Hero> heroesCategory4 = new LinkedList<>();
     private final LinkedList<Hero> heroesCategory0 = new LinkedList<>();
-    private final LinkedList[] heroCategories = {heroesCategory0, heroesCategory1, heroesCategory2, heroesCategory3, heroesCategory4};
+    private final LinkedList<Hero>[] heroCategories = new LinkedList[]{heroesCategory0, heroesCategory1, heroesCategory2, heroesCategory3, heroesCategory4};
 
     /**
      * The Guild constructor creates a new guild and initializes it with a bank.
@@ -251,7 +251,7 @@ public class Guild {
      *
      * @return The hero categories of the current guild.
      */
-    public LinkedList[] getHeroCategories() {
+    public LinkedList<Hero>[] getHeroCategories() {
         return heroCategories;
     }
 

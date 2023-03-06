@@ -91,7 +91,7 @@ public class Main {
      */
     private static void displayOutput(Guild guild) {
         Bank bank = guild.getBank();
-        LinkedList[] categories = guild.getHeroCategories();
+        LinkedList<Hero>[] categories = guild.getHeroCategories();
 
         // Display Guild info
         System.out.println();

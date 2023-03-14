@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ift1025-tp.iml" filepath="$PROJECT_DIR$/ift1025-tp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tp1.iml" filepath="$PROJECT_DIR$/tp1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tp2.iml" filepath="$PROJECT_DIR$/tp2.iml" />
     </modules>
   </component>
 </project>

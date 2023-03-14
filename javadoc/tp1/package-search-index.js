@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.etiennecollin.tp1"},{"l":"com.etiennecollin.tp1.guildcommands"},{"l":"com.etiennecollin.tp1.hero"}];updateSearchResults();

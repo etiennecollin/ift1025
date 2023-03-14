@@ -21,7 +21,7 @@ public class Main {
      * The entry point of the application. Initializes the `GuildCommandSystem` with the provided
      * arguments and executes the commands in a loop until there are no more commands to process.
      *
-     * @param args Array of arguments passed to the program > guild:<initialMoneyAmount>,<initialArmorAmount>
+     * @param args Array of arguments passed to the program > guild:`initialMoneyAmount`,`initialArmorAmount`
      */
     public static void main(String[] args) {
         // Enables or disables challenges in quests by bypassing them or not (added for "wow-factor")

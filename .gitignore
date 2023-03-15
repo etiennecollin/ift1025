@@ -1,5 +1,5 @@
 .DS_Store
-./out
+./target
 
 # Compiled class file
 *.class

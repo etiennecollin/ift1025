@@ -4,6 +4,6 @@
     <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/javadoc/tp1" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_19" default="true" project-jdk-name="19" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/out" />
+    <output url="file://$PROJECT_DIR$/../ift1025-tp1/out" />
   </component>
 </project>

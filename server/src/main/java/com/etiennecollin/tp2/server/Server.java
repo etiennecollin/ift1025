@@ -43,7 +43,7 @@ public class Server {
      *
      * @throws Exception si une erreur se produit lors de la lecture de l'objet, l'écriture dans un fichier ou dans le flux de sortie.
      */
-    public void handleRegistration() {
+    public void handleRegistration() throws Exception {
         // TODO: implémenter cette méthode
     }
 
@@ -56,7 +56,7 @@ public class Server {
      *
      * @throws Exception si une erreur se produit lors de la lecture du fichier ou de l'écriture de l'objet dans le flux
      */
-    public void handleLoadCourses(String arg) {
+    public void handleLoadCourses(String arg) throws Exception {
         // TODO: implémenter cette méthode
     }
 

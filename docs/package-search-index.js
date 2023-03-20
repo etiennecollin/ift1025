@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.etiennecollin.tp2.client"},{"l":"com.etiennecollin.tp2.client.models"},{"l":"com.etiennecollin.tp2.server"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.etiennecollin.tp2.clientFx"},{"l":"com.etiennecollin.tp2.clientSimple"},{"l":"com.etiennecollin.tp2.clientSimple.models"},{"l":"com.etiennecollin.tp2.server"}];updateSearchResults();

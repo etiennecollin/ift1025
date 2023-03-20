@@ -2,7 +2,7 @@
  * Copyright (c) 2023. Etienne Collin #20237904 & Justin Villeneuve #20132792
  */
 
-package com.etiennecollin.tp2.client;
+package com.etiennecollin.tp2.clientSimple;
 
 /**
  * Main entry point to the program.

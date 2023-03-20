@@ -1,8 +1,8 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="server:jar">
-    <output-path>$PROJECT_DIR$/target/out/artifacts/server_jar</output-path>
-    <root id="archive" name="server.jar">
-      <element id="module-output" name="server" />
+  <artifact type="jar" name="clientFx:jar">
+    <output-path>$PROJECT_DIR$/target/out/artifacts/clientFx_jar</output-path>
+    <root id="archive" name="clientFx.jar">
+      <element id="module-output" name="clientFx" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/19/javafx-base-19-mac-aarch64.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/19/javafx-graphics-19-mac-aarch64.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/19/javafx-fxml-19-mac-aarch64.jar" path-in-jar="/" />

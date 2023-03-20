@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.etiennecollin</groupId>
-    <artifactId>client</artifactId>
+    <artifactId>clientFx</artifactId>
     <version>1.0</version>
     <url>https://github.com/etiennecollin/ift1025-tp2</url>
 

@@ -161,7 +161,7 @@ public class Server {
             try {
                 // Accept the request
                 client = server.accept();
-                System.out.println("Connecté au client: " + client);
+                System.out.println("Connected to client: " + client);
 
                 // Create streams to read/write from/to the client
                 objectInputStream = new ObjectInputStream(client.getInputStream());
@@ -170,7 +170,7 @@ public class Server {
                 // Process the client's command and disconnect
                 listen();
                 disconnect();
-                System.out.println("Client déconnecté!");
+                System.out.println("Client disconnected!");
             } catch (Exception e) {
                 e.printStackTrace();
             }

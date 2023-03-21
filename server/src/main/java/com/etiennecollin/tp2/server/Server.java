@@ -96,9 +96,9 @@ public class Server {
         }
 
         // Send a confirmation message to the client
-        String message = "Registration successful, " + form.getFirstName() + form.getLastName() + ". Thank you for registering to " + form.getCourse() + "!";
-        try {
-            objectOutputStream.writeObject(message);
+        String message = "Inscription réussie, " + form.getFirstName() + form.getLastName() + ". Merci de vous être inscrit au cours " + form.getCourse() + "!";
+        try (PrintWriter writer = new PrintWriter(client.getOutputStream(), true)) {
+            writer.println(message);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -112,7 +112,7 @@ public class Server {
      */
     public void handleLoadCourses(String semester) {
         List<Course> courses = new ArrayList<>();
-        String filePath = "data/courses.txt";
+        String filePath = "data/cours.txt";
         try (Scanner scanner = new Scanner(new File(filePath))) {
             // Read all the lines in the file
             while (scanner.hasNextLine()) {

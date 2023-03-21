@@ -1,14 +1,16 @@
 package com.etiennecollin.tp2.server;
 
+import com.etiennecollin.tp2.server.models.Course;
+import com.etiennecollin.tp2.server.models.RegistrationForm;
 import javafx.util.Pair;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * This class represents a server that listens on a specified port for incoming client requests.
@@ -73,26 +75,75 @@ public class Server {
      * throws Exception si une erreur se produit lors de la lecture de l'objet, l'écriture dans un fichier ou dans le flux de sortie.
      */
     public void handleRegistration() {
+        // Read the RegistrationForm object from the object input stream
+        RegistrationForm form = null;
         try {
-            // TODO: implémenter cette méthode
-        } catch (Exception e) {
+            form = (RegistrationForm) objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        // Write the registration information to a text file
+        String filePath = "data/inscription.txt";
+        // Create a PrintWriter object that writes to a file
+        // Use a FileWriter object to append to the file if it already exists
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
+            writer.println(form);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        // Send a confirmation message to the client
+        String message = "Registration successful, " + form.getFirstName() + form.getLastName() + ". Thank you for registering to " + form.getCourse() + "!";
+        try {
+            objectOutputStream.writeObject(message);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Lire un fichier texte contenant des informations sur les cours et les transofmer en liste d'objets 'Course'.
-     * La méthode filtre les cours par la session spécifiée en argument.
-     * Ensuite, elle renvoie la liste des cours pour une session au client en utilisant l'objet 'objectOutputStream'.
-     * <p>
-     * throws Exception si une erreur se produit lors de la lecture du fichier ou de l'écriture de l'objet dans le flux
+     * Reads a file containing course information, filters the courses by semester,
+     * and writes the filtered courses to an object output stream.
      *
-     * @param arg The session for which to retrieve the list of courses.
+     * @param semester A string representing the semester to filter the courses by.
      */
-    public void handleLoadCourses(String arg) {
+    public void handleLoadCourses(String semester) {
+        List<Course> courses = new ArrayList<>();
+        String filePath = "data/courses.txt";
+        try (Scanner scanner = new Scanner(new File(filePath))) {
+            // Read all the lines in the file
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                // Extract arguments from line. The format is `code \t name \t semester`
+                String[] tokens = line.split("\t");
+
+                // Make sure three arguments form the course
+                if (tokens.length != 3) {
+                    throw new InvalidObjectException("The courses in " + filePath + " are not properly formatted. The format is `code\tname\tsemester`");
+                }
+
+                // Filter for the right semester
+                if (tokens[2].equals(semester)) {
+                    courses.add(new Course(tokens[1], tokens[0], tokens[2]));
+                }
+            }
+        } catch (FileNotFoundException e) {
+            // If the file is not found, print the stack trace and return.
+            e.printStackTrace();
+            return;
+        } catch (InvalidObjectException e) {
+            e.printStackTrace();
+            return;
+        }
+
         try {
-            // TODO: implémenter cette méthode
-        } catch (Exception e) {
+            // Write the list of courses to the object output stream
+            objectOutputStream.writeObject(courses);
+        } catch (IOException e) {
+            // If an error occurs while writing to the object output stream, print the stack trace
             e.printStackTrace();
         }
     }

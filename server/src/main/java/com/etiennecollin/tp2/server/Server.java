@@ -88,7 +88,8 @@ public class Server {
         // Create a PrintWriter object that writes to a file
         // Use a FileWriter object to append to the file if it already exists
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
-            writer.println(form);
+            // TODO implement the form.getSession or find a workaround.
+            writer.println("form.getSession" + "\t" + form.getCourse() + "\t" + form.getStudentID() + "\t" + form.getFirstName() + "\t" + form.getLastName() + "\t" + form.getEmail());
         } catch (IOException e) {
             e.printStackTrace();
             return;

@@ -69,10 +69,9 @@ public class Server {
     }
 
     /**
-     * Récupérer l'objet 'RegistrationForm' envoyé par le client en utilisant 'objectInputStream', l'enregistrer
-     * dans un fichier texte et renvoyer un message de confirmation au client.
-     * <p>
-     * throws Exception si une erreur se produit lors de la lecture de l'objet, l'écriture dans un fichier ou dans le flux de sortie.
+     * This method handles the registration process of a client to a course. It reads the RegistrationForm object from
+     * the objectInputStream, writes the registration information to a text file, and sends a confirmation message to
+     * the client.
      */
     public void handleRegistration() {
         // Read the RegistrationForm object from the object input stream

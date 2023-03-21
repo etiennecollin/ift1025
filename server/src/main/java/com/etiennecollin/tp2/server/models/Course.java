@@ -90,6 +90,6 @@ public class Course implements Serializable {
      */
     @Override
     public String toString() {
-        return "Course{" + "name=" + name + ", code=" + code + ", session=" + semester + '}';
+        return "Course{" + "name=" + name + ", code=" + code + ", semester=" + semester + '}';
     }
 }

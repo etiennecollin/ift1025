@@ -22,18 +22,6 @@ public class Server {
      * The command used to disconnect from a client.
      */
     public final static String DISCONNECT_COMMAND = "DISCONNECT";
-    private final ServerSocket server;
-
-    /**
-     * Constructs a new Server object and binds it to the specified port.
-     *
-     * @param port The port on which to bind the server socket.
-     *
-     * @throws IOException If an I/O error occurs while creating the server socket.
-     */
-    public Server(int port) throws IOException {
-        this.server = new ServerSocket(port, 1);
-    }
 
     /**
      * Starts the server and listens for incoming client requests.
@@ -41,7 +29,8 @@ public class Server {
      * When a request is received, it creates a new ClientHandler which will process
      * the client interactions with the server in a separate thread.
      */
-    public void run() {
+    public static void run(int port) throws IOException {
+        ServerSocket server = new ServerSocket(port, 1);
         // Continuously listen for incoming client requests
         while (true) {
             try {

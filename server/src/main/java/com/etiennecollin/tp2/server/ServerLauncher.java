@@ -1,5 +1,7 @@
 package com.etiennecollin.tp2.server;
 
+import java.io.IOException;
+
 /**
  * The ServerLauncher class launches a server on a specified port and starts its execution.
  * <p>
@@ -17,12 +19,10 @@ public class ServerLauncher {
      * @param args An array of command-line arguments passed to the program.
      */
     public static void main(String[] args) {
-        Server server;
         try {
-            server = new Server(PORT);
             System.out.println("[Server] Running on port " + PORT + ".");
-            server.run();
-        } catch (Exception e) {
+            Server.run(PORT);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -15,6 +15,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The ClientHandler class implements the Runnable interface and handles incoming client connections to the server.
+ * <p>
+ * It delegates the execution of received commands to appropriate event handlers. The class contains methods for
+ * registering a client to a course, filtering courses by semester and disconnecting the client.
+ */
 public class ClientHandler implements Runnable {
     private final Socket client;
     private final ObjectInputStream objectInputStream;

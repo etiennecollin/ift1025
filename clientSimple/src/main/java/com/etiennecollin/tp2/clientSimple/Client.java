@@ -57,6 +57,9 @@ public class Client {
                     doExit = true;
                     disconnect();
                 } else {
+                    // TODO check if this is a vulnerability
+                    objectOutputStream.writeObject(command[0]);
+                    objectOutputStream.flush();
                     throw new IllegalArgumentException("[Client] Input command is invalid.");
                 }
 

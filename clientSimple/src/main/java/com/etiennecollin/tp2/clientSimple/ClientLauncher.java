@@ -15,7 +15,7 @@ public class ClientLauncher {
      */
     public static void main(String[] args) {
         try {
-            System.out.println("Client is running...");
+            System.out.println("[Client] Running...");
             Client.run(ServerLauncher.PORT);
         } catch (Exception e) {
             e.printStackTrace();

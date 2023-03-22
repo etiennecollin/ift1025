@@ -20,7 +20,7 @@ public class ServerLauncher {
         Server server;
         try {
             server = new Server(PORT);
-            System.out.println("Server is running on port " + PORT + " ...");
+            System.out.println("[Server] Running on port " + PORT + ".");
             server.run();
         } catch (Exception e) {
             e.printStackTrace();

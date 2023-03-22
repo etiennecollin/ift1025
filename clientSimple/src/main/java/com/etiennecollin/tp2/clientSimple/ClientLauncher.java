@@ -6,6 +6,8 @@ package com.etiennecollin.tp2.clientSimple;
 
 import com.etiennecollin.tp2.server.ServerLauncher;
 
+import java.io.IOException;
+
 /**
  * Main entry point to the program.
  */
@@ -17,7 +19,7 @@ public class ClientLauncher {
         try {
             System.out.println("[Client] Running...");
             Client.run(ServerLauncher.PORT);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

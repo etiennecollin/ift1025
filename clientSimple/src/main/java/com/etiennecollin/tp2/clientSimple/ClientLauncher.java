@@ -4,6 +4,8 @@
 
 package com.etiennecollin.tp2.clientSimple;
 
+import com.etiennecollin.tp2.server.ServerLauncher;
+
 /**
  * Main entry point to the program.
  */
@@ -12,6 +14,11 @@ public class ClientLauncher {
      * @param args The arguments to pass to the main function.
      */
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        try {
+            System.out.println("Client is running...");
+            Client.run(ServerLauncher.PORT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

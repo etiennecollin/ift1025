@@ -26,5 +26,11 @@
             <version>5.9.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.etiennecollin</groupId>
+            <artifactId>server</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

@@ -3,6 +3,7 @@
     <output-path>$PROJECT_DIR$/target/out/artifacts/clientSimple_jar</output-path>
     <root id="archive" name="clientSimple.jar">
       <element id="module-output" name="clientSimple" />
+      <element id="module-output" name="server" />
     </root>
   </artifact>
 </component>

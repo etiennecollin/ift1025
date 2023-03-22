@@ -9,11 +9,16 @@ import com.etiennecollin.tp2.server.ServerLauncher;
 import java.io.IOException;
 
 /**
- * Main entry point to the program.
+ * The ClientLauncher class launches a client to bind to a specific server port and starts its execution.
+ * <p>
+ * The class contains a main method that creates a client instance and starts its execution.
  */
 public class ClientLauncher {
     /**
-     * @param args The arguments to pass to the main function.
+     * The main method of the ClientLauncher class launches a client to bind to a
+     * specific server port and starts its execution.
+     *
+     * @param args An array of command-line arguments passed to the program.
      */
     public static void main(String[] args) {
         try {

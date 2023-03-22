@@ -1,1 +1,3 @@
 Automne	IFT2255	12345678	Michalis	Famelis	mfamelis@iro.umontreal.ca
+INSCRIRE John Doe john.doe@umontreal.ca 12345678 Prog2 IFT1025 Winter
+Winter	IFT1025	12345678	John	Doe	john.doe@umontreal.ca

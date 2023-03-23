@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
  * with the server.
  */
 public class Client {
+    private static final String[] semesters = new String[]{"Automne", "Hiver", "Ete"};
     private static Socket client;
     private static ObjectInputStream objectInputStream;
     private static ObjectOutputStream objectOutputStream;
@@ -133,8 +134,10 @@ public class Client {
             student = new Student(command[1], command[2], command[3], command[4]);
             course = new Course(command[5], command[6], command[7]);
         } else if (command.length == 1) {
+            System.out.println("[Client] Welcome to the course registration portal of the UdeM.");
+            // course = createCourse(scanner);
+            course = courseSelectionMenu(scanner);
             student = createStudent(scanner);
-            course = createCourse(scanner);
         } else {
             throw new IllegalArgumentException("[Client] " + Server.REGISTER_COMMAND + " requires either 0 or 7 arguments specifying the required form information.");
         }
@@ -341,6 +344,76 @@ public class Client {
 
         System.out.println("[Client] This course is unavailable.");
         return false;
+    }
+
+    /**
+     * Makes the user select an available course.
+     *
+     * @param scanner The scanner used to get user input.
+     *
+     * @return A valid Course object.
+     *
+     * @throws IOException            If the method {@link #getCourses(String[]) getCourses()} throws the exception.
+     * @throws ClassNotFoundException If the method {@link #getCourses(String[]) getCourses()} throws the exception.
+     */
+    public static Course courseSelectionMenu(Scanner scanner) throws IOException, ClassNotFoundException {
+        // Toggle used throughout method to stop loops
+        boolean isValid;
+
+        while (true) {
+            // List available semesters
+            System.out.println("[Client] Please select the semester for which you would like to consult available courses:");
+            for (int i = 0; i < semesters.length; i++) {
+                System.out.println(i + ". " + semesters[i]);
+            }
+
+            // Get user choice of semester
+            String semester = null;
+            isValid = false;
+            while (!isValid) {
+                System.out.print("> ");
+                int choice = scanner.nextInt();
+                try {
+                    semester = semesters[choice];
+                    isValid = true;
+                } catch (Exception e) {
+                    System.out.println("[Client] Invalid input.");
+                }
+            }
+
+            // Get available courses
+            Object object = getCourses(new String[]{Server.LOAD_COMMAND, semester});
+            // Check if courses were found
+            if (!(object instanceof ArrayList)) {
+                System.out.println("[Client] No courses available for this semester.");
+                continue;
+            }
+
+            // List available courses
+            ArrayList<Course> courses = (ArrayList<Course>) object;
+            System.out.println("[Client] Choose one ot the available courses:");
+            for (int i = 0; i < courses.size(); i++) {
+                Course course = courses.get(i);
+                System.out.println(i + ". " + course.getCode() + "\t" + course.getName());
+            }
+
+            // Get user choice of course
+            Course course = null;
+            isValid = false;
+            while (!isValid) {
+                System.out.print("> ");
+                int choice = scanner.nextInt();
+                try {
+                    course = courses.get(choice);
+                    isValid = true;
+                } catch (Exception e) {
+                    System.out.println("[Client] Invalid input.");
+                }
+            }
+
+            // Return selected course
+            return course;
+        }
     }
 }
 

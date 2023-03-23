@@ -17,6 +17,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * The Client class represents a client that can interact with a server through a socket connection.
+ * <p>
+ * The client can send registration forms, load courses for a specific semester, and disconnect from the server.
+ * The client is run using the static method run(int port), which connects the client to the server and then allows
+ * the user to input commands that are sent to the server. The client uses object input/output streams to communicate
+ * with the server.
+ */
 public class Client {
     private static Socket client;
     private static ObjectInputStream objectInputStream;
@@ -27,7 +35,10 @@ public class Client {
      *
      * @param port The port number of the server to connect to.
      *
-     * @throws IOException If an I/O error occurs when scanning user input or when getting the client input/output streams.
+     * @throws IOException            If the methods {@link #getUserInput() getUserInput()} or
+     *                                {@link #cleanup() cleanup()} throw the exception or when dealing with the client
+     *                                input/output streams.
+     * @throws ClassNotFoundException If the method {@link #getUserInput() getUserInput()} throws the exception.
      */
     public static void run(int port) throws IOException, ClassNotFoundException {
         // Connect to the server
@@ -45,6 +56,17 @@ public class Client {
         // Close the streams and client
         cleanup();
     }
+
+    /**
+     * Gets the user input command and processes, it if it is valid, before passing it to the server.
+     *
+     * @throws IOException            If the methods {@link #register(String[], Scanner) register()},
+     *                                {@link #getCourses(String[]) getCourses()} or {@link #disconnect() disconnect()}
+     *                                throw the exception, or if an I/O error occurs when dealing
+     *                                with the client input/output streams.
+     * @throws ClassNotFoundException If the methods {@link #register(String[], Scanner) register()} or
+     *                                {@link #getCourses(String[]) getCourses()} throw the exception.
+     */
     public static void getUserInput() throws IOException, ClassNotFoundException {
         // Read and parse user input
         Scanner scanner = new Scanner(System.in);
@@ -93,8 +115,12 @@ public class Client {
      * Sends a registration form to the server.
      *
      * @param command The registration command and its arguments.
+     * @param scanner The scanner which will read the user input.
      *
-     * @throws IOException If an I/O error occurs when dealing with the client input/output streams.
+     * @return The answer from the server.
+     *
+     * @throws IOException            If the method {@link #createCourse(Scanner) createCourse()} throws the exception or if an I/O error occurs when dealing with the client input/output streams.
+     * @throws ClassNotFoundException If the method {@link #createCourse(Scanner) createCourse()} throws the exception or if the returned String by the server is invalid.
      */
     public static String register(String[] command, Scanner scanner) throws IOException, ClassNotFoundException {
         // Initialize objects
@@ -128,12 +154,13 @@ public class Client {
     }
 
     /**
-     * Sends a command to load courses for a specific semester to the server.
+     * Sends a command to the server to load available courses with the option to filter for a specific semester.
      *
-     * @param command The load command and its argument.
+     * @param command The load command and its optional argument.
      *
      * @throws IOException              If an I/O error occurs when dealing with the client input/output streams.
      * @throws IllegalArgumentException If the command has an incorrect number of arguments.
+     * @throws ClassNotFoundException   If the returned Course object by the server is invalid.
      */
     public static Object getCourses(String[] command) throws IOException, IllegalArgumentException, ClassNotFoundException {
         // Send command to server
@@ -163,9 +190,7 @@ public class Client {
     }
 
     /**
-     * Disconnects the client from the server by sending a DISCONNECT_COMMAND to the server through the objectOutputStream,
-     * and then closes the objectOutputStream, objectInputStream, and client. Throws an IOException if there is an error
-     * during the disconnection process.
+     * Disconnects the client from the server by sending a DISCONNECT_COMMAND to the server through the objectOutputStream.
      *
      * @throws IOException If an I/O error occurs when writing to the objectOutputStream.
      */
@@ -176,10 +201,11 @@ public class Client {
     }
 
     /**
-     * Closes the objectOutputStream, objectInputStream, and client. Throws an IOException if there is an error
-     * during the cleanup process.
+     * Creates an array of strings containing the information about a student.
      *
-     * @throws IOException If an I/O error occurs when closing the streams or the client socket.
+     * @param scanner The scanner which will read the user input.
+     *
+     * @return An array of strings containing the information about a student.
      */
     public static Student createStudent(Scanner scanner) {
         // Get first name

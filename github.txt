@@ -1,1 +1,2 @@
-https://github.com/etiennecollin/ift1025-tps
+GitHub Repository:  https://github.com/etiennecollin/ift1025-tps/
+JavaDoc:            https://etiennecollin.com/ift1025-tp2/

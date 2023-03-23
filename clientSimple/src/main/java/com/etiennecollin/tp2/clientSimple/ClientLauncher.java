@@ -24,7 +24,7 @@ public class ClientLauncher {
         try {
             System.out.println("[Client] Running...");
             Client.run(ServerLauncher.PORT);
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

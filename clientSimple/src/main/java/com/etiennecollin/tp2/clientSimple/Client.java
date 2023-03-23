@@ -219,19 +219,21 @@ public class Client {
         boolean isValid;
 
         while (true) {
-            // List available semesters
-            System.out.println("[Client] Please select the semester for which you would like to consult available courses:");
-            for (int i = 0; i < semesters.length; i++) {
-                System.out.println(i + ". " + semesters[i]);
-            }
-
-            // Get user choice of semester
             String semester = null;
+
+            // Reset isValid and get semester
             isValid = false;
             while (!isValid) {
+                // List available semesters
+                System.out.println("[Client] Please select the semester for which you would like to consult available courses:");
+                for (int i = 0; i < semesters.length; i++) {
+                    System.out.println(i + ". " + semesters[i]);
+                }
+
+                // Let user select semester
                 System.out.print("> ");
-                int choice = scanner.nextInt();
                 try {
+                    int choice = Integer.parseInt(scanner.nextLine());
                     semester = semesters[choice];
                     isValid = true;
                 } catch (Exception e) {
@@ -241,27 +243,30 @@ public class Client {
 
             // Get available courses
             Object object = getCourses(new String[]{Server.LOAD_COMMAND, semester});
+
             // Check if courses were found
             if (!(object instanceof ArrayList)) {
-                System.out.println("[Client] No courses available for this semester.");
+                System.out.println("[Client] " + object);
                 continue;
             }
 
             // List available courses
             ArrayList<Course> courses = (ArrayList<Course>) object;
-            System.out.println("[Client] Choose one ot the available courses:");
-            for (int i = 0; i < courses.size(); i++) {
-                Course course = courses.get(i);
-                System.out.println(i + ". " + course.getCode() + "\t" + course.getName());
-            }
-
-            // Get user choice of course
             Course course = null;
+
+            // Reset isValid and get course
             isValid = false;
             while (!isValid) {
+                // List available courses
+                System.out.println("[Client] Choose one ot the available courses:");
+                for (int i = 0; i < courses.size(); i++) {
+                    System.out.println(i + ". " + courses.get(i).getCode() + "\t" + courses.get(i).getName());
+                }
+
+                // Let user select course
                 System.out.print("> ");
-                int choice = scanner.nextInt();
                 try {
+                    int choice = Integer.parseInt(scanner.nextLine());
                     course = courses.get(choice);
                     isValid = true;
                 } catch (Exception e) {

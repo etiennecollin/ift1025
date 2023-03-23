@@ -361,15 +361,7 @@ public class Client {
      * @throws ClassNotFoundException If the method {@link #isCourseValid(Course) isCourseValid()} throws the exception.
      */
     public static Course createCourse(Scanner scanner) throws IOException, ClassNotFoundException {
-        Course course;
-        do {
-            // TODO make it possible to create a coure by providing only the semester and course code. \\
-            //  Could simply modify the isCourseValid() to automatically give the name provided the code and semester.
-
-            // Get course name
-            System.out.print("[Client] Input course name: ");
-            String name = scanner.nextLine();
-
+        while (true) {
             // Get course code
             System.out.print("[Client] Input course code: ");
             String code = scanner.nextLine();
@@ -378,10 +370,26 @@ public class Client {
             System.out.print("[Client] Input course semester: ");
             String semester = scanner.nextLine();
 
-            course = new Course(name, code, semester);
-        } while (!isCourseValid(course));
+            // Get available courses
+            Object object = getCourses(new String[]{Server.LOAD_COMMAND, semester});
 
-        return course;
+            // Check if courses were found
+            if (!(object instanceof ArrayList)) {
+                System.out.println("[Client] " + object);
+                continue;
+            }
+
+            // Return right course
+            ArrayList<Course> courses = (ArrayList<Course>) object;
+            for (Course course : courses) {
+                if (course.getCode().equalsIgnoreCase(code)) {
+                    return course;
+                }
+            }
+
+            // No matching course is available
+            System.out.println("[Client] The course " + code + " is not available during the " + semester + " semester.");
+        }
     }
 
     /**

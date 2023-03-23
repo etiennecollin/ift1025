@@ -166,6 +166,8 @@ public class Client {
      * @throws IOException              If an I/O error occurs when dealing with the client input/output streams.
      * @throws IllegalArgumentException If the command has an incorrect number of arguments.
      * @throws ClassNotFoundException   If the returned Course object by the server is invalid.
+     *
+     * @return An ArrayList&lt;Course&gt; containing the available courses or a String containing a message stating that no courses are available
      */
     public static Object getCourses(String[] command) throws IOException, IllegalArgumentException, ClassNotFoundException {
         // Send command to server

@@ -6,6 +6,11 @@ package com.etiennecollin.tp2.server.models;
 
 import java.io.Serializable;
 
+/**
+ * The Student class represents a student in the academic system.
+ * <p>
+ * It contains the first name, last name, email and student ID of the student.
+ */
 public class Student implements Serializable {
     private String firstName;
     private String lastName;

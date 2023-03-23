@@ -135,12 +135,31 @@ public class Client {
      * @throws IOException              If an I/O error occurs when dealing with the client input/output streams.
      * @throws IllegalArgumentException If the command has an incorrect number of arguments.
      */
-    public static void getCourses(String[] command) throws IOException, IllegalArgumentException {
-        if (command.length != 2) {
-            throw new IllegalArgumentException("CHARGER requires an argument specifying the semester to filter.");
+    public static Object getCourses(String[] command) throws IOException, IllegalArgumentException, ClassNotFoundException {
+        // Send command to server
+        if (command.length == 1) {
+            objectOutputStream.writeObject(Server.LOAD_COMMAND);
+        } else if (command.length == 2) {
+            objectOutputStream.writeObject(Server.LOAD_COMMAND + " " + command[1]);
+        } else {
+            throw new IllegalArgumentException("[Client] " + Server.LOAD_COMMAND + " requires a maximum of 1 argument specifying the semester to filter.");
         }
-        objectOutputStream.writeObject(Server.LOAD_COMMAND + " " + command[1]);
         objectOutputStream.flush();
+
+        // Get server reply
+        ArrayList<Course> courses = (ArrayList<Course>) objectInputStream.readObject();
+
+        // Check if there are available courses or not
+        if (courses.isEmpty()) {
+            // Check if a semester was provided
+            if (command.length == 1) {
+                return "No courses are available.";
+            } else {
+                return "No courses are available during the " + command[1] + " semester.";
+            }
+        }
+
+        return courses;
     }
 
     /**

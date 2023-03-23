@@ -12,8 +12,10 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
+
+// TODO check javadoc for this class
+
 
 /**
  * The ClientHandler class implements the Runnable interface and handles incoming client connections to the server.
@@ -26,6 +28,7 @@ public class ClientHandler implements Runnable {
     private final ObjectInputStream objectInputStream;
     private final ObjectOutputStream objectOutputStream;
     private final ArrayList<EventHandler> handlers;
+    private boolean done = false;
 
     public ClientHandler(Socket client) throws IOException {
         // Store the client and create streams to read/write from/to the client
@@ -92,7 +95,7 @@ public class ClientHandler implements Runnable {
         writer.close();
 
         // Send a confirmation message to the client
-        String message = "[Server] Registration successful, " + form.getFirstName() + " " + form.getLastName() + ". Thank you for registering to the " + form.getCourse().getSemester() + " " + form.getCourse().getCode() + " course!";
+        String message = "Registration successful, " + form.getFirstName() + " " + form.getLastName() + ". Thank you for registering to the " + form.getCourse().getSemester() + " " + form.getCourse().getCode() + " course!";
         objectOutputStream.writeObject(message);
     }
 
@@ -109,7 +112,7 @@ public class ClientHandler implements Runnable {
         // TODO Fix path for JAR
         String filePath = "server/src/main/java/com/etiennecollin/tp2/server/data/cours.txt";
 
-        List<Course> courses = new ArrayList<>();
+        ArrayList<Course> courses = new ArrayList<>();
         Scanner scanner = new Scanner(new File(filePath));
 
         // Read all the lines in the file
@@ -123,15 +126,19 @@ public class ClientHandler implements Runnable {
                 throw new InvalidObjectException("[Server] The courses in " + filePath + " are not properly formatted. The format is `code\tname\tsemester`");
             }
 
-            // Filter for the right semester
-            if (tokens[2].equalsIgnoreCase(semester)) {
+            if (semester.equals("")) {
+                // If no semester is provided, load all the courses
+                courses.add(new Course(tokens[1], tokens[0], tokens[2]));
+            } else if (tokens[2].equalsIgnoreCase(semester)) {
+                // Filter for the right semester
                 courses.add(new Course(tokens[1], tokens[0], tokens[2]));
             }
         }
-
         scanner.close();
+
         // Write the list of courses to the object output stream
-        objectOutputStream.writeObject("[Server] " + courses);
+        objectOutputStream.writeObject(courses);
+        objectOutputStream.flush();
     }
 
     /**
@@ -140,7 +147,9 @@ public class ClientHandler implements Runnable {
      * @throws IOException If an I/O error occurs while closing the object input/output streams or the socket.
      */
     public void disconnect() throws IOException {
+        done = true;
         objectOutputStream.writeObject("[Server] Confirming disconnection...");
+        System.out.println("[Server] Client disconnected: " + client);
         objectOutputStream.flush();
         objectOutputStream.close();
         objectInputStream.close();
@@ -150,13 +159,13 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         // Process the client's command and disconnect
-        try {
-            listen();
-            // disconnect();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            System.out.println("[Server] Client disconnected: " + client);
+        while (!done) {
+            try {
+                listen();
+                objectOutputStream.flush();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -169,6 +178,7 @@ public class ClientHandler implements Runnable {
      */
     public void listen() throws IOException, ClassNotFoundException {
         String line;
+
         if ((line = this.objectInputStream.readObject().toString()) != null) {
             Pair<String, String> parts = processCommandLine(line);
             String cmd = parts.getKey();
@@ -191,7 +201,6 @@ public class ClientHandler implements Runnable {
         // The first word is considered the command, and the rest is considered the arguments.
         String cmd = parts[0];
         String args = String.join(" ", Arrays.asList(parts).subList(1, parts.length));
-
         return new Pair<>(cmd, args);
     }
 

@@ -12,7 +12,6 @@ import com.etiennecollin.tp2.server.models.Student;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -38,10 +37,10 @@ public class Client {
      *
      * @param port The port number of the server to connect to.
      *
-     * @throws IOException            If the methods {@link #getUserInput() getUserInput()} or
+     * @throws IOException            If the methods {@link #listen() listen()} or
      *                                {@link #cleanup() cleanup()} throw the exception or when dealing with the client
      *                                input/output streams.
-     * @throws ClassNotFoundException If the method {@link #getUserInput() getUserInput()} throws the exception.
+     * @throws ClassNotFoundException If the method {@link #listen() listen()} throws the exception.
      */
     public static void run(int port) throws IOException, ClassNotFoundException {
         // Connect to the server
@@ -53,7 +52,7 @@ public class Client {
 
         // Continuously get user to input commands
         while (!done) {
-            getUserInput();
+            listen();
         }
 
         // Close the streams and client
@@ -70,7 +69,7 @@ public class Client {
      * @throws ClassNotFoundException If the methods {@link #register(String[], Scanner) register()} or
      *                                {@link #getCourses(String[]) getCourses()} throw the exception.
      */
-    public static void getUserInput() throws IOException, ClassNotFoundException {
+    public static void listen() throws IOException, ClassNotFoundException {
         // Read and parse user input
         Scanner scanner = new Scanner(System.in);
 
@@ -85,12 +84,12 @@ public class Client {
             } else if (command[0].equalsIgnoreCase(Server.REGISTER_COMMAND)) {
                 String serverAnswer = register(command, scanner);
                 // Print server answer
-                System.out.println("\n[Client] " + serverAnswer);
+                System.out.println("\n[Client] " + serverAnswer + "\n");
             } else if (command[0].equalsIgnoreCase(Server.LOAD_COMMAND)) {
                 ArrayList<Course> courses = getCourses(command);
                 // Print available courses if there are any
                 if (!courses.isEmpty()) {
-                    System.out.println("\n[Client] " + courses);
+                    System.out.println("\n[Client] " + courses + "\n");
                 }
             } else if (command[0].equalsIgnoreCase(Server.DISCONNECT_COMMAND)) {
                 done = true;

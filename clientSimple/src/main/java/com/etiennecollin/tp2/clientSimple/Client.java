@@ -82,11 +82,11 @@ public class Client {
             if (command[0].equalsIgnoreCase(Server.REGISTER_COMMAND)) {
                 String serverAnswer = register(command, scanner);
                 // Print server answer
-                System.out.println("[Client] " + serverAnswer);
+                System.out.println("\n[Client] " + serverAnswer);
             } else if (command[0].equalsIgnoreCase(Server.LOAD_COMMAND)) {
                 Object object = getCourses(command);
                 // Print available courses or a message
-                System.out.println("[Client] " + object);
+                System.out.println("\n[Client] " + object);
             } else if (command[0].equalsIgnoreCase(Server.DISCONNECT_COMMAND)) {
                 done = true;
                 scanner.close();
@@ -134,8 +134,7 @@ public class Client {
             student = new Student(command[1], command[2], command[3], command[4]);
             course = new Course(command[5], command[6], command[7]);
         } else if (command.length == 1) {
-            System.out.println("[Client] Welcome to the course registration portal of the UdeM.");
-            // course = createCourse(scanner);
+            System.out.println("\n[Client] Welcome to the course registration portal of the UdeM.");
             course = courseSelectionMenu(scanner);
             student = createStudent(scanner);
         } else {

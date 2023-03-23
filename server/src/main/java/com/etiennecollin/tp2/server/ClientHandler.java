@@ -14,22 +14,28 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-// TODO check javadoc for this class
-
-
 /**
  * The ClientHandler class implements the Runnable interface and handles incoming client connections to the server.
  * <p>
  * It delegates the execution of received commands to appropriate event handlers. The class contains methods for
- * registering a client to a course, filtering courses by semester and disconnecting the client.
+ * registering a client to a course, sending available courses to the client, filtering courses by semester and
+ * disconnecting from the client.
  */
 public class ClientHandler implements Runnable {
     private final Socket client;
     private final ObjectInputStream objectInputStream;
     private final ObjectOutputStream objectOutputStream;
     private final ArrayList<EventHandler> handlers;
-    private boolean done = false;
+    // Tells the handler whether it can stop listening to the client
+    private boolean isClientDisconnecting = false;
 
+    /**
+     * Creates a new client handler for a specific client.
+     *
+     * @param client The client that is to be handled.
+     *
+     * @throws IOException If an I/O error occurs when getting the client streams.
+     */
     public ClientHandler(Socket client) throws IOException {
         // Store the client and create streams to read/write from/to the client
         this.client = client;
@@ -72,12 +78,13 @@ public class ClientHandler implements Runnable {
     }
 
     /**
-     * This method handles the registration process of a client to a course. It reads the RegistrationForm object from
-     * the objectInputStream, writes the registration information to a text file, and sends a confirmation message to
-     * the client.
+     * This method handles the registration process of a client to a course.
+     * <p>
+     * It reads the RegistrationForm object from the objectInputStream, writes the registration information to a text
+     * file, and sends a confirmation message to the client.
      *
      * @throws IOException            If an I/O error occurs while writing to the text file containing the courses or
-     *                                when writing to the ObjectOutputStream.
+     *                                when dealing with the input/output streams.
      * @throws ClassNotFoundException If the content of the ObjectInputStream is not a RegistrationForm object.
      */
     public void handleRegistration() throws IOException, ClassNotFoundException {
@@ -100,13 +107,13 @@ public class ClientHandler implements Runnable {
     }
 
     /**
-     * Reads a file containing course information, filters the courses by semester,
+     * Reads a file containing course information, filters the courses by semester if needed,
      * and writes the filtered courses to an object output stream.
      *
      * @param semester A string representing the semester to filter the courses by.
      *
      * @throws IOException If an I/O error occurs while reading from the text file containing the courses or
-     *                     when writing to the ObjectOutputStream.
+     *                     when writing to the output stream.
      */
     public void handleLoadCourses(String semester) throws IOException {
         // TODO Fix path for JAR
@@ -142,30 +149,44 @@ public class ClientHandler implements Runnable {
     }
 
     /**
-     * Closes the input and output streams and the client socket.
+     * Sends a disconnection confirmation to the client, then closes the input/output streams and the client socket.
      *
      * @throws IOException If an I/O error occurs while closing the object input/output streams or the socket.
      */
     public void disconnect() throws IOException {
-        done = true;
+        // Tell the handler it can stop listening to the client
+        isClientDisconnecting = true;
+
+        // Send confirmation
         objectOutputStream.writeObject("[Server] Confirming disconnection...");
         System.out.println("[Server] Client disconnected: " + client);
         objectOutputStream.flush();
+
+        // Close streams
         objectOutputStream.close();
         objectInputStream.close();
+
+        // Close socket
         client.close();
     }
 
+    /**
+     * Runs a continuous loop that listens to the client's command until the client disconnects.
+     * <p>
+     * It catches any IO exceptions or class not found exceptions that may occur while listening to the client's command
+     * and handles the case where the client crashes without disconnecting by properly terminating the connection to the
+     * crashed client.
+     */
     @Override
     public void run() {
-        // Process the client's command and disconnect
-        while (!done) {
+        while (!isClientDisconnecting) {
             try {
+                // Listen to the client's command
                 listen();
-                objectOutputStream.flush();
             } catch (EOFException e) {
-                // Handle the case where the client crashes without properly disconnecting
+                // Handle the case where the client crashes without disconnecting
                 try {
+                    // Properly terminate the connection to the crashed client
                     disconnect();
                 } catch (IOException ex) {
                     e.printStackTrace();

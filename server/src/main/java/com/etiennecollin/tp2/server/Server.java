@@ -7,7 +7,7 @@ import java.net.Socket;
 /**
  * This class represents a server that listens on a specified port for incoming client requests.
  * <p>
- * It can handle two types of commands, "INSCRIRE" and "CHARGER", and delegates their execution to registered event handlers.
+ * It creates threads that handle each client.
  */
 public class Server {
     /**
@@ -15,7 +15,7 @@ public class Server {
      */
     public final static String REGISTER_COMMAND = "INSCRIRE";
     /**
-     * The command used to load course information for a given semester.
+     * The command used to load available courses for a given semester or for all semesters.
      */
     public final static String LOAD_COMMAND = "CHARGER";
     /**
@@ -28,6 +28,10 @@ public class Server {
      * <p>
      * When a request is received, it creates a new ClientHandler which will process
      * the client interactions with the server in a separate thread.
+     *
+     * @param port The port on which the server is launched.
+     *
+     * @throws IOException If there is an exception when creating the new server socket.
      */
     public static void run(int port) throws IOException {
         ServerSocket server = new ServerSocket(port, 1);

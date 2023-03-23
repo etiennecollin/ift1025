@@ -13,9 +13,6 @@ import java.net.ConnectException;
  * The class contains a main method that creates a client instance and starts its execution.
  */
 public class ClientLauncher {
-    /**
-     * The port on which the server is launched.
-     */
     private final static int PORT = 1337;
 
     /**
@@ -30,8 +27,7 @@ public class ClientLauncher {
             Client.run(PORT);
         } catch (ConnectException e) {
             System.err.println(e.getMessage() + ", no server available on port " + PORT + ".");
-        }
-        catch (IOException | ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

@@ -4,13 +4,8 @@ import java.io.IOException;
 
 /**
  * The ServerLauncher class launches a server on a specified port and starts its execution.
- * <p>
- * The class contains a constant field for the port number and a main method that creates a server instance and starts its execution.
  */
 public class ServerLauncher {
-    /**
-     * The port on which the server is launched.
-     */
     private final static int PORT = 1337;
 
     /**

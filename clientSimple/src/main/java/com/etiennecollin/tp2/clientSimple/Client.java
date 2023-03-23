@@ -248,6 +248,9 @@ public class Client {
     public static Course createCourse(Scanner scanner) throws IOException, ClassNotFoundException {
         Course course;
         do {
+            // TODO make it possible to create a coure by providing only the semester and course code. \\
+            //  Could simply modify the isCourseValid() to automatically give the name provided the code and semester.
+
             // Get course name
             System.out.print("[Client] Input course name: ");
             String name = scanner.nextLine();
@@ -329,6 +332,10 @@ public class Client {
                 if (course.equals(targetCourse)) {
                     return true;
                 }
+                // TODO Maybe this? or change the equals() method of the Course class.
+                // if (course.getCode().equals(targetCourse.getCode()) && course.getSemester().equals(targetCourse.getSemester())) {
+                //     return true;
+                // }
             }
         }
 

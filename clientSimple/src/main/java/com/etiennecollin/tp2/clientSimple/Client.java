@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -30,7 +31,8 @@ public class Client {
     private static Socket client;
     private static ObjectInputStream objectInputStream;
     private static ObjectOutputStream objectOutputStream;
-    private static boolean done = false;
+    // Tells the client whether to disconnect from the server or not
+    private static boolean doDisconnect = false;
 
     /**
      * Runs the client, allowing the user to interact with the server.
@@ -51,7 +53,7 @@ public class Client {
         objectInputStream = new ObjectInputStream(client.getInputStream());
 
         // Continuously get user to input commands
-        while (!done) {
+        while (!doDisconnect) {
             listen();
         }
 
@@ -92,7 +94,7 @@ public class Client {
                     System.out.println("\n[Client] " + courses + "\n");
                 }
             } else if (command[0].equalsIgnoreCase(Server.DISCONNECT_COMMAND)) {
-                done = true;
+                doDisconnect = true;
                 scanner.close();
                 disconnect();
             } else {
@@ -104,6 +106,17 @@ public class Client {
             objectOutputStream.writeObject("INVALID");
             objectOutputStream.flush();
         }
+    }
+
+    /**
+     * Disconnects the client from the server by sending a DISCONNECT_COMMAND to the server through the objectOutputStream.
+     *
+     * @throws IOException If an I/O error occurs when writing to the objectOutputStream.
+     */
+    public static void disconnect() throws IOException {
+        objectOutputStream.writeObject(Server.DISCONNECT_COMMAND);
+        objectOutputStream.flush();
+        System.out.println("[Client] Disconnecting from server...");
     }
 
     /**
@@ -165,11 +178,11 @@ public class Client {
      *
      * @param command The load command and its optional argument.
      *
+     * @return A list containing the available courses.
+     *
      * @throws IOException              If an I/O error occurs when dealing with the client input/output streams.
      * @throws IllegalArgumentException If the command has an incorrect number of arguments.
      * @throws ClassNotFoundException   If the returned Course object by the server is invalid.
-     *
-     * @return A list containing the available courses.
      */
     public static ArrayList<Course> getCourses(String[] command) throws IOException, IllegalArgumentException, ClassNotFoundException {
         // Send command to server
@@ -196,17 +209,6 @@ public class Client {
         }
 
         return courses;
-    }
-
-    /**
-     * Disconnects the client from the server by sending a DISCONNECT_COMMAND to the server through the objectOutputStream.
-     *
-     * @throws IOException If an I/O error occurs when writing to the objectOutputStream.
-     */
-    public static void disconnect() throws IOException {
-        objectOutputStream.writeObject(Server.DISCONNECT_COMMAND);
-        objectOutputStream.flush();
-        System.out.println("[Client] Disconnecting from server...");
     }
 
     /**

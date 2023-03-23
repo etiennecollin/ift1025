@@ -13,29 +13,8 @@ import java.io.Serializable;
  * last name, email, and student ID. It also includes the course the student is registering for.
  */
 public class RegistrationForm implements Serializable {
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String studentID;
     private Course course;
     private Student student;
-
-    /**
-     * Constructs a new RegistrationForm for a course with the given student information.
-     *
-     * @param firstName The first name of the student.
-     * @param lastName  The last name of the student.
-     * @param email     The email address of the student.
-     * @param studentID The student ID of the student.
-     * @param course    The course the student wants to register for.
-     */
-    public RegistrationForm(String firstName, String lastName, String email, String studentID, Course course) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.studentID = studentID;
-        this.course = course;
-    }
 
     /**
      * Constructs a new RegistrationForm for a course for the given student.
@@ -46,12 +25,24 @@ public class RegistrationForm implements Serializable {
     public RegistrationForm(Student student, Course course) {
         this.student = student;
         this.course = course;
+    }
 
-        // TODO if this is ok, maybe change the setters and getters to only use the student object and no other fields.
-        this.firstName = student.getFirstName();
-        this.lastName = student.getLastName();
-        this.email = student.getEmail();
-        this.studentID = student.getStudentID();
+    /**
+     * Returns the student to be registered.
+     *
+     * @return The student to be registered.
+     */
+    public Student getStudent() {
+        return student;
+    }
+
+    /**
+     * Sets the student that is to be registered.
+     *
+     * @param student The student that is to be registered.
+     */
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     /**
@@ -60,16 +51,7 @@ public class RegistrationForm implements Serializable {
      * @return The first name of the student.
      */
     public String getFirstName() {
-        return firstName;
-    }
-
-    /**
-     * Sets the first name of the student.
-     *
-     * @param firstName The new first name of the student.
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        return student.getFirstName();
     }
 
     /**
@@ -78,16 +60,7 @@ public class RegistrationForm implements Serializable {
      * @return The last name of the student.
      */
     public String getLastName() {
-        return lastName;
-    }
-
-    /**
-     * Sets the last name of the student.
-     *
-     * @param lastName The new last name of the student.
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+        return student.getLastName();
     }
 
     /**
@@ -96,16 +69,7 @@ public class RegistrationForm implements Serializable {
      * @return The email address of the student.
      */
     public String getEmail() {
-        return email;
-    }
-
-    /**
-     * Sets the email address of the student.
-     *
-     * @param email The new email address of the student.
-     */
-    public void setEmail(String email) {
-        this.email = email;
+        return student.getEmail();
     }
 
     /**
@@ -114,16 +78,7 @@ public class RegistrationForm implements Serializable {
      * @return The student ID of the student.
      */
     public String getStudentID() {
-        return studentID;
-    }
-
-    /**
-     * Sets the student ID of the student.
-     *
-     * @param studentID The new student ID of the student.
-     */
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
+        return student.getStudentID();
     }
 
     /**

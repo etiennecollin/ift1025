@@ -26,7 +26,7 @@ public class ClientHandler implements Runnable {
     private final ObjectInputStream objectInputStream;
     private final ObjectOutputStream objectOutputStream;
     private final ArrayList<EventHandler> handlers;
-    // Tells the handler whether it can stop listening to the client
+    // Tells the handler whether it can stop listening to the client or not
     private boolean isClientDisconnecting = false;
 
     /**
@@ -91,13 +91,14 @@ public class ClientHandler implements Runnable {
         // Read the RegistrationForm object from the object input stream
         RegistrationForm form = (RegistrationForm) objectInputStream.readObject();
 
-        // Write the registration information to a text file
-        // TODO Fix path for JAR
-        String filePath = "server/src/main/java/com/etiennecollin/tp2/server/data/inscription.txt";
+        // Get the file
+        String fileName = "inscription.txt";
+        String file = "server/src/main/java/com/etiennecollin/tp2/server/data/" + fileName;
 
         // Create a PrintWriter object that writes to a file
         // Use a FileWriter object to append to the file if it already exists
-        PrintWriter writer = new PrintWriter(new FileWriter(filePath, true));
+        // TODO Fix fileWriter
+        PrintWriter writer = new PrintWriter(new FileWriter(file, true));
         writer.println(form.getCourse().getSemester() + "\t" + form.getCourse().getCode() + "\t" + form.getStudentID() + "\t" + form.getFirstName() + "\t" + form.getLastName() + "\t" + form.getEmail());
         writer.close();
 
@@ -116,11 +117,13 @@ public class ClientHandler implements Runnable {
      *                     when writing to the output stream.
      */
     public void handleLoadCourses(String semester) throws IOException {
-        // TODO Fix path for JAR
-        String filePath = "server/src/main/java/com/etiennecollin/tp2/server/data/cours.txt";
-
         ArrayList<Course> courses = new ArrayList<>();
-        Scanner scanner = new Scanner(new File(filePath));
+
+        // Read the file
+        String fileName = "cours.txt";
+        // InputStream file = getClass().getResourceAsStream("/" + fileName);
+        File file = new File("server/src/main/java/com/etiennecollin/tp2/server/data/" + fileName);
+        Scanner scanner = new Scanner(file);
 
         // Read all the lines in the file
         while (scanner.hasNextLine()) {
@@ -130,7 +133,7 @@ public class ClientHandler implements Runnable {
 
             // Make sure three arguments form the course in the file
             if (tokens.length != 3) {
-                throw new InvalidObjectException("[Server] The courses in " + filePath + " are not properly formatted. The format is `code\tname\tsemester`");
+                throw new InvalidObjectException("[Server] The courses in " + fileName + " are not properly formatted. The format is `code\tname\tsemester`");
             }
 
             if (semester.equals("")) {

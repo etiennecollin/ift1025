@@ -6,6 +6,7 @@ package com.etiennecollin.tp2.clientSimple;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.net.SocketException;
 
 /**
  * The ClientLauncher class launches a client to bind to a specific server port and starts its execution.
@@ -26,7 +27,11 @@ public class ClientLauncher {
             System.out.println("[Client] Running...");
             Client.run(PORT);
         } catch (ConnectException e) {
-            System.err.println(e.getMessage() + ", no server available on port " + PORT + ".");
+            // Handle the case where no server is found
+            System.err.println("[Client] " + e.getMessage() + ", no server available on port " + PORT + ".");
+        } catch (SocketException e) {
+            // Handle the case where the server crashes without disconnecting
+            System.err.println("[Client] " + e.getMessage() + ", the connection to the server was lost.");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

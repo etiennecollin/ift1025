@@ -42,50 +42,36 @@ public class Client {
         // Close the streams and client
         cleanup();
     }
+    public static void getUserInput() throws IOException, ClassNotFoundException {
+        // Read and parse user input
         Scanner scanner = new Scanner(System.in);
 
-        while (!doExit) {
-            // Connect to the server
-            client = new Socket("localhost", port);
+        try {
+            // Tell the user the client is waiting for input via this symbol
+            System.out.print("> ");
+            String[] command = scanner.nextLine().split(" ");
 
-            // Create streams to write/read to/from the server
-            objectOutputStream = new ObjectOutputStream(client.getOutputStream());
-            objectInputStream = new ObjectInputStream(client.getInputStream());
-
-            // Prepare to read user input
-            String line = null;
-
-            try {
-                // Read user input
-                line = scanner.nextLine();
-                // Parse command
-                String[] command = line.split(" ");
-
-                // Check if command is valid
-                if (command[0].equalsIgnoreCase(Server.REGISTER_COMMAND)) {
-                    register(command);
-                } else if (command[0].equalsIgnoreCase(Server.LOAD_COMMAND)) {
-                    getCourses(command);
-                } else if (command[0].equalsIgnoreCase(Server.DISCONNECT_COMMAND)) {
-                    doExit = true;
-                    disconnect();
-                } else {
-                    // TODO check if this is a vulnerability
-                    objectOutputStream.writeObject(command[0]);
-                    objectOutputStream.flush();
-                    throw new IllegalArgumentException("[Client] Input command is invalid.");
-                }
-
-                // Print server reply
-                System.out.println(objectInputStream.readObject());
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            } finally {
-                // Closing the scanner object
-                cleanup();
+            // Check if command is valid
+            if (command[0].equalsIgnoreCase(Server.REGISTER_COMMAND)) {
+                String serverAnswer = register(command, scanner);
+                // Print server answer
+                System.out.println("[Client] " + serverAnswer);
+            } else if (command[0].equalsIgnoreCase(Server.LOAD_COMMAND)) {
+                Object object = getCourses(command);
+                // Print available courses or a message
+                System.out.println("[Client] " + object);
+            } else if (command[0].equalsIgnoreCase(Server.DISCONNECT_COMMAND)) {
+                done = true;
+                scanner.close();
+                disconnect();
+            } else {
+                throw new IllegalArgumentException("[Client] Input command is invalid.");
             }
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            // Tell the server that the command was invalid as it expects a command
+            objectOutputStream.writeObject("INVALID");
+            objectOutputStream.flush();
         }
     }
 

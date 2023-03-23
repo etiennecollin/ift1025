@@ -76,6 +76,17 @@ public class Client {
     }
 
     /**
+     * Closes the objectOutputStream, objectInputStream, and client.
+     *
+     * @throws IOException If an I/O error occurs when closing the streams or the client socket.
+     */
+    public static void cleanup() throws IOException {
+        objectOutputStream.close();
+        objectInputStream.close();
+        client.close();
+    }
+
+    /**
      * Sends a registration form to the server.
      *
      * @param command The registration command and its arguments.

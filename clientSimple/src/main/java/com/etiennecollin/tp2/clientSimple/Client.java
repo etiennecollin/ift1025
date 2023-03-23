@@ -205,148 +205,6 @@ public class Client {
     }
 
     /**
-     * Creates an array of strings containing the information about a student.
-     *
-     * @param scanner The scanner which will read the user input.
-     *
-     * @return An array of strings containing the information about a student.
-     */
-    public static Student createStudent(Scanner scanner) {
-        // Get first name
-        System.out.print("[Client] Input first name: ");
-        String firstName = scanner.nextLine();
-
-        // Get last name
-        System.out.print("[Client] Input last name: ");
-        String lastName = scanner.nextLine();
-
-        // Get valid email
-        String email;
-        do {
-            System.out.print("[Client] Input email: ");
-            email = scanner.nextLine();
-        } while (!isEmailValid(email));
-
-        // Get student ID
-        String studentID;
-        do {
-            System.out.print("[Client] Input student ID: ");
-            studentID = scanner.nextLine();
-        } while (!isStudentIDValid(studentID));
-
-        // Return student information
-        return new Student(firstName, lastName, email, studentID);
-    }
-
-    /**
-     * Creates and validates a course object with user input.
-     *
-     * @param scanner The scanner used to get user input.
-     *
-     * @return A valid Course object.
-     *
-     * @throws IOException            If the method {@link #isCourseValid(Course) isCourseValid()} throws the exception.
-     * @throws ClassNotFoundException If the method {@link #isCourseValid(Course) isCourseValid()} throws the exception.
-     */
-    public static Course createCourse(Scanner scanner) throws IOException, ClassNotFoundException {
-        Course course;
-        do {
-            // TODO make it possible to create a coure by providing only the semester and course code. \\
-            //  Could simply modify the isCourseValid() to automatically give the name provided the code and semester.
-
-            // Get course name
-            System.out.print("[Client] Input course name: ");
-            String name = scanner.nextLine();
-
-            // Get course code
-            System.out.print("[Client] Input course code: ");
-            String code = scanner.nextLine();
-
-            // Get course semester
-            System.out.print("[Client] Input course semester: ");
-            String semester = scanner.nextLine();
-
-            course = new Course(name, code, semester);
-        } while (!isCourseValid(course));
-
-        return course;
-    }
-
-    /**
-     * Validates an email.
-     * <p>
-     * Source of pattern: <a href="https://stackoverflow.com/a/8204716">StackOverflow</a>
-     *
-     * @param email The email to validate.
-     *
-     * @return Whether the email is valid or not.
-     */
-    public static boolean isEmailValid(String email) {
-        // Generate email regex pattern
-        Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-        boolean isValid = pattern.matcher(email).matches();
-
-        // Print message in case of invalid email
-        if (!isValid) {
-            System.out.println("[Client] The email is invalid.");
-        }
-
-        return isValid;
-    }
-
-    /**
-     * Validates a student ID.
-     *
-     * @param studentID The student ID to validate.
-     *
-     * @return Whether the student ID is valid or not.
-     */
-    public static boolean isStudentIDValid(String studentID) {
-        // Generate email regex pattern
-        Pattern pattern = Pattern.compile("^\\d{8}$");
-        boolean isValid = pattern.matcher(studentID).matches();
-
-        // Print message in case of invalid student ID
-        if (!isValid) {
-            System.out.println("[Client] The student ID is invalid.");
-        }
-
-        return isValid;
-    }
-
-    /**
-     * Validates that a course is available to take.
-     *
-     * @param targetCourse The course that is searched in the list of available courses.
-     *
-     * @return Whether the course is available or not.
-     *
-     * @throws IOException            If the method {@link #getCourses(String[]) getCourses()} throws the exception.
-     * @throws ClassNotFoundException If the method {@link #getCourses(String[]) getCourses()} throws the exception.
-     */
-    public static boolean isCourseValid(Course targetCourse) throws IOException, ClassNotFoundException {
-        Object object = getCourses(new String[]{Server.LOAD_COMMAND, targetCourse.getSemester()});
-
-        // Check that an ArrayList was returned by getCourses()
-        if (object instanceof ArrayList) {
-            ArrayList<Course> courses = (ArrayList<Course>) object;
-            // Check if the course is available
-            for (Course course : courses) {
-                if (course.equals(targetCourse)) {
-                    return true;
-                }
-                // TODO Maybe this? or change the equals() method of the Course class.
-                // if (course.getCode().equals(targetCourse.getCode()) && course.getSemester().equals(targetCourse.getSemester())) {
-                //     return true;
-                // }
-            }
-        }
-
-        System.out.println("[Client] This course is unavailable.");
-        return false;
-    }
-
-    /**
      * Makes the user select an available course.
      *
      * @param scanner The scanner used to get user input.
@@ -414,6 +272,148 @@ public class Client {
             // Return selected course
             return course;
         }
+    }
+
+    /**
+     * Creates an array of strings containing the information about a student.
+     *
+     * @param scanner The scanner which will read the user input.
+     *
+     * @return An array of strings containing the information about a student.
+     */
+    public static Student createStudent(Scanner scanner) {
+        // Get first name
+        System.out.print("[Client] Input first name: ");
+        String firstName = scanner.nextLine();
+
+        // Get last name
+        System.out.print("[Client] Input last name: ");
+        String lastName = scanner.nextLine();
+
+        // Get valid email
+        String email;
+        do {
+            System.out.print("[Client] Input email: ");
+            email = scanner.nextLine();
+        } while (!isEmailValid(email));
+
+        // Get student ID
+        String studentID;
+        do {
+            System.out.print("[Client] Input student ID: ");
+            studentID = scanner.nextLine();
+        } while (!isStudentIDValid(studentID));
+
+        // Return student information
+        return new Student(firstName, lastName, email, studentID);
+    }
+
+    /**
+     * Validates an email.
+     * <p>
+     * Source of pattern: <a href="https://stackoverflow.com/a/8204716">StackOverflow</a>
+     *
+     * @param email The email to validate.
+     *
+     * @return Whether the email is valid or not.
+     */
+    public static boolean isEmailValid(String email) {
+        // Generate email regex pattern
+        Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        boolean isValid = pattern.matcher(email).matches();
+
+        // Print message in case of invalid email
+        if (!isValid) {
+            System.out.println("[Client] The email is invalid.");
+        }
+
+        return isValid;
+    }
+
+    /**
+     * Validates a student ID.
+     *
+     * @param studentID The student ID to validate.
+     *
+     * @return Whether the student ID is valid or not.
+     */
+    public static boolean isStudentIDValid(String studentID) {
+        // Generate email regex pattern
+        Pattern pattern = Pattern.compile("^\\d{8}$");
+        boolean isValid = pattern.matcher(studentID).matches();
+
+        // Print message in case of invalid student ID
+        if (!isValid) {
+            System.out.println("[Client] The student ID is invalid.");
+        }
+
+        return isValid;
+    }
+
+    /**
+     * Creates and validates a course object with user input.
+     *
+     * @param scanner The scanner used to get user input.
+     *
+     * @return A valid Course object.
+     *
+     * @throws IOException            If the method {@link #isCourseValid(Course) isCourseValid()} throws the exception.
+     * @throws ClassNotFoundException If the method {@link #isCourseValid(Course) isCourseValid()} throws the exception.
+     */
+    public static Course createCourse(Scanner scanner) throws IOException, ClassNotFoundException {
+        Course course;
+        do {
+            // TODO make it possible to create a coure by providing only the semester and course code. \\
+            //  Could simply modify the isCourseValid() to automatically give the name provided the code and semester.
+
+            // Get course name
+            System.out.print("[Client] Input course name: ");
+            String name = scanner.nextLine();
+
+            // Get course code
+            System.out.print("[Client] Input course code: ");
+            String code = scanner.nextLine();
+
+            // Get course semester
+            System.out.print("[Client] Input course semester: ");
+            String semester = scanner.nextLine();
+
+            course = new Course(name, code, semester);
+        } while (!isCourseValid(course));
+
+        return course;
+    }
+
+    /**
+     * Validates that a course is available to take.
+     *
+     * @param targetCourse The course that is searched in the list of available courses.
+     *
+     * @return Whether the course is available or not.
+     *
+     * @throws IOException            If the method {@link #getCourses(String[]) getCourses()} throws the exception.
+     * @throws ClassNotFoundException If the method {@link #getCourses(String[]) getCourses()} throws the exception.
+     */
+    public static boolean isCourseValid(Course targetCourse) throws IOException, ClassNotFoundException {
+        Object object = getCourses(new String[]{Server.LOAD_COMMAND, targetCourse.getSemester()});
+
+        // Check that an ArrayList was returned by getCourses()
+        if (object instanceof ArrayList) {
+            ArrayList<Course> courses = (ArrayList<Course>) object;
+            // Check if the course is available
+            for (Course course : courses) {
+                if (course.equals(targetCourse)) {
+                    return true;
+                }
+                // TODO Maybe this? or change the equals() method of the Course class.
+                // if (course.getCode().equals(targetCourse.getCode()) && course.getSemester().equals(targetCourse.getSemester())) {
+                //     return true;
+                // }
+            }
+        }
+
+        System.out.println("[Client] This course is unavailable.");
+        return false;
     }
 }
 

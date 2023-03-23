@@ -19,14 +19,28 @@ public class Course implements Serializable {
     /**
      * Creates a new Course object with the specified name, code and semester.
      *
-     * @param name    The name of the course.
-     * @param code    The code of the course.
+     * @param name     The name of the course.
+     * @param code     The code of the course.
      * @param semester The semester of the course.
      */
     public Course(String name, String code, String semester) {
         this.name = name;
         this.code = code;
         this.semester = semester;
+    }
+
+    /**
+     * Indicates whether some other course is "equal to" this one.
+     *
+     * @param obj The object to compare to the course object.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Course course) {
+            return this.toString().equals(course.toString());
+        } else {
+            return false;
+        }
     }
 
     /**

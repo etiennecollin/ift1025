@@ -30,20 +30,6 @@ public class Course implements Serializable {
     }
 
     /**
-     * Indicates whether some other course is "equal to" this one.
-     *
-     * @param obj The object to compare to the course object.
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Course course) {
-            return this.toString().equals(course.toString());
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Returns the name of the course.
      *
      * @return The name of the course.

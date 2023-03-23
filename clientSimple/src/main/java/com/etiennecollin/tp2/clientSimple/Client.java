@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -109,17 +108,6 @@ public class Client {
     }
 
     /**
-     * Disconnects the client from the server by sending a DISCONNECT_COMMAND to the server through the objectOutputStream.
-     *
-     * @throws IOException If an I/O error occurs when writing to the objectOutputStream.
-     */
-    public static void disconnect() throws IOException {
-        objectOutputStream.writeObject(Server.DISCONNECT_COMMAND);
-        objectOutputStream.flush();
-        System.out.println("[Client] Disconnecting from server...");
-    }
-
-    /**
      * Closes the objectOutputStream, objectInputStream, and client.
      *
      * @throws IOException If an I/O error occurs when closing the streams or the client socket.
@@ -209,6 +197,17 @@ public class Client {
         }
 
         return courses;
+    }
+
+    /**
+     * Disconnects the client from the server by sending a DISCONNECT_COMMAND to the server through the objectOutputStream.
+     *
+     * @throws IOException If an I/O error occurs when writing to the objectOutputStream.
+     */
+    public static void disconnect() throws IOException {
+        objectOutputStream.writeObject(Server.DISCONNECT_COMMAND);
+        objectOutputStream.flush();
+        System.out.println("[Client] Disconnecting from server...");
     }
 
     /**

@@ -18,6 +18,7 @@ public class RegistrationForm implements Serializable {
     private String email;
     private String studentID;
     private Course course;
+    private Student student;
 
     /**
      * Constructs a new RegistrationForm for a course with the given student information.
@@ -37,9 +38,26 @@ public class RegistrationForm implements Serializable {
     }
 
     /**
+     * Constructs a new RegistrationForm for a course for the given student.
+     *
+     * @param student The student to be registered.
+     * @param course  The course the student wants to register for.
+     */
+    public RegistrationForm(Student student, Course course) {
+        this.student = student;
+        this.course = course;
+
+        // TODO if this is ok, maybe change the setters and getters to only use the student object and no other fields.
+        this.firstName = student.getFirstName();
+        this.lastName = student.getLastName();
+        this.email = student.getEmail();
+        this.studentID = student.getStudentID();
+    }
+
+    /**
      * Returns the first name of the student.
      *
-     * @return the first name of the student.
+     * @return The first name of the student.
      */
     public String getFirstName() {
         return firstName;
@@ -66,7 +84,7 @@ public class RegistrationForm implements Serializable {
     /**
      * Sets the last name of the student.
      *
-     * @param lastName the new last name of the student.
+     * @param lastName The new last name of the student.
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
@@ -134,6 +152,7 @@ public class RegistrationForm implements Serializable {
      */
     @Override
     public String toString() {
-        return "InscriptionForm{" + "firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", studentID='" + studentID + '\'' + ", course='" + course + '\'' + '}';
+        // return "RegistrationForm{" + "firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", studentID='" + studentID + '\'' + ", course='" + course + '\'' + '}';
+        return "RegistrationForm{" + "student='" + student + "'" + ", course='" + course + "'" + "}";
     }
 }

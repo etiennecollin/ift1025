@@ -121,8 +121,8 @@ public class Client {
      *
      * @return The answer from the server.
      *
-     * @throws IOException            If the method {@link #createCourse(Scanner) createCourse()} throws the exception or if an I/O error occurs when dealing with the client input/output streams.
-     * @throws ClassNotFoundException If the method {@link #createCourse(Scanner) createCourse()} throws the exception or if the returned String by the server is invalid.
+     * @throws IOException            If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if an I/O error occurs when dealing with the client input/output streams.
+     * @throws ClassNotFoundException If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if the returned String by the server is invalid.
      */
     public static String register(String[] command, Scanner scanner) throws IOException, ClassNotFoundException {
         // Initialize objects
@@ -353,80 +353,6 @@ public class Client {
         }
 
         return isValid;
-    }
-
-    /**
-     * Creates and validates a course object with user input.
-     *
-     * @param scanner The scanner used to get user input.
-     *
-     * @return A valid Course object.
-     *
-     * @throws IOException            If the method {@link #isCourseValid(Course) isCourseValid()} throws the exception.
-     * @throws ClassNotFoundException If the method {@link #isCourseValid(Course) isCourseValid()} throws the exception.
-     */
-    public static Course createCourse(Scanner scanner) throws IOException, ClassNotFoundException {
-        while (true) {
-            // Get course code
-            System.out.print("[Client] Input course code: ");
-            String code = scanner.nextLine();
-
-            // Get course semester
-            System.out.print("[Client] Input course semester: ");
-            String semester = scanner.nextLine();
-
-            // Get available courses
-            Object object = getCourses(new String[]{Server.LOAD_COMMAND, semester});
-
-            // Check if courses were found
-            if (!(object instanceof ArrayList)) {
-                System.out.println("[Client] " + object);
-                continue;
-            }
-
-            // Return right course
-            ArrayList<Course> courses = (ArrayList<Course>) object;
-            for (Course course : courses) {
-                if (course.getCode().equalsIgnoreCase(code)) {
-                    return course;
-                }
-            }
-
-            // No matching course is available
-            System.out.println("[Client] The course " + code + " is not available during the " + semester + " semester.");
-        }
-    }
-
-    /**
-     * Validates that a course is available to take.
-     *
-     * @param targetCourse The course that is searched in the list of available courses.
-     *
-     * @return Whether the course is available or not.
-     *
-     * @throws IOException            If the method {@link #getCourses(String[]) getCourses()} throws the exception.
-     * @throws ClassNotFoundException If the method {@link #getCourses(String[]) getCourses()} throws the exception.
-     */
-    public static boolean isCourseValid(Course targetCourse) throws IOException, ClassNotFoundException {
-        Object object = getCourses(new String[]{Server.LOAD_COMMAND, targetCourse.getSemester()});
-
-        // Check that an ArrayList was returned by getCourses()
-        if (object instanceof ArrayList) {
-            ArrayList<Course> courses = (ArrayList<Course>) object;
-            // Check if the course is available
-            for (Course course : courses) {
-                if (course.equals(targetCourse)) {
-                    return true;
-                }
-                // TODO Maybe this? or change the equals() method of the Course class.
-                // if (course.getCode().equals(targetCourse.getCode()) && course.getSemester().equals(targetCourse.getSemester())) {
-                //     return true;
-                // }
-            }
-        }
-
-        System.out.println("[Client] This course is unavailable.");
-        return false;
     }
 }
 

@@ -26,9 +26,22 @@ public class Client {
      *
      * @throws IOException If an I/O error occurs when scanning user input or when getting the client input/output streams.
      */
-    public static void run(int port) throws IOException {
-        boolean doExit = false;
-        // Scan user input
+    public static void run(int port) throws IOException, ClassNotFoundException {
+        // Connect to the server
+        client = new Socket("localhost", port);
+
+        // Create streams to write/read to/from the server
+        objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+        objectInputStream = new ObjectInputStream(client.getInputStream());
+
+        // Continuously get user to input commands
+        while (!done) {
+            getUserInput();
+        }
+
+        // Close the streams and client
+        cleanup();
+    }
         Scanner scanner = new Scanner(System.in);
 
         while (!doExit) {

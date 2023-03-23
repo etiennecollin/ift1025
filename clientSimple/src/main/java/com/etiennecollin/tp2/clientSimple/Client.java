@@ -29,6 +29,7 @@ public class Client {
     private static Socket client;
     private static ObjectInputStream objectInputStream;
     private static ObjectOutputStream objectOutputStream;
+    private static boolean done = false;
 
     /**
      * Runs the client, allowing the user to interact with the server.

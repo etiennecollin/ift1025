@@ -12,6 +12,7 @@ import com.etiennecollin.tp2.server.models.Student;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -86,9 +87,11 @@ public class Client {
                 // Print server answer
                 System.out.println("\n[Client] " + serverAnswer);
             } else if (command[0].equalsIgnoreCase(Server.LOAD_COMMAND)) {
-                Object object = getCourses(command);
-                // Print available courses or a message
-                System.out.println("\n[Client] " + object);
+                ArrayList<Course> courses = getCourses(command);
+                // Print available courses if there are any
+                if (!courses.isEmpty()) {
+                    System.out.println("\n[Client] " + courses);
+                }
             } else if (command[0].equalsIgnoreCase(Server.DISCONNECT_COMMAND)) {
                 done = true;
                 scanner.close();
@@ -167,9 +170,9 @@ public class Client {
      * @throws IllegalArgumentException If the command has an incorrect number of arguments.
      * @throws ClassNotFoundException   If the returned Course object by the server is invalid.
      *
-     * @return An ArrayList&lt;Course&gt; containing the available courses or a String containing a message stating that no courses are available
+     * @return A list containing the available courses.
      */
-    public static Object getCourses(String[] command) throws IOException, IllegalArgumentException, ClassNotFoundException {
+    public static ArrayList<Course> getCourses(String[] command) throws IOException, IllegalArgumentException, ClassNotFoundException {
         // Send command to server
         if (command.length == 1) {
             objectOutputStream.writeObject(Server.LOAD_COMMAND);
@@ -187,9 +190,9 @@ public class Client {
         if (courses.isEmpty()) {
             // Check if a semester was provided
             if (command.length == 1) {
-                return "No courses are available.";
+                System.out.println("[Client] No courses are available.");
             } else {
-                return "No courses are available during the " + command[1] + " semester.";
+                System.out.println("[Client] No courses are available during the " + command[1] + " semester.");
             }
         }
 
@@ -245,19 +248,15 @@ public class Client {
             }
 
             // Get available courses
-            Object object = getCourses(new String[]{Server.LOAD_COMMAND, semester});
+            ArrayList<Course> courses = getCourses(new String[]{Server.LOAD_COMMAND, semester});
 
             // Check if courses were found
-            if (!(object instanceof ArrayList)) {
-                System.out.println("[Client] " + object);
+            if (courses.isEmpty()) {
                 continue;
             }
 
-            // List available courses
-            ArrayList<Course> courses = (ArrayList<Course>) object;
-            Course course = null;
-
             // Reset isValid and get course
+            Course selectedCourse = null;
             isValid = false;
             while (!isValid) {
                 // List available courses
@@ -270,15 +269,14 @@ public class Client {
                 System.out.print("> ");
                 try {
                     int choice = Integer.parseInt(scanner.nextLine());
-                    course = courses.get(choice);
+                    selectedCourse = courses.get(choice);
                     isValid = true;
                 } catch (Exception e) {
                     System.out.println("[Client] Invalid input.");
                 }
             }
 
-            // Return selected course
-            return course;
+            return selectedCourse;
         }
     }
 

@@ -11,7 +11,7 @@ public class ServerLauncher {
     /**
      * The port on which the server is launched.
      */
-    public final static int PORT = 1337;
+    private final static int PORT = 1337;
 
     /**
      * The main method of the ServerLauncher class launches a server on a specified port and starts its execution.

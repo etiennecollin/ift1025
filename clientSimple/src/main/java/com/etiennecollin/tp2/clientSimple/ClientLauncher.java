@@ -4,8 +4,6 @@
 
 package com.etiennecollin.tp2.clientSimple;
 
-import com.etiennecollin.tp2.server.ServerLauncher;
-
 import java.io.IOException;
 
 /**
@@ -15,6 +13,11 @@ import java.io.IOException;
  */
 public class ClientLauncher {
     /**
+     * The port on which the server is launched.
+     */
+    private final static int PORT = 1337;
+
+    /**
      * The main method of the ClientLauncher class launches a client to bind to a
      * specific server port and starts its execution.
      *
@@ -23,8 +26,8 @@ public class ClientLauncher {
     public static void main(String[] args) {
         try {
             System.out.println("[Client] Running...");
-            Client.run(ServerLauncher.PORT);
         } catch (IOException | ClassNotFoundException e) {
+            Client.run(PORT);
             e.printStackTrace();
         }
     }

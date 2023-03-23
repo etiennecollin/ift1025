@@ -163,6 +163,13 @@ public class ClientHandler implements Runnable {
             try {
                 listen();
                 objectOutputStream.flush();
+            } catch (EOFException e) {
+                // Handle the case where the client crashes without properly disconnecting
+                try {
+                    disconnect();
+                } catch (IOException ex) {
+                    e.printStackTrace();
+                }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }

@@ -79,7 +79,9 @@ public class Client {
             String[] command = scanner.nextLine().split(" ");
 
             // Check if command is valid
-            if (command[0].equalsIgnoreCase(Server.REGISTER_COMMAND)) {
+            if (command.length == 0) {
+                throw new IllegalArgumentException("[Client] Input command is invalid.");
+            } else if (command[0].equalsIgnoreCase(Server.REGISTER_COMMAND)) {
                 String serverAnswer = register(command, scanner);
                 // Print server answer
                 System.out.println("\n[Client] " + serverAnswer);

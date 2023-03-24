@@ -1,0 +1,32 @@
+/*
+ * Copyright (c) 2023. Etienne Collin #20237904 & Justin Villeneuve #20132792
+ */
+
+/*Inspired by https://www.youtube.com/watch?v=oWk9fwRgV_k&t=266s*/
+
+.root {
+    -fx-background-color: #222;
+    -fx-background-radius: 28;
+}
+
+.mainPane {
+    -fx-background-color: linear-gradient(to top left, lightblue, skyblue);
+    -fx-background-radius: 15 15 25 25;
+}
+
+.highlight {
+    -fx-background-color: #00000022;
+    -fx-background-radius: 15;
+}
+
+.courseTable, .courseTableColumn, .choiceBox, .textArea {
+    -fx-background-color: #FFFFFF00;
+    -fx-background-radius: 15;
+
+}
+
+.inputField {
+    -fx-background-color: #FFFFFFFF;
+    -fx-background-radius: 5;
+}
+

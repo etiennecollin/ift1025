@@ -1,1 +1,1 @@
-moduleSearchIndex = [];updateSearchResults();
+moduleSearchIndex = [{"l":"clientFx"},{"l":"clientSimple"},{"l":"server"}];updateSearchResults();

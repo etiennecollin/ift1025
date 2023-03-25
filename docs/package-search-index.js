@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.etiennecollin.tp2.clientFx"},{"l":"com.etiennecollin.tp2.clientSimple"},{"l":"com.etiennecollin.tp2.server"},{"l":"com.etiennecollin.tp2.server.models"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"clientFx","l":"com.etiennecollin.tp2.clientFx"},{"m":"clientSimple","l":"com.etiennecollin.tp2.clientSimple"},{"m":"server","l":"com.etiennecollin.tp2.server"},{"m":"server","l":"com.etiennecollin.tp2.server.models"}];updateSearchResults();

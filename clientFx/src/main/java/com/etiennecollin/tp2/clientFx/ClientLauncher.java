@@ -4,12 +4,18 @@
 
 package com.etiennecollin.tp2.clientFx;
 
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketException;
+
 /**
  * The ClientLauncher class launches a client to bind to a specific server port and starts its execution.
  * <p>
  * The class contains a main method that creates a client instance and starts its execution.
  */
 public class ClientLauncher {
+    private final static int PORT = 1337;
+
     /**
      * The main method of the ClientLauncher class launches a client to bind to a
      * specific server port and starts its execution.
@@ -17,7 +23,17 @@ public class ClientLauncher {
      * @param args An array of command-line arguments passed to the program.
      */
     public static void main(String[] args) {
-        Client mainWindow = new Client();
-        mainWindow.run();
+        try {
+            Client.run(PORT);
+        } catch (ConnectException e) {
+            // Handle the case where no server is found
+            System.err.println("[Client] " + e.getMessage() + ", no server available on port " + PORT + ".");
+        } catch (SocketException e) {
+            // Handle the case where the server crashes without disconnecting
+            System.err.println("[Client] " + e.getMessage() + ", the connection to the server was lost.");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 }

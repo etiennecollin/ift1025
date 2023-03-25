@@ -285,7 +285,7 @@ public class Client {
      *
      * @param scanner The scanner which will read the user input.
      *
-     * @return An array of strings containing the information about a student.
+     * @return A valid student object.
      */
     public static Student createStudent(Scanner scanner) {
         // Get first name

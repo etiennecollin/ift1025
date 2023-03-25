@@ -10,121 +10,131 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@MainWindowStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.etiennecollin.tp2.clientFx.ClientController">
-   <children>
-      <Pane layoutX="16.0" layoutY="45.0" prefHeight="343.0" prefWidth="568.0" styleClass="mainPane">
+
+<BorderPane fx:id="borderPane" onMouseDragged="#onBorderPaneDragged" onMousePressed="#onBorderPanePressed" stylesheets="@MainWindowStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.etiennecollin.tp2.clientFx.ClientController">
+   <center>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0">
          <children>
-            <Pane layoutX="14.0" layoutY="14.0" prefHeight="278.0" prefWidth="277.0" styleClass="highlight">
+            <Pane layoutX="16.0" layoutY="3.0" prefHeight="385.0" prefWidth="568.0" styleClass="mainPane">
                <children>
-                  <TableView fx:id="table" fixedCellSize="1.0" layoutX="11.0" layoutY="29.0" prefHeight="236.0" prefWidth="256.0" styleClass="courseTable">
-                    <columns>
-                      <TableColumn fx:id="tableColumnCode" minWidth="-1.0" prefWidth="128.0" resizable="false" sortable="false" styleClass="courseTableColumn" text="Code" />
-                      <TableColumn fx:id="tableColumnCourse" minWidth="-1.0" prefWidth="128.0" resizable="false" sortable="false" styleClass="courseTableColumn" text="Course" />
-                    </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="1.0" text="Available Courses" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="Avenir Next Bold" size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-            <Pane layoutX="298.0" layoutY="14.0" prefHeight="191.0" prefWidth="256.0" styleClass="highlight">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="1.0" text="Registration Form" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="Avenir Next Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="inputFieldFirstName" layoutX="16.0" layoutY="34.0" prefHeight="26.0" prefWidth="224.0" promptText="First Name" styleClass="inputField">
-                     <font>
-                        <Font name="Avenir Next Bold" size="13.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="inputFieldLastName" layoutX="16.0" layoutY="72.0" prefHeight="26.0" prefWidth="224.0" promptText="Last Name" styleClass="inputField">
-                     <font>
-                        <Font name="Avenir Next Bold" size="13.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="inputFieldEmail" layoutX="16.0" layoutY="110.0" prefHeight="26.0" prefWidth="224.0" promptText="Email" styleClass="inputField">
-                     <font>
-                        <Font name="Avenir Next Bold" size="13.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </TextField>
-                  <TextField fx:id="inputFieldStudentID" layoutX="16.0" layoutY="148.0" prefHeight="26.0" prefWidth="224.0" promptText="Student ID" styleClass="inputField">
-                     <font>
-                        <Font name="Avenir Next Bold" size="13.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </TextField>
-               </children></Pane>
-            <Pane layoutX="14.0" layoutY="296.0" prefHeight="39.0" prefWidth="141.0" styleClass="highlight">
-               <children>
-                  <ChoiceBox fx:id="choiceBox" layoutX="8.0" layoutY="7.0" prefHeight="26.0" prefWidth="126.0" styleClass="choiceBox">
+                  <Pane layoutX="14.0" layoutY="14.0" prefHeight="318.0" prefWidth="277.0" styleClass="highlight">
+                     <children>
+                        <TableView fx:id="table" fixedCellSize="1.0" layoutX="11.0" layoutY="29.0" prefHeight="285.0" prefWidth="256.0">
+                          <columns>
+                            <TableColumn fx:id="tableColumnCode" minWidth="-1.0" prefWidth="128.0" resizable="false" sortable="false" text="Code" />
+                            <TableColumn fx:id="tableColumnCourse" minWidth="-1.0" prefWidth="128.0" resizable="false" sortable="false" text="Course" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="1.0" text="Available Courses" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Avenir Next Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="298.0" layoutY="14.0" prefHeight="191.0" prefWidth="256.0" styleClass="highlight">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="1.0" text="Registration Form" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Avenir Next Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldFirstName" layoutX="16.0" layoutY="34.0" prefHeight="26.0" prefWidth="224.0" promptText="First Name">
+                           <font>
+                              <Font name="Avenir Next Bold" size="13.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="textFieldLastName" layoutX="16.0" layoutY="72.0" prefHeight="26.0" prefWidth="224.0" promptText="Last Name">
+                           <font>
+                              <Font name="Avenir Next Bold" size="13.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="textFieldEmail" layoutX="16.0" layoutY="110.0" prefHeight="26.0" prefWidth="224.0" promptText="Email">
+                           <font>
+                              <Font name="Avenir Next Bold" size="13.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="textFieldStudentID" layoutX="16.0" layoutY="148.0" prefHeight="26.0" prefWidth="224.0" promptText="Student ID">
+                           <font>
+                              <Font name="Avenir Next Bold" size="13.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </TextField>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="14.0" layoutY="337.0" prefHeight="39.0" prefWidth="141.0" styleClass="highlight">
+                     <children>
+                        <ChoiceBox fx:id="choiceBox" layoutX="8.0" layoutY="7.0" prefHeight="26.0" prefWidth="126.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ChoiceBox>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="btnLoad" layoutX="159.0" layoutY="337.0" onMouseClicked="#onLoadButtonClick" prefHeight="39.0" prefWidth="131.0" styleClass="highlight">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="6.0" prefHeight="27.0" prefWidth="126.0" text="Load Courses" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Avenir Next Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
                      <cursor>
                         <Cursor fx:constant="HAND" />
-                     </cursor></ChoiceBox>
-               </children>
-            </Pane>
-            <Pane fx:id="btnLoad" layoutX="159.0" layoutY="296.0" onMouseClicked="#onLoadButtonClick" prefHeight="39.0" prefWidth="131.0" styleClass="highlight">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="6.0" prefHeight="27.0" prefWidth="126.0" text="Load Courses" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="Avenir Next Bold" size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Pane>
-            <Pane fx:id="btnRegister" layoutX="298.0" layoutY="211.0" onMouseClicked="#onRegisterButtonClick" prefHeight="39.0" prefWidth="256.0" styleClass="highlight">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="92.0" layoutY="6.0" text="Register" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="Avenir Next Bold" size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Pane>
-            <Pane layoutX="298.0" layoutY="256.0" prefHeight="81.0" prefWidth="256.0" styleClass="highlight">
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-               <children>
-                  <Label fx:id="labelClientFeedback" alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="7.0" layoutY="6.0" prefHeight="69.0" prefWidth="242.0" text="Client Feedback" textFill="WHITE" wrapText="true">
-                     <font>
-                        <Font name="Avenir Next Bold" size="12.0" />
-                     </font>
-                  </Label>
+                     </cursor>
+                  </Pane>
+                  <Pane fx:id="btnRegister" layoutX="298.0" layoutY="211.0" onMouseClicked="#onRegisterButtonClick" prefHeight="39.0" prefWidth="256.0" styleClass="highlight">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="92.0" layoutY="6.0" text="Register" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Avenir Next Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Pane>
+                  <Pane layoutX="298.0" layoutY="256.0" prefHeight="122.0" prefWidth="256.0" styleClass="highlight">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                     <children>
+                        <Label fx:id="labelClientFeedback" alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="7.0" layoutY="6.0" prefHeight="111.0" prefWidth="242.0" text="Client Feedback" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="Avenir Next Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
                </children>
             </Pane>
          </children>
-      </Pane>
-      <Pane layoutY="6.0">
+      </AnchorPane>
+   </center>
+   <top>
+      <Pane BorderPane.alignment="CENTER">
          <children>
-            <FlowPane alignment="CENTER_LEFT" layoutX="13.0" layoutY="-3.0" prefHeight="39.0" prefWidth="575.0">
+            <FlowPane alignment="CENTER_LEFT" layoutX="13.0" prefHeight="39.0" prefWidth="120.0" stylesheets="@MainWindowStyle.css">
                <children>
                   <ImageView fx:id="btnClose" fitHeight="23.0" fitWidth="22.0" onMouseClicked="#onCloseButtonClick" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -153,12 +163,12 @@
                   <Insets left="10.0" right="10.0" />
                </padding>
             </FlowPane>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="139.0" layoutY="5.0" prefHeight="30.0" prefWidth="332.0" text="UdeM Course Registration Portal" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Avenir Next Bold" size="20.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="134.0" layoutY="7.0" prefHeight="30.0" prefWidth="332.0" text="UdeM Course Registration Portal" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Avenir Next Bold" size="20.0" />
-         </font>
-      </Label>
-   </children>
-</AnchorPane>
+   </top>
+</BorderPane>

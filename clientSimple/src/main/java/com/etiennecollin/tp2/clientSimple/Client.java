@@ -136,6 +136,7 @@ public class Client {
         Course course;
 
         if (command.length == 8) {
+            // TODO verify that each argument is valid
             student = new Student(command[1], command[2], command[3], command[4]);
             course = new Course(command[5], command[6], command[7]);
         } else if (command.length == 1) {
@@ -221,15 +222,11 @@ public class Client {
      * @throws ClassNotFoundException If the method {@link #getCourses(String[]) getCourses()} throws the exception.
      */
     public static Course courseSelectionMenu(Scanner scanner) throws IOException, ClassNotFoundException {
-        // Toggle used throughout method to stop loops
-        boolean isValid;
-
+        // TODO add way to exit registration process (when input received is -1?)
         while (true) {
             String semester = null;
 
-            // Reset isValid and get semester
-            isValid = false;
-            while (!isValid) {
+            while (true) {
                 // List available semesters
                 System.out.println("[Client] Please select the semester for which you would like to consult available courses:");
                 for (int i = 0; i < semesters.length; i++) {
@@ -241,7 +238,7 @@ public class Client {
                 try {
                     int choice = Integer.parseInt(scanner.nextLine());
                     semester = semesters[choice];
-                    isValid = true;
+                    break;
                 } catch (Exception e) {
                     System.out.println("[Client] Invalid input.");
                 }
@@ -255,10 +252,9 @@ public class Client {
                 continue;
             }
 
-            // Reset isValid and get course
+            // Get course
             Course selectedCourse = null;
-            isValid = false;
-            while (!isValid) {
+            while (true) {
                 // List available courses
                 System.out.println("[Client] Choose one ot the available courses:");
                 for (int i = 0; i < courses.size(); i++) {
@@ -270,7 +266,7 @@ public class Client {
                 try {
                     int choice = Integer.parseInt(scanner.nextLine());
                     selectedCourse = courses.get(choice);
-                    isValid = true;
+                    break;
                 } catch (Exception e) {
                     System.out.println("[Client] Invalid input.");
                 }

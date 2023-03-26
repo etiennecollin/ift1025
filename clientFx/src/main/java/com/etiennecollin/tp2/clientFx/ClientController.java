@@ -60,75 +60,7 @@ public class ClientController {
     @FXML
     private TextField textFieldStudentID;
 
-    /**
-     * Makes the user select an available course.
-     *
-     * @param scanner The scanner used to get user input.
-     *
-     * @return A valid Course object.
-     *
-     * @throws IOException            If the method {@link #getCourses(String) getCourses()} throws the exception.
-     * @throws ClassNotFoundException If the method {@link #getCourses(String) getCourses()} throws the exception.
-     */
-    public Course courseSelectionMenu(Scanner scanner) throws IOException, ClassNotFoundException {
-        // Toggle used throughout method to stop loops
-        boolean isValid;
-
-        while (true) {
-            String semester = null;
-
-            // Reset isValid and get semester
-            isValid = false;
-            while (!isValid) {
-                // List available semesters
-                labelClientFeedback.setText("[Client] Please select the semester for which you would like to consult available courses:");
-                for (int i = 0; i < semesters.length; i++) {
-                    labelClientFeedback.setText(i + ". " + semesters[i]);
-                }
-
-                // Let user select semester
-                System.out.print("> ");
-                try {
-                    int choice = Integer.parseInt(scanner.nextLine());
-                    semester = semesters[choice];
-                    isValid = true;
-                } catch (Exception e) {
-                    labelClientFeedback.setText("[Client] Invalid input.");
-                }
-            }
-
-            // Get available courses
-            ArrayList<Course> courses = getCourses(semester);
-
-            // Check if courses were found
-            if (courses.isEmpty()) {
-                continue;
-            }
-
-            // Reset isValid and get course
-            Course selectedCourse = null;
-            isValid = false;
-            while (!isValid) {
-                // List available courses
-                labelClientFeedback.setText("[Client] Choose one ot the available courses:");
-                for (int i = 0; i < courses.size(); i++) {
-                    labelClientFeedback.setText(i + ". " + courses.get(i).getCode() + "\t" + courses.get(i).getName());
-                }
-
-                // Let user select course
-                System.out.print("> ");
-                try {
-                    int choice = Integer.parseInt(scanner.nextLine());
-                    selectedCourse = courses.get(choice);
-                    isValid = true;
-                } catch (Exception e) {
-                    labelClientFeedback.setText("[Client] Invalid input.");
-                }
-            }
-
-            return selectedCourse;
-        }
-    }
+    // TODO verify and create javadoc
 
     /**
      * Sends a command to the server to load available courses with the option to filter for a specific semester.
@@ -167,6 +99,101 @@ public class ClientController {
     }
 
     /**
+     * Closes the application.
+     */
+    @FXML
+    protected void onCloseButtonClick() {
+        try {
+            disconnect();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Stage stage = (Stage) borderPane.getScene().getWindow();
+        stage.close();
+    }
+
+    /**
+     * Disconnects the client from the server by sending a DISCONNECT_COMMAND to the server through the objectOutputStream.
+     *
+     * @throws IOException If an I/O error occurs when writing to the objectOutputStream.
+     */
+    public void disconnect() throws IOException {
+        objectOutputStream.writeObject(Server.DISCONNECT_COMMAND);
+        objectOutputStream.flush();
+        labelClientFeedback.setText("[Client] Disconnecting from server...");
+    }
+
+    /**
+     * Sends the application the taskbar.
+     */
+    @FXML
+    protected void onHideButtonClick() {
+        Stage stage = (Stage) borderPane.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
+    @FXML
+    protected void onLoadButtonClick() {
+        String semester = choiceBox.getValue().toString();
+
+        ArrayList<Course> courses = null;
+
+        try {
+            courses = getCourses(semester);
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Print available courses if there are any
+        if (!courses.isEmpty()) {
+            // TODO Add courses to table
+            labelClientFeedback.setText("[Client] " + courses);
+        }
+    }
+
+    @FXML
+    protected void onRegisterButtonClick() {
+        String serverAnswer = null;
+        try {
+            serverAnswer = register();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        // Print server answer
+        labelClientFeedback.setText("[Client]" + serverAnswer);
+    }
+
+    /**
+     * Sends a registration form to the server.
+     *
+     * @return The answer from the server.
+     *
+     * @throws IOException            If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if an I/O error occurs when dealing with the client input/output streams.
+     * @throws ClassNotFoundException If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if the returned String by the server is invalid.
+     */
+    public String register() throws IOException, ClassNotFoundException {
+        // Create student and course objects
+        Student student = createStudent();
+
+        // TODO get values of course from table in GUI
+        Course course = new Course("Programmation2", "IFT1025", "Automne");
+
+        // Create form
+        RegistrationForm form = new RegistrationForm(student, course);
+
+        // Send command to the server
+        objectOutputStream.writeObject(Server.REGISTER_COMMAND);
+        objectOutputStream.flush();
+
+        // Send form to the server
+        objectOutputStream.writeObject(form);
+        objectOutputStream.flush();
+
+        // Get the answer from the server
+        return (String) objectInputStream.readObject();
+    }
+
+    /**
      * Creates an array of strings containing the information about a student.
      *
      * @return A student object.
@@ -182,12 +209,14 @@ public class ClientController {
         String email;
         do {
             email = textFieldEmail.getText();
+            // TODO break/return and send prompt that email is invalid
         } while (!isEmailValid(email));
 
         // Get student ID
         String studentID;
         do {
             studentID = textFieldStudentID.getText();
+            // TODO break/return and send prompt that ID is invalid
         } while (!isStudentIDValid(studentID));
 
         // Return student information
@@ -239,100 +268,6 @@ public class ClientController {
     }
 
     /**
-     * Closes the application.
-     */
-    @FXML
-    protected void onCloseButtonClick() {
-        try {
-            disconnect();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Stage stage = (Stage) borderPane.getScene().getWindow();
-        stage.close();
-    }
-
-    /**
-     * Disconnects the client from the server by sending a DISCONNECT_COMMAND to the server through the objectOutputStream.
-     *
-     * @throws IOException If an I/O error occurs when writing to the objectOutputStream.
-     */
-    public void disconnect() throws IOException {
-        objectOutputStream.writeObject(Server.DISCONNECT_COMMAND);
-        objectOutputStream.flush();
-        labelClientFeedback.setText("[Client] Disconnecting from server...");
-    }
-
-    /**
-     * Sends the application the taskbar.
-     */
-    @FXML
-    protected void onHideButtonClick() {
-        Stage stage = (Stage) borderPane.getScene().getWindow();
-        stage.setIconified(true);
-    }
-
-    @FXML
-    protected void onLoadButtonClick() {
-        String semester = (String) choiceBox.getValue();
-        ArrayList<Course> courses = null;
-
-        try {
-            courses = getCourses(semester);
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Print available courses if there are any
-        if (!courses.isEmpty()) {
-            // TODO Add courses to table
-            labelClientFeedback.setText("[Client] " + courses);
-        }
-    }
-
-    @FXML
-    protected void onRegisterButtonClick() {
-        String serverAnswer = null;
-        try {
-            serverAnswer = register();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        // Print server answer
-        labelClientFeedback.setText("[Client]" + serverAnswer);
-    }
-
-    /**
-     * Sends a registration form to the server.
-     *
-     * @return The answer from the server.
-     *
-     * @throws IOException            If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if an I/O error occurs when dealing with the client input/output streams.
-     * @throws ClassNotFoundException If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if the returned String by the server is invalid.
-     */
-    public String register() throws IOException, ClassNotFoundException {
-        // Create student and course objects
-        Student student = createStudent();
-
-        // TODO get values of course from table in GUI
-        // Course course = new Course(command[5], command[6], command[7]);
-
-        // Create form
-        RegistrationForm form = new RegistrationForm(student, course);
-
-        // Send command to the server
-        objectOutputStream.writeObject(Server.REGISTER_COMMAND);
-        objectOutputStream.flush();
-
-        // Send form to the server
-        objectOutputStream.writeObject(form);
-        objectOutputStream.flush();
-
-        // Get the answer from the server
-        return (String) objectInputStream.readObject();
-    }
-
-    /**
      * Allows the dragging of the application window.
      *
      * @param event An event representing the actions of the mouse.
@@ -353,5 +288,13 @@ public class ClientController {
     protected void onBorderPanePressed(MouseEvent event) {
         x = event.getSceneX();
         y = event.getSceneY();
+    }
+
+    public void initialize() {
+        // Fill choicebox and set its default value
+        for (String semester : semesters) {
+            choiceBox.getItems().add(semester);
+        }
+        choiceBox.setValue(semesters[0]);
     }
 }

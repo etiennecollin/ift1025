@@ -8,8 +8,8 @@ import com.etiennecollin.tp2.server.Server;
 import com.etiennecollin.tp2.server.models.Course;
 import com.etiennecollin.tp2.server.models.RegistrationForm;
 import com.etiennecollin.tp2.server.models.Student;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
@@ -19,15 +19,15 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 import static com.etiennecollin.tp2.clientFx.Client.objectInputStream;
 import static com.etiennecollin.tp2.clientFx.Client.objectOutputStream;
 
-public class ClientController {
+public class ClientController implements Initializable {
     private static final String[] semesters = new String[]{"Automne", "Hiver", "Ete"};
     @FXML
     private Label labelClientFeedback;
@@ -61,42 +61,6 @@ public class ClientController {
     private TextField textFieldStudentID;
 
     // TODO verify and create javadoc
-
-    /**
-     * Sends a command to the server to load available courses with the option to filter for a specific semester.
-     *
-     * @param semester The semester to filter courses with.
-     *
-     * @return A list containing the available courses.
-     *
-     * @throws IOException              If an I/O error occurs when dealing with the client input/output streams.
-     * @throws IllegalArgumentException If the command has an incorrect number of arguments.
-     * @throws ClassNotFoundException   If the returned Course object by the server is invalid.
-     */
-    public ArrayList<Course> getCourses(String semester) throws IOException, IllegalArgumentException, ClassNotFoundException {
-        // Send command to server
-        if (semester.equals("")) {
-            objectOutputStream.writeObject(Server.LOAD_COMMAND);
-        } else {
-            objectOutputStream.writeObject(Server.LOAD_COMMAND + " " + semester);
-        }
-        objectOutputStream.flush();
-
-        // Get server reply
-        ArrayList<Course> courses = (ArrayList<Course>) objectInputStream.readObject();
-
-        // Check if there are available courses or not
-        if (courses.isEmpty()) {
-            // Check if a semester was provided
-            if (semester.equals("")) {
-                labelClientFeedback.setText("[Client] No courses are available.");
-            } else {
-                labelClientFeedback.setText("[Client] No courses are available during the " + semester + " semester.");
-            }
-        }
-
-        return courses;
-    }
 
     /**
      * Closes the application.
@@ -146,9 +110,49 @@ public class ClientController {
 
         // Print available courses if there are any
         if (!courses.isEmpty()) {
+            tableColumnCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+            tableColumnCourse.setCellValueFactory(new PropertyValueFactory<>("name"));
+            table.getItems().setAll(courses);
+
             // TODO Add courses to table
             labelClientFeedback.setText("[Client] " + courses);
         }
+    }
+
+    /**
+     * Sends a command to the server to load available courses with the option to filter for a specific semester.
+     *
+     * @param semester The semester to filter courses with.
+     *
+     * @return A list containing the available courses.
+     *
+     * @throws IOException              If an I/O error occurs when dealing with the client input/output streams.
+     * @throws IllegalArgumentException If the command has an incorrect number of arguments.
+     * @throws ClassNotFoundException   If the returned Course object by the server is invalid.
+     */
+    public ArrayList<Course> getCourses(String semester) throws IOException, IllegalArgumentException, ClassNotFoundException {
+        // Send command to server
+        if (semester.equals("")) {
+            objectOutputStream.writeObject(Server.LOAD_COMMAND);
+        } else {
+            objectOutputStream.writeObject(Server.LOAD_COMMAND + " " + semester);
+        }
+        objectOutputStream.flush();
+
+        // Get server reply
+        ArrayList<Course> courses = (ArrayList<Course>) objectInputStream.readObject();
+
+        // Check if there are available courses or not
+        if (courses.isEmpty()) {
+            // Check if a semester was provided
+            if (semester.equals("")) {
+                labelClientFeedback.setText("[Client] No courses are available.");
+            } else {
+                labelClientFeedback.setText("[Client] No courses are available during the " + semester + " semester.");
+            }
+        }
+
+        return courses;
     }
 
     @FXML
@@ -168,8 +172,8 @@ public class ClientController {
      *
      * @return The answer from the server.
      *
-     * @throws IOException            If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if an I/O error occurs when dealing with the client input/output streams.
-     * @throws ClassNotFoundException If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if the returned String by the server is invalid.
+     * @throws IOException            If an I/O error occurs when dealing with the client input/output streams.
+     * @throws ClassNotFoundException If the returned String by the server is invalid.
      */
     public String register() throws IOException, ClassNotFoundException {
         // Create student and course objects
@@ -290,7 +294,8 @@ public class ClientController {
         y = event.getSceneY();
     }
 
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         // Fill choicebox and set its default value
         for (String semester : semesters) {
             choiceBox.getItems().add(semester);

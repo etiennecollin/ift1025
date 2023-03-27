@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import static com.etiennecollin.tp2.server.ServerLauncher.*;
+
 /**
  * The ClientHandler class implements the Runnable interface and handles incoming client connections to the server.
  * <p>
@@ -63,7 +65,7 @@ public class ClientHandler implements Runnable {
      * @param arg The argument to pass to the event handler.
      */
     public void handleEvents(String cmd, String arg) {
-        System.out.println("[Server] Received command " + cmd + " from client: " + client);
+        System.out.println(SERVER + "Received command " + ANSI_BLUE + cmd + ANSI_RESET + " from client: " + ANSI_BLUE + client + ANSI_RESET);
         try {
             if (cmd.equalsIgnoreCase(Server.REGISTER_COMMAND)) {
                 handleRegistration();
@@ -73,7 +75,8 @@ public class ClientHandler implements Runnable {
                 disconnect();
             }
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println(SERVER_ERROR + e.getMessage());
+            e.getStackTrace();
         }
     }
 
@@ -93,11 +96,10 @@ public class ClientHandler implements Runnable {
 
         // Get the file
         String fileName = "inscription.txt";
-        String file = "server/src/main/java/com/etiennecollin/tp2/server/data/" + fileName;
+        String file = System.getProperty("user.dir") + "/data/" + fileName;
 
         // Create a PrintWriter object that writes to a file
         // Use a FileWriter object to append to the file if it already exists
-        // TODO Fix fileWriter
         PrintWriter writer = new PrintWriter(new FileWriter(file, true));
         writer.println(form.getCourse().getSemester() + "\t" + form.getCourse().getCode() + "\t" + form.getStudentID() + "\t" + form.getFirstName() + "\t" + form.getLastName() + "\t" + form.getEmail());
         writer.close();
@@ -121,8 +123,7 @@ public class ClientHandler implements Runnable {
 
         // Read the file
         String fileName = "cours.txt";
-        // InputStream file = getClass().getResourceAsStream("/" + fileName);
-        File file = new File("server/src/main/java/com/etiennecollin/tp2/server/data/" + fileName);
+        File file = new File(System.getProperty("user.dir") + "/data/" + fileName);
         Scanner scanner = new Scanner(file);
 
         // Read all the lines in the file
@@ -133,7 +134,7 @@ public class ClientHandler implements Runnable {
 
             // Make sure three arguments form the course in the file
             if (tokens.length != 3) {
-                throw new InvalidObjectException("[Server] The courses in " + fileName + " are not properly formatted. The format is `code\tname\tsemester`");
+                throw new InvalidObjectException("The courses in " + fileName + " are not properly formatted. The format is `code\tname\tsemester`");
             }
 
             if (semester.equals("")) {
@@ -161,8 +162,8 @@ public class ClientHandler implements Runnable {
         isClientDisconnecting = true;
 
         // Send confirmation
-        objectOutputStream.writeObject("[Server] Confirming disconnection...");
-        System.out.println("[Server] Client disconnected: " + client);
+        objectOutputStream.writeObject(SERVER + "Confirming disconnection...");
+        System.out.println(SERVER + "Client disconnected: " + ANSI_BLUE + client + ANSI_RESET);
         objectOutputStream.flush();
 
         // Close streams
@@ -187,12 +188,13 @@ public class ClientHandler implements Runnable {
                 // Listen to the client's command
                 listen();
             } catch (EOFException e) {
+                System.out.println(SERVER_ERROR + "Client improperly disconnected. Trying to properly close the streams...");
                 // Handle the case where the client crashes without disconnecting
                 try {
                     // Properly terminate the connection to the crashed client
                     disconnect();
                 } catch (IOException ex) {
-                    e.printStackTrace();
+                    ex.getStackTrace();
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

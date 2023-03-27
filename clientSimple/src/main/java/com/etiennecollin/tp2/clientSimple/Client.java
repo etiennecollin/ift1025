@@ -10,12 +10,15 @@ import com.etiennecollin.tp2.server.models.RegistrationForm;
 import com.etiennecollin.tp2.server.models.Student;
 
 import java.io.IOException;
+import java.io.InterruptedIOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+
+import static com.etiennecollin.tp2.clientSimple.ClientLauncher.*;
 
 /**
  * The Client class represents a client that can interact with a server through a socket connection.
@@ -81,28 +84,38 @@ public class Client {
 
             // Check if command is valid
             if (command.length == 0) {
-                throw new IllegalArgumentException("[Client] Input command is invalid.");
+                throw new IllegalArgumentException(CLIENT + "Input command is invalid.");
             } else if (command[0].equalsIgnoreCase(Server.REGISTER_COMMAND)) {
                 String serverAnswer = register(command, scanner);
                 // Print server answer
-                System.out.println("\n[Client] " + serverAnswer + "\n");
+                System.out.println("\n" + CLIENT_VALID + serverAnswer + "\n");
             } else if (command[0].equalsIgnoreCase(Server.LOAD_COMMAND)) {
                 ArrayList<Course> courses = getCourses(command);
                 // Print available courses if there are any
                 if (!courses.isEmpty()) {
-                    System.out.println("\n[Client] " + courses + "\n");
+                    System.out.println("\n" + CLIENT_VALID + "Available courses:");
+                    for (Course course : courses) {
+                        System.out.println("\t" + course.getSemester() + "\t" + course.getCode() + "\t" + course.getName());
+                    }
+                    System.out.println();
                 }
             } else if (command[0].equalsIgnoreCase(Server.DISCONNECT_COMMAND)) {
                 doDisconnect = true;
                 scanner.close();
                 disconnect();
             } else {
-                throw new IllegalArgumentException("[Client] Input command is invalid.");
+                // If no command is recognised
+                throw new IllegalArgumentException(CLIENT_ERROR + "Input command is invalid.");
             }
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             // Tell the server that the command was invalid as it expects a command
             objectOutputStream.writeObject("INVALID");
+            objectOutputStream.flush();
+        } catch (InterruptedIOException e) {
+            System.out.println(e.getMessage());
+            // Tell the server that the command was interrupted as it expects a command
+            objectOutputStream.writeObject("INTERRUPTED");
             objectOutputStream.flush();
         }
     }
@@ -140,11 +153,11 @@ public class Client {
             student = new Student(command[1], command[2], command[3], command[4]);
             course = new Course(command[5], command[6], command[7]);
         } else if (command.length == 1) {
-            System.out.println("\n[Client] Welcome to the course registration portal of the UdeM.");
+            System.out.println("\n" + CLIENT + "Welcome to the course registration portal of the UdeM.");
             course = courseSelectionMenu(scanner);
             student = createStudent(scanner);
         } else {
-            throw new IllegalArgumentException("[Client] " + Server.REGISTER_COMMAND + " requires either 0 or 7 arguments specifying the required form information.");
+            throw new IllegalArgumentException(CLIENT_ERROR + Server.REGISTER_COMMAND + " requires either 0 or 7 arguments specifying the required form information.");
         }
 
         // Create form
@@ -180,7 +193,7 @@ public class Client {
         } else if (command.length == 2) {
             objectOutputStream.writeObject(Server.LOAD_COMMAND + " " + command[1]);
         } else {
-            throw new IllegalArgumentException("[Client] " + Server.LOAD_COMMAND + " requires a maximum of 1 argument specifying the semester to filter.");
+            throw new IllegalArgumentException(CLIENT_ERROR + Server.LOAD_COMMAND + " requires a maximum of 1 argument specifying the semester to filter.");
         }
         objectOutputStream.flush();
 
@@ -191,9 +204,9 @@ public class Client {
         if (courses.isEmpty()) {
             // Check if a semester was provided
             if (command.length == 1) {
-                System.out.println("[Client] No courses are available.");
+                System.out.println(CLIENT_ERROR + "No courses are available.");
             } else {
-                System.out.println("[Client] No courses are available during the " + command[1] + " semester.");
+                System.out.println(CLIENT_ERROR + "No courses are available during the " + command[1] + " semester.");
             }
         }
 
@@ -208,7 +221,7 @@ public class Client {
     public static void disconnect() throws IOException {
         objectOutputStream.writeObject(Server.DISCONNECT_COMMAND);
         objectOutputStream.flush();
-        System.out.println("[Client] Disconnecting from server...");
+        System.out.println(CLIENT + "Disconnecting from server...");
     }
 
     /**
@@ -223,12 +236,13 @@ public class Client {
      */
     public static Course courseSelectionMenu(Scanner scanner) throws IOException, ClassNotFoundException {
         // TODO add way to exit registration process (when input received is -1?)
+        System.out.println(CLIENT + "At anytime, input -1 to stop the registration process.");
         while (true) {
             String semester = null;
 
             while (true) {
                 // List available semesters
-                System.out.println("[Client] Please select the semester for which you would like to consult available courses:");
+                System.out.println(CLIENT + "Please select the semester for which you would like to consult available courses:");
                 for (int i = 0; i < semesters.length; i++) {
                     System.out.println(i + ". " + semesters[i]);
                 }
@@ -237,10 +251,16 @@ public class Client {
                 System.out.print("> ");
                 try {
                     int choice = Integer.parseInt(scanner.nextLine());
+
+                    // Stop the registration process
+                    if (choice == -1) {
+                        throw new InterruptedIOException(CLIENT_ERROR + "Registration process interrupted.");
+                    }
+
                     semester = semesters[choice];
                     break;
-                } catch (Exception e) {
-                    System.out.println("[Client] Invalid input.");
+                } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                    System.out.println(CLIENT_ERROR + "Invalid input.");
                 }
             }
 
@@ -256,7 +276,7 @@ public class Client {
             Course selectedCourse = null;
             while (true) {
                 // List available courses
-                System.out.println("[Client] Choose one ot the available courses:");
+                System.out.println(CLIENT + "Choose one ot the available courses:");
                 for (int i = 0; i < courses.size(); i++) {
                     System.out.println(i + ". " + courses.get(i).getCode() + "\t" + courses.get(i).getName());
                 }
@@ -265,10 +285,16 @@ public class Client {
                 System.out.print("> ");
                 try {
                     int choice = Integer.parseInt(scanner.nextLine());
+
+                    // Stop the registration process
+                    if (choice == -1) {
+                        throw new InterruptedIOException(CLIENT_ERROR + "Registration process interrupted.");
+                    }
+
                     selectedCourse = courses.get(choice);
                     break;
-                } catch (Exception e) {
-                    System.out.println("[Client] Invalid input.");
+                } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                    System.out.println(CLIENT_ERROR + "Invalid input.");
                 }
             }
 
@@ -285,24 +311,24 @@ public class Client {
      */
     public static Student createStudent(Scanner scanner) {
         // Get first name
-        System.out.print("[Client] Input first name: ");
+        System.out.print(CLIENT + "Input first name: ");
         String firstName = scanner.nextLine();
 
         // Get last name
-        System.out.print("[Client] Input last name: ");
+        System.out.print(CLIENT + "Input last name: ");
         String lastName = scanner.nextLine();
 
         // Get valid email
         String email;
         do {
-            System.out.print("[Client] Input email: ");
+            System.out.print(CLIENT + "Input email: ");
             email = scanner.nextLine();
         } while (!isEmailValid(email));
 
         // Get student ID
         String studentID;
         do {
-            System.out.print("[Client] Input student ID: ");
+            System.out.print(CLIENT + "Input student ID: ");
             studentID = scanner.nextLine();
         } while (!isStudentIDValid(studentID));
 
@@ -326,7 +352,7 @@ public class Client {
 
         // Print message in case of invalid email
         if (!isValid) {
-            System.out.println("[Client] The email is invalid.");
+            System.out.println(CLIENT_ERROR + "The email is invalid.");
         }
 
         return isValid;
@@ -346,7 +372,7 @@ public class Client {
 
         // Print message in case of invalid student ID
         if (!isValid) {
-            System.out.println("[Client] The student ID is invalid.");
+            System.out.println(CLIENT_ERROR + "The student ID is invalid.");
         }
 
         return isValid;

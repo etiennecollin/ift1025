@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static com.etiennecollin.tp2.server.ServerLauncher.*;
+
 /**
  * This class represents a server that listens on a specified port for incoming client requests.
  * <p>
@@ -43,9 +45,9 @@ public class Server {
         while (true) {
             try {
                 // Wait for connection request, then accept it
-                System.out.println("[Server] Waiting for a client...");
+                System.out.println(SERVER + "Waiting for a client...");
                 Socket client = server.accept();
-                System.out.println("[Server] Connected to client: " + client);
+                System.out.println(SERVER + "Connected to client: " + ANSI_BLUE + client + ANSI_RESET);
 
                 // Create a new thread to listen to the client
                 ClientHandler clientHandler = new ClientHandler(client);

@@ -4,6 +4,8 @@
 
 package com.etiennecollin.tp2.clientSimple;
 
+import com.etiennecollin.tp2.server.Server;
+
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketException;
@@ -14,7 +16,15 @@ import java.net.SocketException;
  * The class contains a main method that creates a client instance and starts its execution.
  */
 public class ClientLauncher {
-    private final static int PORT = 1337;
+    protected static final String CLIENT = "[Client] ";
+    // Colors used to display output.
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final int PORT = 1337;
+    private static final String ANSI_RED = "\u001B[31m";
+    protected static final String CLIENT_ERROR = ANSI_RED + CLIENT + ANSI_RESET;
+    private static final String ANSI_GREEN = "\u001B[32m";
+    protected static final String CLIENT_VALID = ANSI_GREEN + CLIENT + ANSI_RESET;
+    private static final String ANSI_BLUE = "\u001B[34m";
 
     /**
      * The main method of the ClientLauncher class launches a client to bind to a
@@ -24,14 +34,16 @@ public class ClientLauncher {
      */
     public static void main(String[] args) {
         try {
-            System.out.println("[Client] Running...");
+            System.out.println(CLIENT + "Running...");
+            System.out.println(CLIENT + "Available commands are: " + ANSI_BLUE + Server.LOAD_COMMAND + ANSI_RESET + ", " + ANSI_BLUE + Server.REGISTER_COMMAND + ANSI_RESET + " and " + ANSI_BLUE + Server.DISCONNECT_COMMAND + ANSI_RESET + ".");
+
             Client.run(PORT);
         } catch (ConnectException e) {
             // Handle the case where no server is found
-            System.err.println("[Client] " + e.getMessage() + ", no server available on port " + PORT + ".");
+            System.out.println(CLIENT_ERROR + e.getMessage() + ", no server available on port " + PORT + ".");
         } catch (SocketException e) {
             // Handle the case where the server crashes without disconnecting
-            System.err.println("[Client] " + e.getMessage() + ", the connection to the server was lost.");
+            System.out.println(CLIENT_ERROR + e.getMessage() + ", the connection to the server was lost.");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

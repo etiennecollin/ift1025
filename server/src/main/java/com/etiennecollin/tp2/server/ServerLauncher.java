@@ -10,7 +10,14 @@ import java.io.IOException;
  * The ServerLauncher class launches a server on a specified port and starts its execution.
  */
 public class ServerLauncher {
-    private final static int PORT = 1337;
+    protected static final String SERVER = "[Server] ";
+    protected static final String ANSI_RESET = "\u001B[0m";
+    protected static final String ANSI_BLUE = "\u001B[34m";
+    private static final int PORT = 1337;
+    private static final String ANSI_RED = "\u001B[31m";
+    protected static final String SERVER_ERROR = ANSI_RED + SERVER + ANSI_RESET;
+    private static final String ANSI_GREEN = "\u001B[32m";
+    protected static final String SERVER_VALID = ANSI_GREEN + SERVER + ANSI_RESET;
 
     /**
      * The main method of the ServerLauncher class launches a server on a specified port and starts its execution.
@@ -19,10 +26,10 @@ public class ServerLauncher {
      */
     public static void main(String[] args) {
         try {
-            System.out.println("[Server] Running on port " + PORT + ".");
             Server.run(PORT);
+            System.out.println(SERVER + "Running on port " + PORT + ".");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(SERVER_ERROR + e.getMessage());
         }
     }
 }

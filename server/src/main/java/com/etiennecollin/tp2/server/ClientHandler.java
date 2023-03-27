@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. Etienne Collin #20237904 & Justin Villeneuve #20132792
+ * Copyright (c) 2023. Etienne Collin #20237904
  */
 
 package com.etiennecollin.tp2.server;

@@ -16,6 +16,10 @@
 <?import javafx.scene.text.Font?>
 
 
+<!--
+  ~ Copyright (c) 2023. Etienne Collin #20237904
+  -->
+
 <BorderPane fx:id="borderPane" onMouseDragged="#onBorderPaneDragged" onMousePressed="#onBorderPanePressed" stylesheets="@MainWindowStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.etiennecollin.tp2.clientFx.ClientController">
    <center>
       <AnchorPane prefHeight="400.0" prefWidth="600.0">

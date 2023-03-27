@@ -1,7 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="Etienne Collin &amp; Justin Villeneuve">
+  <settings default="Etienne Collin">
     <module2copyright>
-      <element module="All" copyright="Etienne Collin &amp; Justin Villeneuve" />
+      <element module="All" copyright="Etienne Collin" />
     </module2copyright>
   </settings>
 </component>

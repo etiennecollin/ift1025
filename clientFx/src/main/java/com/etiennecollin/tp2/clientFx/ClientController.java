@@ -202,7 +202,7 @@ public class ClientController implements Initializable {
      *
      * @return A student object.
      */
-    public Student createStudent() {
+    public Student createStudent() throws IllegalArgumentException {
         // Get first name
         String firstName = textFieldFirstName.getText();
 
@@ -210,18 +210,16 @@ public class ClientController implements Initializable {
         String lastName = textFieldLastName.getText();
 
         // Get valid email
-        String email;
-        do {
-            email = textFieldEmail.getText();
-            // TODO break/return and send prompt that email is invalid
-        } while (!isEmailValid(email));
+        String email = textFieldEmail.getText();
+        if (!isEmailValid(email)) {
+            throw new IllegalArgumentException("The email is invalid.");
+        }
 
         // Get student ID
-        String studentID;
-        do {
-            studentID = textFieldStudentID.getText();
-            // TODO break/return and send prompt that ID is invalid
-        } while (!isStudentIDValid(studentID));
+        String studentID = textFieldStudentID.getText();
+        if (!isStudentIDValid(studentID)) {
+            throw new IllegalArgumentException("The student ID is invalid.");
+        }
 
         // Return student information
         return new Student(firstName, lastName, email, studentID);
@@ -239,15 +237,7 @@ public class ClientController implements Initializable {
     public boolean isEmailValid(String email) {
         // Generate email regex pattern
         Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-        boolean isValid = pattern.matcher(email).matches();
-
-        // Print message in case of invalid email
-        if (!isValid) {
-            labelClientFeedback.setText("[Client] The email is invalid.");
-            // TODO send a prompt telling the user that the email is invalid just like in demo
-        }
-
-        return isValid;
+        return pattern.matcher(email).matches();
     }
 
     /**
@@ -260,15 +250,7 @@ public class ClientController implements Initializable {
     public boolean isStudentIDValid(String studentID) {
         // Generate email regex pattern
         Pattern pattern = Pattern.compile("^\\d{8}$");
-        boolean isValid = pattern.matcher(studentID).matches();
-
-        // Print message in case of invalid student ID
-        if (!isValid) {
-            labelClientFeedback.setText("[Client] The student ID is invalid.");
-            // TODO send a prompt telling the user that the student ID is invalid just like in demo
-        }
-
-        return isValid;
+        return pattern.matcher(studentID).matches();
     }
 
     /**

@@ -88,6 +88,24 @@ public class ClientController implements Initializable {
     }
 
     /**
+     * Displays an error message prompt and broadcasts the error message to the CLI error output.
+     *
+     * @param message The error message.
+     */
+    protected void displayErrorAlert(String message) {
+        System.err.println("[Client] " + message);
+        Alert alert = new Alert(Alert.AlertType.ERROR, message);
+        alert.showAndWait();
+        Stage stage = (Stage) borderPane.getScene().getWindow();
+        stage.close();
+    }
+
+    protected void displayInformationAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
+        alert.showAndWait();
+    }
+
+    /**
      * Sends the application the taskbar.
      */
     @FXML

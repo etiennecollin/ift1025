@@ -18,7 +18,7 @@ public class ClientLauncher {
     private final static int PORT = 1337;
 
     /**
-     * The main method of the ClientLauncher class launches a client to bind to a
+     * The main method of the ClientLauncher class launches a client, binds it to a
      * specific server port and starts its execution.
      *
      * @param args An array of command-line arguments passed to the program.
@@ -35,6 +35,5 @@ public class ClientLauncher {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 }

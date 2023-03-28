@@ -63,14 +63,17 @@ public class ClientController implements Initializable {
     // TODO verify and create javadoc
 
     /**
-     * Closes the application.
+     * Disconnects from the server and closes the application.
      */
     @FXML
     protected void onCloseButtonClick() {
         try {
             disconnect();
+        } catch (SocketException | EOFException e) {
+            // Handle the case where the server crashes without disconnecting
+            displayErrorAlert(e.getMessage() + ", the connection to the server was lost. The client will exit.");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         Stage stage = (Stage) borderPane.getScene().getWindow();
         stage.close();
@@ -84,7 +87,7 @@ public class ClientController implements Initializable {
     public void disconnect() throws IOException {
         objectOutputStream.writeObject(Server.DISCONNECT_COMMAND);
         objectOutputStream.flush();
-        labelClientFeedback.setText("[Client] Disconnecting from server...");
+        System.out.println("[Client] Disconnecting from server...");
     }
 
     /**
@@ -114,6 +117,9 @@ public class ClientController implements Initializable {
         stage.setIconified(true);
     }
 
+    /**
+     * Loads the available courses for the semester selected in the choiceBox.
+     */
     @FXML
     protected void onLoadButtonClick() {
         String semester = choiceBox.getValue().toString();
@@ -139,15 +145,14 @@ public class ClientController implements Initializable {
     }
 
     /**
-     * Sends a command to the server to load available courses with the option to filter for a specific semester.
+     * Sends a command to the server to load available courses for a specific semester.
      *
      * @param semester The semester to filter courses with.
      *
-     * @return A list containing the available courses.
+     * @return An ArrayList containing the available courses.
      *
-     * @throws IOException              If an I/O error occurs when dealing with the client input/output streams.
-     * @throws IllegalArgumentException If the command has an incorrect number of arguments.
-     * @throws ClassNotFoundException   If the returned Course object by the server is invalid.
+     * @throws IOException            If an I/O error occurs when dealing with the client input/output streams.
+     * @throws ClassNotFoundException If the returned Course object by the server is invalid.
      */
     public ArrayList<Course> getCourses(String semester) throws IOException, ClassNotFoundException {
         // Send command to server
@@ -167,6 +172,9 @@ public class ClientController implements Initializable {
         return courses;
     }
 
+    /**
+     * Sends a registration request to the server and notifies the user of the success of the registration.
+     */
     @FXML
     protected void onRegisterButtonClick() {
         try {
@@ -189,8 +197,9 @@ public class ClientController implements Initializable {
      *
      * @return The answer from the server.
      *
-     * @throws IOException            If an I/O error occurs when dealing with the client input/output streams.
-     * @throws ClassNotFoundException If the returned String by the server is invalid.
+     * @throws IOException              If an I/O error occurs when dealing with the client input/output streams.
+     * @throws ClassNotFoundException   If the returned String by the server is invalid.
+     * @throws IllegalArgumentException Iif the {@link #createStudent() createStudent()} method throws the exception.
      */
     public String register() throws IOException, IllegalArgumentException, ClassNotFoundException {
         // Create course object
@@ -220,9 +229,11 @@ public class ClientController implements Initializable {
     }
 
     /**
-     * Creates an array of strings containing the information about a student.
+     * Creates a student object containing the information about a student.
      *
      * @return A student object.
+     *
+     * @throws IllegalArgumentException If the email or student ID of the student is invalid.
      */
     public Student createStudent() throws IllegalArgumentException {
         // Get first name
@@ -298,6 +309,12 @@ public class ClientController implements Initializable {
         y = event.getSceneY();
     }
 
+    /**
+     * Initializes the client controller.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Fill choiceBox and set its default value

@@ -67,6 +67,13 @@ public class Client extends Application {
         client.close();
     }
 
+    /**
+     * This method starts the JavaFX client.
+     *
+     * @param stage A JavaFX application stage object.
+     *
+     * @throws IOException If there is an error loading the FXML file.
+     */
     @Override
     public void start(Stage stage) throws IOException {
         // Load window style

@@ -192,14 +192,19 @@ public class ClientController implements Initializable {
      * @throws IOException            If an I/O error occurs when dealing with the client input/output streams.
      * @throws ClassNotFoundException If the returned String by the server is invalid.
      */
-    public String register() throws IOException, ClassNotFoundException {
-        // Create student and course objects
+    public String register() throws IOException, IllegalArgumentException, ClassNotFoundException {
+        // Create course object
+        Course course = courseTable.getSelectionModel().getSelectedItem();
+
+        // Check that a course is selected
+        if (course == null) {
+            throw new IllegalArgumentException("No course is selected.");
+        }
+
+        // Create student object
         Student student = createStudent();
 
-        // TODO get values of course from table in GUI
-        Course course = new Course("Programmation2", "IFT1025", "Automne");
-
-        // Create form
+        // Create form object
         RegistrationForm form = new RegistrationForm(student, course);
 
         // Send command to the server

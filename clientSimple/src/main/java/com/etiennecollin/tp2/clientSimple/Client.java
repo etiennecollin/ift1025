@@ -144,7 +144,7 @@ public class Client {
      * @throws ClassNotFoundException   If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if the returned String by the server is invalid.
      * @throws IllegalArgumentException If the method is called with th eimproper number of arguments.
      */
-    public static String register(String[] command, Scanner scanner) throws IOException, ClassNotFoundException {
+    public static String register(String[] command, Scanner scanner) throws IOException, IllegalArgumentException, ClassNotFoundException {
         // Initialize objects
         RegistrationForm form;
         Student student;

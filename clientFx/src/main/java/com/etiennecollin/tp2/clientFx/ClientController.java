@@ -169,14 +169,19 @@ public class ClientController implements Initializable {
 
     @FXML
     protected void onRegisterButtonClick() {
-        String serverAnswer = null;
         try {
-            serverAnswer = register();
+            String serverAnswer = register();
+            // Print server answer
+            displayInformationAlert(serverAnswer);
+            labelClientFeedback.setText("Successful registration.");
+        } catch (IllegalArgumentException e) {
+            labelClientFeedback.setText(e.getMessage());
+        } catch (SocketException | EOFException e) {
+            // Handle the case where the server crashes without disconnecting
+            displayErrorAlert(e.getMessage() + ", the connection to the server was lost. The client will exit.");
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-        // Print server answer
-        labelClientFeedback.setText("[Client]" + serverAnswer);
     }
 
     /**

@@ -86,14 +86,14 @@ public class Client {
             if (command.length == 0) {
                 throw new IllegalArgumentException(CLIENT + "Input command is invalid.");
             } else if (command[0].equalsIgnoreCase(Server.REGISTER_COMMAND)) {
-                String serverAnswer = register(command, scanner);
+                String serverAnswer = register(scanner);
                 // Print server answer
-                System.out.println("\n" + CLIENT_VALID + serverAnswer + "\n");
+                System.out.println("\n" + CLIENT_SUCCESS + serverAnswer + "\n");
             } else if (command[0].equalsIgnoreCase(Server.LOAD_COMMAND)) {
                 ArrayList<Course> courses = getCourses(command);
                 // Print available courses if there are any
                 if (!courses.isEmpty()) {
-                    System.out.println("\n" + CLIENT_VALID + "Available courses:");
+                    System.out.println("\n" + CLIENT_SUCCESS + "Available courses:");
                     for (Course course : courses) {
                         System.out.println("\t" + course.getSemester() + "\t" + course.getCode() + "\t" + course.getName());
                     }
@@ -142,26 +142,13 @@ public class Client {
      * @throws IOException            If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if an I/O error occurs when dealing with the client input/output streams.
      * @throws ClassNotFoundException If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if the returned String by the server is invalid.
      */
-    public static String register(String[] command, Scanner scanner) throws IOException, IllegalArgumentException, ClassNotFoundException {
-        // Initialize objects
-        RegistrationForm form;
-        Student student;
-        Course course;
-
-        if (command.length == 8) {
-            // TODO verify that each argument is valid
-            student = new Student(command[1], command[2], command[3], command[4]);
-            course = new Course(command[5], command[6], command[7]);
-        } else if (command.length == 1) {
-            System.out.println("\n" + CLIENT + "Welcome to the course registration portal of the UdeM.");
-            course = courseSelectionMenu(scanner);
-            student = createStudent(scanner);
-        } else {
-            throw new IllegalArgumentException(CLIENT_ERROR + Server.REGISTER_COMMAND + " requires either 0 or 7 arguments specifying the required form information.");
-        }
+    private static String register(Scanner scanner) throws IOException, ClassNotFoundException {
+        System.out.println("\n" + CLIENT + "Welcome to the course registration portal of the UdeM.");
+        Course course = courseSelectionMenu(scanner);
+        Student student = createStudent(scanner);
 
         // Create form
-        form = new RegistrationForm(student, course);
+        RegistrationForm form = new RegistrationForm(student, course);
 
         // Send command to the server
         objectOutputStream.writeObject(Server.REGISTER_COMMAND);

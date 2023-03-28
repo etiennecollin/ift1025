@@ -300,10 +300,16 @@ public class ClientController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Fill choicebox and set its default value
+        // Fill choiceBox and set its default value
         for (String semester : semesters) {
             choiceBox.getItems().add(semester);
         }
         choiceBox.setValue(semesters[0]);
+
+        // Set table placeholder text
+        courseTable.setPlaceholder(new Label("No courses loaded"));
+        // Initialize table columns
+        tableColumnCode.setCellValueFactory(new PropertyValueFactory<>("Code"));
+        tableColumnCourse.setCellValueFactory(new PropertyValueFactory<>("Name"));
     }
 }

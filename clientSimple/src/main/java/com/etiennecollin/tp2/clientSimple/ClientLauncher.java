@@ -15,12 +15,11 @@ import java.net.SocketException;
  * <p>
  * The class contains a main method that creates a client instance and starts its execution.
  */
-public class ClientLauncher {
-    protected static final String CLIENT = "[Client] ";
+class ClientLauncher {
     /**
      * Prefix for client standard status messages.
      */
-    // Colors used to display output.
+    static final String CLIENT = "[Client] ";
     /**
      * Color code to reset text color to default.
      */
@@ -33,14 +32,15 @@ public class ClientLauncher {
     /**
      * Prefix for server error status messages.
      */
+    static final String CLIENT_ERROR = ANSI_RED + CLIENT + ANSI_RESET;
     /**
      * Color code to set text color to green.
      */
     private static final String ANSI_GREEN = "\u001B[32m";
-    protected static final String CLIENT_VALID = ANSI_GREEN + CLIENT + ANSI_RESET;
     /**
      * Prefix for server success status messages.
      */
+    static final String CLIENT_SUCCESS = ANSI_GREEN + CLIENT + ANSI_RESET;
     /**
      * Color code to set text color to blue.
      */

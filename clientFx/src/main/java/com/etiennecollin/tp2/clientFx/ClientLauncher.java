@@ -14,10 +14,23 @@ import java.net.SocketException;
  * <p>
  * The class contains a main method that creates a client instance and starts its execution.
  */
-public class ClientLauncher {
+class ClientLauncher {
     /**
      * Prefix for client standard status messages.
      */
+    static final String CLIENT = "[Client] ";
+    /**
+     * Color code to reset text color to default.
+     */
+    private static final String ANSI_RESET = "\u001B[0m";
+    /**
+     * Color code to set text color to red.
+     */
+    private static final String ANSI_RED = "\u001B[31m";
+    /**
+     * Prefix for server error status messages.
+     */
+    static final String CLIENT_ERROR = ANSI_RED + CLIENT + ANSI_RESET;
     private final static int PORT = 1337;
 
     /**
@@ -31,10 +44,10 @@ public class ClientLauncher {
             Client.run(PORT);
         } catch (ConnectException e) {
             // Handle the case where no server is found
-            System.err.println("[Client] " + e.getMessage() + ", no server available on port " + PORT + ".");
+            System.err.println(CLIENT + e.getMessage() + ", no server available on port " + PORT + ".");
         } catch (SocketException | EOFException e) {
             // Handle the case where the server crashes without disconnecting
-            System.err.println("[Client] " + e.getMessage() + ", the connection to the server was lost.");
+            System.err.println(CLIENT + e.getMessage() + ", the connection to the server was lost.");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

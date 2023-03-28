@@ -10,7 +10,7 @@ package com.etiennecollin.tp2.server;
  * Implementations of this interface must provide a method to handle events, taking in a command and an argument as strings.
  */
 @FunctionalInterface
-public interface EventHandler {
+interface EventHandler {
     /**
      * Handles an event with the given command and argument.
      *

@@ -39,7 +39,7 @@ public class Server {
      *
      * @throws IOException If there is an exception when creating the new server socket.
      */
-    public static void run(int port) throws IOException {
+   static void run(int port) throws IOException {
         ServerSocket server = new ServerSocket(port, 1);
         // Continuously listen for incoming client requests
         while (true) {

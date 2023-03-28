@@ -46,7 +46,7 @@ public class Client {
      *                                input/output streams.
      * @throws ClassNotFoundException If the method {@link #listen() listen()} throws the exception.
      */
-    public static void run(int port) throws IOException, ClassNotFoundException {
+    static void run(int port) throws IOException, ClassNotFoundException {
         // Connect to the server
         client = new Socket("localhost", port);
 
@@ -73,7 +73,7 @@ public class Client {
      * @throws ClassNotFoundException If the methods {@link #register(Scanner) register()} or
      *                                {@link #getCourses(String[]) getCourses()} throw the exception.
      */
-    public static void listen() throws IOException, ClassNotFoundException {
+    private static void listen() throws IOException, ClassNotFoundException {
         // Read and parse user input
         Scanner scanner = new Scanner(System.in);
 
@@ -126,7 +126,7 @@ public class Client {
      *
      * @throws IOException If an I/O error occurs when closing the streams or the client socket.
      */
-    public static void cleanup() throws IOException {
+    private static void cleanup() throws IOException {
         objectOutputStream.close();
         objectInputStream.close();
         client.close();
@@ -173,7 +173,7 @@ public class Client {
      * @throws IllegalArgumentException If the command has an incorrect number of arguments.
      * @throws ClassNotFoundException   If the returned Course object by the server is invalid.
      */
-    public static ArrayList<Course> getCourses(String[] command) throws IOException, IllegalArgumentException, ClassNotFoundException {
+    private static ArrayList<Course> getCourses(String[] command) throws IOException, IllegalArgumentException, ClassNotFoundException {
         // Send command to server
         if (command.length == 1) {
             objectOutputStream.writeObject(Server.LOAD_COMMAND);
@@ -205,7 +205,7 @@ public class Client {
      *
      * @throws IOException If an I/O error occurs when writing to the objectOutputStream.
      */
-    public static void disconnect() throws IOException {
+    private static void disconnect() throws IOException {
         objectOutputStream.writeObject(Server.DISCONNECT_COMMAND);
         objectOutputStream.flush();
         System.out.println(CLIENT + "Disconnecting from server...");
@@ -221,8 +221,7 @@ public class Client {
      * @throws IOException            If the method {@link #getCourses(String[]) getCourses()} throws the exception.
      * @throws ClassNotFoundException If the method {@link #getCourses(String[]) getCourses()} throws the exception.
      */
-    public static Course courseSelectionMenu(Scanner scanner) throws IOException, ClassNotFoundException {
-        // TODO add way to exit registration process (when input received is -1?)
+    private static Course courseSelectionMenu(Scanner scanner) throws IOException, ClassNotFoundException {
         System.out.println(CLIENT + "At anytime, input -1 to stop the registration process.");
         while (true) {
             String semester = null;
@@ -296,7 +295,7 @@ public class Client {
      *
      * @return A valid student object.
      */
-    public static Student createStudent(Scanner scanner) {
+    private static Student createStudent(Scanner scanner) {
         // Get first name
         System.out.print(CLIENT + "Input first name: ");
         String firstName = scanner.nextLine();
@@ -332,7 +331,7 @@ public class Client {
      *
      * @return Whether the email is valid or not.
      */
-    public static boolean isEmailValid(String email) {
+    private static boolean isEmailValid(String email) {
         // Generate email regex pattern
         Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         boolean isValid = pattern.matcher(email).matches();
@@ -352,7 +351,7 @@ public class Client {
      *
      * @return Whether the student ID is valid or not.
      */
-    public static boolean isStudentIDValid(String studentID) {
+    private static boolean isStudentIDValid(String studentID) {
         // Generate email regex pattern
         Pattern pattern = Pattern.compile("^\\d{8}$");
         boolean isValid = pattern.matcher(studentID).matches();

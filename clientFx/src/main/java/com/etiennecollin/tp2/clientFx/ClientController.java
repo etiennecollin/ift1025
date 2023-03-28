@@ -28,6 +28,8 @@ import java.util.regex.Pattern;
 
 import static com.etiennecollin.tp2.clientFx.Client.objectInputStream;
 import static com.etiennecollin.tp2.clientFx.Client.objectOutputStream;
+import static com.etiennecollin.tp2.clientFx.ClientLauncher.CLIENT;
+import static com.etiennecollin.tp2.clientFx.ClientLauncher.CLIENT_ERROR;
 
 /**
  * The ClientController class is responsible for handling user input and communicating with the server.
@@ -58,13 +60,11 @@ public class ClientController implements Initializable {
     @FXML
     private TextField textFieldStudentID;
 
-    // TODO verify and create javadoc
-
     /**
      * Disconnects from the server and closes the application.
      */
     @FXML
-    protected void onCloseButtonClick() {
+    private void onCloseButtonClick() {
         try {
             disconnect();
         } catch (SocketException | EOFException e) {
@@ -82,10 +82,10 @@ public class ClientController implements Initializable {
      *
      * @throws IOException If an I/O error occurs when writing to the objectOutputStream.
      */
-    public void disconnect() throws IOException {
+    private void disconnect() throws IOException {
         objectOutputStream.writeObject(Server.DISCONNECT_COMMAND);
         objectOutputStream.flush();
-        System.out.println("[Client] Disconnecting from server...");
+        System.out.println(CLIENT + "Disconnecting from server...");
     }
 
     /**
@@ -93,8 +93,8 @@ public class ClientController implements Initializable {
      *
      * @param message The error message.
      */
-    protected void displayErrorAlert(String message) {
-        System.err.println("[Client] " + message);
+    private void displayErrorAlert(String message) {
+        System.err.println(CLIENT_ERROR + message);
         Alert alert = new Alert(Alert.AlertType.ERROR, message);
         alert.showAndWait();
         Stage stage = (Stage) borderPane.getScene().getWindow();
@@ -105,7 +105,7 @@ public class ClientController implements Initializable {
      * Sends the application the taskbar.
      */
     @FXML
-    protected void onHideButtonClick() {
+    private void onHideButtonClick() {
         Stage stage = (Stage) borderPane.getScene().getWindow();
         stage.setIconified(true);
     }
@@ -114,7 +114,7 @@ public class ClientController implements Initializable {
      * Loads the available courses for the semester selected in the choiceBox.
      */
     @FXML
-    protected void onLoadButtonClick() {
+    private void onLoadButtonClick() {
         String semester = choiceBox.getValue().toString();
 
         ArrayList<Course> courses = null;
@@ -145,7 +145,7 @@ public class ClientController implements Initializable {
      * @throws IOException            If an I/O error occurs when dealing with the client input/output streams.
      * @throws ClassNotFoundException If the returned Course object by the server is invalid.
      */
-    public ArrayList<Course> getCourses(String semester) throws IOException, ClassNotFoundException {
+    private ArrayList<Course> getCourses(String semester) throws IOException, ClassNotFoundException {
         // Send command to server
         objectOutputStream.writeObject(Server.LOAD_COMMAND + " " + semester);
         objectOutputStream.flush();
@@ -167,7 +167,7 @@ public class ClientController implements Initializable {
      * Sends a registration request to the server and notifies the user of the success of the registration.
      */
     @FXML
-    protected void onRegisterButtonClick() {
+    private void onRegisterButtonClick() {
         try {
             String serverAnswer = register();
             // Print server answer
@@ -192,7 +192,7 @@ public class ClientController implements Initializable {
      * @throws ClassNotFoundException   If the returned String by the server is invalid.
      * @throws IllegalArgumentException Iif the {@link #createStudent() createStudent()} method throws the exception.
      */
-    public String register() throws IOException, IllegalArgumentException, ClassNotFoundException {
+    private String register() throws IOException, IllegalArgumentException, ClassNotFoundException {
         // Create course object
         Course course = courseTable.getSelectionModel().getSelectedItem();
 
@@ -236,7 +236,7 @@ public class ClientController implements Initializable {
      *
      * @throws IllegalArgumentException If the email or student ID of the student is invalid.
      */
-    public Student createStudent() throws IllegalArgumentException {
+    private Student createStudent() throws IllegalArgumentException {
         // Get first name
         String firstName = textFieldFirstName.getText();
 
@@ -268,7 +268,7 @@ public class ClientController implements Initializable {
      *
      * @return Whether the email is valid or not.
      */
-    public boolean isEmailValid(String email) {
+    private boolean isEmailValid(String email) {
         // Generate email regex pattern
         Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         return pattern.matcher(email).matches();
@@ -281,7 +281,7 @@ public class ClientController implements Initializable {
      *
      * @return Whether the student ID is valid or not.
      */
-    public boolean isStudentIDValid(String studentID) {
+    private boolean isStudentIDValid(String studentID) {
         // Generate email regex pattern
         Pattern pattern = Pattern.compile("^\\d{8}$");
         return pattern.matcher(studentID).matches();
@@ -293,7 +293,7 @@ public class ClientController implements Initializable {
      * @param event An event representing the actions of the mouse.
      */
     @FXML
-    protected void onBorderPaneDragged(MouseEvent event) {
+    private void onBorderPaneDragged(MouseEvent event) {
         Stage stage = (Stage) borderPane.getScene().getWindow();
         stage.setX(event.getScreenX() - x);
         stage.setY(event.getScreenY() - y);
@@ -305,7 +305,7 @@ public class ClientController implements Initializable {
      * @param event An event representing the actions of the mouse.
      */
     @FXML
-    protected void onBorderPanePressed(MouseEvent event) {
+    private void onBorderPanePressed(MouseEvent event) {
         x = event.getSceneX();
         y = event.getSceneY();
     }

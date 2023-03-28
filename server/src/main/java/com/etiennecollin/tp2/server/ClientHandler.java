@@ -23,7 +23,7 @@ import static com.etiennecollin.tp2.server.ServerLauncher.*;
  * registering a client to a course, sending available courses to the client, filtering courses by semester and
  * disconnecting from the client.
  */
-public class ClientHandler implements Runnable {
+class ClientHandler implements Runnable {
     private final Socket client;
     private final ObjectInputStream objectInputStream;
     private final ObjectOutputStream objectOutputStream;
@@ -38,7 +38,7 @@ public class ClientHandler implements Runnable {
      *
      * @throws IOException If an I/O error occurs when getting the client streams.
      */
-    public ClientHandler(Socket client) throws IOException {
+    ClientHandler(Socket client) throws IOException {
         // Store the client and create streams to read/write from/to the client
         this.client = client;
         this.objectInputStream = new ObjectInputStream(client.getInputStream());
@@ -54,7 +54,7 @@ public class ClientHandler implements Runnable {
      *
      * @param handler The event handler to add.
      */
-    public void addEventHandler(EventHandler handler) {
+    private void addEventHandler(EventHandler handler) {
         this.handlers.add(handler);
     }
 
@@ -64,7 +64,7 @@ public class ClientHandler implements Runnable {
      * @param cmd The command to execute.
      * @param arg The argument to pass to the event handler.
      */
-    public void handleEvents(String cmd, String arg) {
+    private void handleEvents(String cmd, String arg) {
         System.out.println(SERVER + "Received command " + ANSI_BLUE + cmd + ANSI_RESET + " from client: " + ANSI_BLUE + client + ANSI_RESET);
         try {
             if (cmd.equalsIgnoreCase(Server.REGISTER_COMMAND)) {
@@ -90,7 +90,7 @@ public class ClientHandler implements Runnable {
      *                                when dealing with the input/output streams.
      * @throws ClassNotFoundException If the content of the ObjectInputStream is not a RegistrationForm object.
      */
-    public void handleRegistration() throws IOException, ClassNotFoundException {
+    private void handleRegistration() throws IOException, ClassNotFoundException {
         // Read the RegistrationForm object from the object input stream
         RegistrationForm form = (RegistrationForm) objectInputStream.readObject();
 
@@ -118,7 +118,7 @@ public class ClientHandler implements Runnable {
      * @throws IOException If an I/O error occurs while reading from the text file containing the courses or
      *                     when writing to the output stream.
      */
-    public void handleLoadCourses(String semester) throws IOException {
+    private void handleLoadCourses(String semester) throws IOException {
         ArrayList<Course> courses = new ArrayList<>();
 
         // Read the file
@@ -157,7 +157,7 @@ public class ClientHandler implements Runnable {
      *
      * @throws IOException If an I/O error occurs while closing the object input/output streams or the socket.
      */
-    public void disconnect() throws IOException {
+    private void disconnect() throws IOException {
         // Tell the handler it can stop listening to the client
         isClientDisconnecting = true;
 
@@ -209,7 +209,7 @@ public class ClientHandler implements Runnable {
      * @throws IOException            If an I/O error occurs while reading from the input stream.
      * @throws ClassNotFoundException If the class of the serialized object in the input stream cannot be found.
      */
-    public void listen() throws IOException, ClassNotFoundException {
+    private void listen() throws IOException, ClassNotFoundException {
         String line;
 
         if ((line = this.objectInputStream.readObject().toString()) != null) {
@@ -227,7 +227,7 @@ public class ClientHandler implements Runnable {
      *
      * @return A pair containing the command and its arguments.
      */
-    public Pair<String, String> processCommandLine(String line) {
+    private Pair<String, String> processCommandLine(String line) {
         // Split the command into two parts
         String[] parts = line.split(" ");
 

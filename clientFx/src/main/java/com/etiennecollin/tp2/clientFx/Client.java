@@ -25,8 +25,8 @@ import java.net.Socket;
  * communicate with the server.
  */
 public class Client extends Application {
-    protected static ObjectInputStream objectInputStream;
-    protected static ObjectOutputStream objectOutputStream;
+    static ObjectInputStream objectInputStream;
+    static ObjectOutputStream objectOutputStream;
     private static Socket client;
 
     /**
@@ -39,7 +39,7 @@ public class Client extends Application {
      *                                input/output streams.
      * @throws ClassNotFoundException If the method {@link #launch(String...) launch()} throws the exception.
      */
-    public static void run(int port) throws IOException, ClassNotFoundException {
+    static void run(int port) throws IOException, ClassNotFoundException {
         // Connect to the server
         client = new Socket("localhost", port);
 
@@ -59,7 +59,7 @@ public class Client extends Application {
      *
      * @throws IOException If an I/O error occurs when closing the streams or the client socket.
      */
-    public static void cleanup() throws IOException {
+    private static void cleanup() throws IOException {
         objectOutputStream.close();
         objectInputStream.close();
         client.close();

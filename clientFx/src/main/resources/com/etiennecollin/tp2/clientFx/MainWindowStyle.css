@@ -58,7 +58,7 @@
 
 }
 
-.table-row-cell:selected {
+.table-view .cell:selected {
     -fx-background-color: #00000022;
     -fx-background-insets: 0;
     -fx-background-radius: 1;

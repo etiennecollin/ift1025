@@ -149,13 +149,9 @@ public class ClientController implements Initializable {
      * @throws IllegalArgumentException If the command has an incorrect number of arguments.
      * @throws ClassNotFoundException   If the returned Course object by the server is invalid.
      */
-    public ArrayList<Course> getCourses(String semester) throws IOException, IllegalArgumentException, ClassNotFoundException {
+    public ArrayList<Course> getCourses(String semester) throws IOException, ClassNotFoundException {
         // Send command to server
-        if (semester.equals("")) {
-            objectOutputStream.writeObject(Server.LOAD_COMMAND);
-        } else {
-            objectOutputStream.writeObject(Server.LOAD_COMMAND + " " + semester);
-        }
+        objectOutputStream.writeObject(Server.LOAD_COMMAND + " " + semester);
         objectOutputStream.flush();
 
         // Get server reply
@@ -163,12 +159,9 @@ public class ClientController implements Initializable {
 
         // Check if there are available courses or not
         if (courses.isEmpty()) {
-            // Check if a semester was provided
-            if (semester.equals("")) {
-                labelClientFeedback.setText("[Client] No courses are available.");
-            } else {
-                labelClientFeedback.setText("[Client] No courses are available during the " + semester + " semester.");
-            }
+            labelClientFeedback.setText("No courses are available during the " + semester + " semester.");
+        } else {
+            labelClientFeedback.setText("Loaded the available courses for the " + semester + " semester.");
         }
 
         return courses;

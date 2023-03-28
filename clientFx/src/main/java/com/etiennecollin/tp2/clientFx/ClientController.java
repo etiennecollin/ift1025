@@ -8,17 +8,19 @@ import com.etiennecollin.tp2.server.Server;
 import com.etiennecollin.tp2.server.models.Course;
 import com.etiennecollin.tp2.server.models.RegistrationForm;
 import com.etiennecollin.tp2.server.models.Student;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.EOFException;
 import java.io.IOException;
+import java.net.SocketException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -32,15 +34,7 @@ public class ClientController implements Initializable {
     @FXML
     private Label labelClientFeedback;
     @FXML
-    private TableView<Course> table;
-    @FXML
-    private ImageView btnClose;
-    @FXML
-    private ImageView btnHide;
-    @FXML
-    private Pane btnLoad;
-    @FXML
-    private Pane btnRegister;
+    private TableView<Course> courseTable;
     @FXML
     private ChoiceBox choiceBox;
     @FXML

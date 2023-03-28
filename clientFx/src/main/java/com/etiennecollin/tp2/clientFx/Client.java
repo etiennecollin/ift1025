@@ -12,24 +12,14 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-
-import com.etiennecollin.tp2.server.Server;
-import com.etiennecollin.tp2.server.models.Course;
-import com.etiennecollin.tp2.server.models.RegistrationForm;
-import com.etiennecollin.tp2.server.models.Student;
-
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Client extends Application {
-    private static Socket client;
     protected static ObjectInputStream objectInputStream;
     protected static ObjectOutputStream objectOutputStream;
+    private static Socket client;
 
     /**
      * Runs the client, allowing the user to interact with the server.

@@ -113,6 +113,7 @@ public class Client {
             objectOutputStream.writeObject("INVALID");
             objectOutputStream.flush();
         } catch (InterruptedIOException e) {
+            // Case when the user interrupts the registration process
             System.out.println(e.getMessage());
             // Tell the server that the command was interrupted as it expects a command
             objectOutputStream.writeObject("INTERRUPTED");
@@ -139,8 +140,9 @@ public class Client {
      *
      * @return The answer from the server.
      *
-     * @throws IOException            If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if an I/O error occurs when dealing with the client input/output streams.
-     * @throws ClassNotFoundException If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if the returned String by the server is invalid.
+     * @throws IOException              If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if an I/O error occurs when dealing with the client input/output streams.
+     * @throws ClassNotFoundException   If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if the returned String by the server is invalid.
+     * @throws IllegalArgumentException If the method is called with th eimproper number of arguments.
      */
     public static String register(String[] command, Scanner scanner) throws IOException, ClassNotFoundException {
         // Initialize objects
@@ -303,7 +305,7 @@ public class Client {
     }
 
     /**
-     * Creates an array of strings containing the information about a student.
+     * Creates a student object containing the information about a student.
      *
      * @param scanner The scanner which will read the user input.
      *

@@ -24,9 +24,9 @@ import static com.etiennecollin.tp2.clientSimple.ClientLauncher.*;
  * The Client class represents a client that can interact with a server through a socket connection.
  * <p>
  * The client can send registration forms, load courses for a specific semester, and disconnect from the server.
- * The client is run using the static method run(int port), which connects the client to the server and then allows
- * the user to input commands that are sent to the server. The client uses object input/output streams to communicate
- * with the server.
+ * The client is run using the static method {@link #run(int) run()}, which connects the client to the server and then
+ * allows the user to input commands that are sent to the server. The client uses object input/output streams to
+ * communicate with the server.
  */
 public class Client {
     private static final String[] semesters = new String[]{"Automne", "Hiver", "Ete"};
@@ -66,11 +66,11 @@ public class Client {
     /**
      * Gets the user input command and processes, it if it is valid, before passing it to the server.
      *
-     * @throws IOException            If the methods {@link #register(String[], Scanner) register()},
+     * @throws IOException            If the methods {@link #register(Scanner) register()},
      *                                {@link #getCourses(String[]) getCourses()} or {@link #disconnect() disconnect()}
      *                                throw the exception, or if an I/O error occurs when dealing
      *                                with the client input/output streams.
-     * @throws ClassNotFoundException If the methods {@link #register(String[], Scanner) register()} or
+     * @throws ClassNotFoundException If the methods {@link #register(Scanner) register()} or
      *                                {@link #getCourses(String[]) getCourses()} throw the exception.
      */
     public static void listen() throws IOException, ClassNotFoundException {
@@ -135,14 +135,12 @@ public class Client {
     /**
      * Sends a registration form to the server.
      *
-     * @param command The registration command and its arguments.
      * @param scanner The scanner which will read the user input.
      *
      * @return The answer from the server.
      *
-     * @throws IOException              If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if an I/O error occurs when dealing with the client input/output streams.
-     * @throws ClassNotFoundException   If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if the returned String by the server is invalid.
-     * @throws IllegalArgumentException If the method is called with th eimproper number of arguments.
+     * @throws IOException            If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if an I/O error occurs when dealing with the client input/output streams.
+     * @throws ClassNotFoundException If the method {@link #courseSelectionMenu(Scanner) courseSelectionMenu()} throws the exception or if the returned String by the server is invalid.
      */
     public static String register(String[] command, Scanner scanner) throws IOException, IllegalArgumentException, ClassNotFoundException {
         // Initialize objects

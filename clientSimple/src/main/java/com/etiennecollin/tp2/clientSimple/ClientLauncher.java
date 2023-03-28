@@ -17,13 +17,33 @@ import java.net.SocketException;
  */
 public class ClientLauncher {
     protected static final String CLIENT = "[Client] ";
+    /**
+     * Prefix for client standard status messages.
+     */
     // Colors used to display output.
+    /**
+     * Color code to reset text color to default.
+     */
     private static final String ANSI_RESET = "\u001B[0m";
     private static final int PORT = 1337;
+    /**
+     * Color code to set text color to red.
+     */
     private static final String ANSI_RED = "\u001B[31m";
-    protected static final String CLIENT_ERROR = ANSI_RED + CLIENT + ANSI_RESET;
+    /**
+     * Prefix for server error status messages.
+     */
+    /**
+     * Color code to set text color to green.
+     */
     private static final String ANSI_GREEN = "\u001B[32m";
     protected static final String CLIENT_VALID = ANSI_GREEN + CLIENT + ANSI_RESET;
+    /**
+     * Prefix for server success status messages.
+     */
+    /**
+     * Color code to set text color to blue.
+     */
     private static final String ANSI_BLUE = "\u001B[34m";
 
     /**

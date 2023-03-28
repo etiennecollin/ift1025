@@ -29,6 +29,10 @@ import java.util.regex.Pattern;
 import static com.etiennecollin.tp2.clientFx.Client.objectInputStream;
 import static com.etiennecollin.tp2.clientFx.Client.objectOutputStream;
 
+/**
+ * The ClientController class is responsible for handling user input and communicating with the server.
+ * It implements the Initializable interface, which allows it to initialize components from a JavaFX FXML file.
+ */
 public class ClientController implements Initializable {
     private static final String[] semesters = new String[]{"Automne", "Hiver", "Ete"};
     @FXML
@@ -85,7 +89,7 @@ public class ClientController implements Initializable {
     }
 
     /**
-     * Displays an error message prompt and broadcasts the error message to the CLI error output.
+     * Displays an error message alert to the user and also broadcasts the error message to the CLI error output.
      *
      * @param message The error message.
      */
@@ -95,11 +99,6 @@ public class ClientController implements Initializable {
         alert.showAndWait();
         Stage stage = (Stage) borderPane.getScene().getWindow();
         stage.close();
-    }
-
-    protected void displayInformationAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
-        alert.showAndWait();
     }
 
     /**
@@ -128,8 +127,6 @@ public class ClientController implements Initializable {
 
             // Print available courses
             courseTable.setItems(observableCourses);
-
-
         } catch (SocketException | EOFException e) {
             // Handle the case where the server crashes without disconnecting
             displayErrorAlert("The connection to the server was lost. The client will exit.");
@@ -223,6 +220,16 @@ public class ClientController implements Initializable {
     }
 
     /**
+     * Displays an information alert to the user.
+     *
+     * @param message The error message.
+     */
+    private void displayInformationAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
+        alert.showAndWait();
+    }
+
+    /**
      * Creates a student object containing the information about a student.
      *
      * @return A student object.
@@ -306,7 +313,7 @@ public class ClientController implements Initializable {
     /**
      * Initializes the client controller.
      *
-     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override

@@ -16,6 +16,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * The Client class represents a client that can interact with a server through a socket connection.
+ * <p>
+ * The client can send registration forms, load courses for a specific semester, and disconnect from the server.
+ * The client is run using the static method {@link #run(int) run()}, which connects the client to the server and then
+ * allows the user to input commands that are sent to the server. The client uses object input/output streams to
+ * communicate with the server.
+ */
 public class Client extends Application {
     protected static ObjectInputStream objectInputStream;
     protected static ObjectOutputStream objectOutputStream;

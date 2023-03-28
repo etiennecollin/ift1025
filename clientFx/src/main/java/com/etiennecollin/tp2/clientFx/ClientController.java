@@ -122,18 +122,19 @@ public class ClientController implements Initializable {
 
         try {
             courses = getCourses(semester);
+
+            // Convert courses to Observable
+            ObservableList<Course> observableCourses = FXCollections.observableArrayList(courses);
+
+            // Print available courses
+            courseTable.setItems(observableCourses);
+
+
+        } catch (SocketException | EOFException e) {
+            // Handle the case where the server crashes without disconnecting
+            displayErrorAlert("The connection to the server was lost. The client will exit.");
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Print available courses if there are any
-        if (!courses.isEmpty()) {
-            tableColumnCode.setCellValueFactory(new PropertyValueFactory<>("code"));
-            tableColumnCourse.setCellValueFactory(new PropertyValueFactory<>("name"));
-            table.getItems().setAll(courses);
-
-            // TODO Add courses to table
-            labelClientFeedback.setText("[Client] " + courses);
+            e.printStackTrace();
         }
     }
 

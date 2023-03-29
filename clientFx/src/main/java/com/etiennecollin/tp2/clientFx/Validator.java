@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 /**
  * The Validator class implements methods that validate information.
  */
-class Validator {
+public class Validator {
     /**
      * Validates an email.
      * <p>
@@ -19,7 +19,7 @@ class Validator {
      *
      * @return Whether the email is valid or not.
      */
-    static boolean isEmailValid(String email) {
+    public static boolean isEmailValid(String email) {
         // Generate email regex pattern
         Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         return pattern.matcher(email).matches();
@@ -32,7 +32,7 @@ class Validator {
      *
      * @return Whether the student ID is valid or not.
      */
-    static boolean isStudentIDValid(String studentID) {
+    public static boolean isStudentIDValid(String studentID) {
         // Generate email regex pattern
         Pattern pattern = Pattern.compile("^\\d{8}$");
         return pattern.matcher(studentID).matches();

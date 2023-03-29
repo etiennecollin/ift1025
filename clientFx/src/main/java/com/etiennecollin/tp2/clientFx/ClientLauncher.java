@@ -14,7 +14,7 @@ import java.net.SocketException;
  * <p>
  * The class contains a main method that creates a client instance and starts its execution.
  */
-class ClientLauncher {
+public class ClientLauncher {
     /**
      * Prefix for client standard status messages.
      */

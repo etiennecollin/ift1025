@@ -11,6 +11,8 @@
         <option value="$PROJECT_DIR$/server/pom.xml" />
         <option value="$PROJECT_DIR$/clientSimple/pom.xml" />
         <option value="$PROJECT_DIR$/clientFx/pom.xml" />
+        <option value="$PROJECT_DIR$/clientCLI/pom.xml" />
+        <option value="$PROJECT_DIR$/clientGUI/pom.xml" />
       </list>
     </option>
   </component>

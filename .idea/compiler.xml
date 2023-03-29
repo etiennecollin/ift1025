@@ -6,9 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="clientFx" />
+        <module name="clientCLI" />
         <module name="server" />
-        <module name="clientSimple" />
+        <module name="clientGUI" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

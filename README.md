@@ -13,21 +13,21 @@ This project involves creating a Java client-server application that allows stud
 
 To execute the JAR and to make sure the data files are properly found, make sure that you are inside the repository directory such that your environment variable `$PWD=.../ift1025-tp2/`.
 
-To run the jar files, use the command `java -jar theFile.jar`.
+To run the jar files, use the command `java -jar jars/theFile.jar`.
 
 ### Example
 
 To launch the server:
 ```bash
-java -jar target/jar/server.jar
+java -jar jars/server.jar
 ```
 
 To launch the CLI client:
 ```bash
-java -jar target/jar/clientSimple.jar
+java -jar jars/clientCLI.jar
 ```
 
 To lunch the GUI client:
 ```bash
-java -jar target/jar/clientFx.jar
+java -jar jars/clientGUI.jar
 ```

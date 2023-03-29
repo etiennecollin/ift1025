@@ -2,9 +2,6 @@
 <module version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$/server">
-      <sourceFolder url="file://$MODULE_DIR$/server/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/server/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/server/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/server/target" />
     </content>
   </component>

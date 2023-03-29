@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="clientSimple" type="Application" factoryName="Application" singleton="false">
-    <option name="MAIN_CLASS_NAME" value="com.etiennecollin.tp2.clientSimple.ClientLauncher" />
-    <module name="clientSimple" />
+    <option name="MAIN_CLASS_NAME" value="com.etiennecollin.tp2.clientCLI.ClientLauncher" />
+    <module name="clientCLI" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CssDialectMappings">
-    <file url="file://$PROJECT_DIR$/clientFx/src/main/resources/com/etiennecollin/tp2/clientFx/MainWindowStyle.css" dialect="CLASSIC" />
+    <file url="file://$PROJECT_DIR$/clientGUI/src/main/resources/com/etiennecollin/tp2/clientGUI/MainWindowStyle.css" dialect="CLASSIC" />
   </component>
 </project>

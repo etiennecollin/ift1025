@@ -11,6 +11,7 @@
     <groupId>com.etiennecollin</groupId>
     <artifactId>server</artifactId>
     <version>1.0</version>
+    <name>server</name>
     <url>https://github.com/etiennecollin/ift1025-tp2</url>
 
     <properties>
@@ -24,12 +25,6 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>19</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.9.2</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

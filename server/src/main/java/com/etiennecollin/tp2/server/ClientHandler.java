@@ -148,7 +148,8 @@ class ClientHandler implements Runnable {
 
             // Make sure three arguments form the course in the file
             if (tokens.length != 3) {
-                throw new InvalidObjectException("The courses in " + fileName + " are not properly formatted. The format is `code\tname\tsemester`");
+                System.out.println(SERVER_ERROR + "The courses in " + fileName + " are not properly formatted. The format is `code\tname\tsemester`");
+                break;
             }
 
             if (semester.equals("")) {

@@ -1,7 +1,7 @@
-module:clientFx
-com.etiennecollin.tp2.clientFx
-module:clientSimple
-com.etiennecollin.tp2.clientSimple
+module:clientCLI
+com.etiennecollin.tp2.clientCLI
+module:clientGUI
+com.etiennecollin.tp2.clientGUI
 module:server
 com.etiennecollin.tp2.server
 com.etiennecollin.tp2.server.models

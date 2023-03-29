@@ -8,17 +8,20 @@ Server.java
   - Made the server "static" by removing its constructor and passing the server port directly to the run() method.
     Done because the server launcher will never launch more than one server.
   - Added error handling
+  - Changed accessibility of methods/classes/fields
 
 ServerLauncher.java
   - Modified server startup message
   - When the server class was made "static", the ServerLauncher was modified to simply do Server.run(PORT) to start a server
   - Made the server port private as it is independently modified from the client port
+  - Changed accessibility of methods/classes/fields
 
 ClientHandler.java
   - Modified server messages and the way it sends information to the client
   - run() continuously listens to the client without disconnections until the server receives a DISCONNECT commands
   - Added error handling
   - The now server accepts a DISCONNECT command to cleanly disconnect from a client
+  - Changed accessibility of methods/classes/fields
 
 Course.java
   - Uniformized code by translating it to english (variables, toString() method return, etc)

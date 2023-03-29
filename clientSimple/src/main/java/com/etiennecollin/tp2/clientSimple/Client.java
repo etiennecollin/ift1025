@@ -4,7 +4,6 @@
 
 package com.etiennecollin.tp2.clientSimple;
 
-import com.etiennecollin.tp2.server.Server;
 import com.etiennecollin.tp2.server.models.Course;
 import com.etiennecollin.tp2.server.models.RegistrationForm;
 import com.etiennecollin.tp2.server.models.Student;
@@ -16,9 +15,11 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 import static com.etiennecollin.tp2.clientSimple.ClientLauncher.*;
+import static com.etiennecollin.tp2.clientSimple.Validator.isEmailValid;
+import static com.etiennecollin.tp2.clientSimple.Validator.isStudentIDValid;
+import static com.etiennecollin.tp2.server.Server.*;
 
 /**
  * The Client class represents a client that can interact with a server through a socket connection.
@@ -85,11 +86,11 @@ public class Client {
             // Check if command is valid
             if (command.length == 0) {
                 throw new IllegalArgumentException(CLIENT + "Input command is invalid.");
-            } else if (command[0].equalsIgnoreCase(Server.REGISTER_COMMAND)) {
+            } else if (command[0].equalsIgnoreCase(REGISTER_COMMAND)) {
                 String serverAnswer = register(scanner);
                 // Print server answer
                 System.out.println("\n" + CLIENT_SUCCESS + serverAnswer + "\n");
-            } else if (command[0].equalsIgnoreCase(Server.LOAD_COMMAND)) {
+            } else if (command[0].equalsIgnoreCase(LOAD_COMMAND)) {
                 ArrayList<Course> courses = getCourses(command);
                 // Print available courses if there are any
                 if (!courses.isEmpty()) {
@@ -99,7 +100,7 @@ public class Client {
                     }
                     System.out.println();
                 }
-            } else if (command[0].equalsIgnoreCase(Server.DISCONNECT_COMMAND)) {
+            } else if (command[0].equalsIgnoreCase(DISCONNECT_COMMAND)) {
                 doDisconnect = true;
                 scanner.close();
                 disconnect();
@@ -151,7 +152,7 @@ public class Client {
         RegistrationForm form = new RegistrationForm(student, course);
 
         // Send command to the server
-        objectOutputStream.writeObject(Server.REGISTER_COMMAND);
+        objectOutputStream.writeObject(REGISTER_COMMAND);
         objectOutputStream.flush();
 
         // Send form to the server
@@ -176,11 +177,11 @@ public class Client {
     private static ArrayList<Course> getCourses(String[] command) throws IOException, IllegalArgumentException, ClassNotFoundException {
         // Send command to server
         if (command.length == 1) {
-            objectOutputStream.writeObject(Server.LOAD_COMMAND);
+            objectOutputStream.writeObject(LOAD_COMMAND);
         } else if (command.length == 2) {
-            objectOutputStream.writeObject(Server.LOAD_COMMAND + " " + command[1]);
+            objectOutputStream.writeObject(LOAD_COMMAND + " " + command[1]);
         } else {
-            throw new IllegalArgumentException(CLIENT_ERROR + Server.LOAD_COMMAND + " requires a maximum of 1 argument specifying the semester to filter.");
+            throw new IllegalArgumentException(CLIENT_ERROR + LOAD_COMMAND + " requires a maximum of 1 argument specifying the semester to filter.");
         }
         objectOutputStream.flush();
 
@@ -206,7 +207,7 @@ public class Client {
      * @throws IOException If an I/O error occurs when writing to the objectOutputStream.
      */
     private static void disconnect() throws IOException {
-        objectOutputStream.writeObject(Server.DISCONNECT_COMMAND);
+        objectOutputStream.writeObject(DISCONNECT_COMMAND);
         objectOutputStream.flush();
         System.out.println(CLIENT + "Disconnecting from server...");
     }
@@ -251,7 +252,7 @@ public class Client {
             }
 
             // Get available courses
-            ArrayList<Course> courses = getCourses(new String[]{Server.LOAD_COMMAND, semester});
+            ArrayList<Course> courses = getCourses(new String[]{LOAD_COMMAND, semester});
 
             // Check if courses were found
             if (courses.isEmpty()) {

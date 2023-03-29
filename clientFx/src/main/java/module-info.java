@@ -9,7 +9,6 @@ module clientFx {
     requires javafx.controls;
     requires javafx.fxml;
     requires server;
-    requires clientSimple;
 
     requires org.controlsfx.controls;
 

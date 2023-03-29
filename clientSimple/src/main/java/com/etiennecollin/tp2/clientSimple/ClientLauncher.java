@@ -4,11 +4,11 @@
 
 package com.etiennecollin.tp2.clientSimple;
 
-import com.etiennecollin.tp2.server.Server;
-
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketException;
+
+import static com.etiennecollin.tp2.server.Server.*;
 
 /**
  * The ClientLauncher class launches a client to bind to a specific server port and starts its execution.
@@ -55,7 +55,7 @@ class ClientLauncher {
     public static void main(String[] args) {
         try {
             System.out.println(CLIENT + "Running...");
-            System.out.println(CLIENT + "Available commands are: " + ANSI_BLUE + Server.LOAD_COMMAND + ANSI_RESET + ", " + ANSI_BLUE + Server.REGISTER_COMMAND + ANSI_RESET + " and " + ANSI_BLUE + Server.DISCONNECT_COMMAND + ANSI_RESET + ".");
+            System.out.println(CLIENT + "Available commands are: " + ANSI_BLUE + LOAD_COMMAND + ANSI_RESET + ", " + ANSI_BLUE + REGISTER_COMMAND + ANSI_RESET + " and " + ANSI_BLUE + DISCONNECT_COMMAND + ANSI_RESET + ".");
 
             Client.run(PORT);
         } catch (ConnectException e) {

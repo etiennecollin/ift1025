@@ -4,7 +4,6 @@
 
 package com.etiennecollin.tp2.clientFx;
 
-import com.etiennecollin.tp2.server.Server;
 import com.etiennecollin.tp2.server.models.Course;
 import com.etiennecollin.tp2.server.models.RegistrationForm;
 import com.etiennecollin.tp2.server.models.Student;
@@ -24,12 +23,14 @@ import java.net.SocketException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 
 import static com.etiennecollin.tp2.clientFx.Client.objectInputStream;
 import static com.etiennecollin.tp2.clientFx.Client.objectOutputStream;
 import static com.etiennecollin.tp2.clientFx.ClientLauncher.CLIENT;
 import static com.etiennecollin.tp2.clientFx.ClientLauncher.CLIENT_ERROR;
+import static com.etiennecollin.tp2.clientFx.Validator.isEmailValid;
+import static com.etiennecollin.tp2.clientFx.Validator.isStudentIDValid;
+import static com.etiennecollin.tp2.server.Server.*;
 
 /**
  * The ClientController class is responsible for handling user input and communicating with the server.
@@ -83,7 +84,7 @@ public class ClientController implements Initializable {
      * @throws IOException If an I/O error occurs when writing to the objectOutputStream.
      */
     private void disconnect() throws IOException {
-        objectOutputStream.writeObject(Server.DISCONNECT_COMMAND);
+        objectOutputStream.writeObject(DISCONNECT_COMMAND);
         objectOutputStream.flush();
         System.out.println(CLIENT + "Disconnecting from server...");
     }
@@ -147,7 +148,7 @@ public class ClientController implements Initializable {
      */
     private ArrayList<Course> getCourses(String semester) throws IOException, ClassNotFoundException {
         // Send command to server
-        objectOutputStream.writeObject(Server.LOAD_COMMAND + " " + semester);
+        objectOutputStream.writeObject(LOAD_COMMAND + " " + semester);
         objectOutputStream.flush();
 
         // Get server reply
@@ -208,7 +209,7 @@ public class ClientController implements Initializable {
         RegistrationForm form = new RegistrationForm(student, course);
 
         // Send command to the server
-        objectOutputStream.writeObject(Server.REGISTER_COMMAND);
+        objectOutputStream.writeObject(REGISTER_COMMAND);
         objectOutputStream.flush();
 
         // Send form to the server

@@ -24,6 +24,9 @@ public class ClientLauncher {
      * Color code to reset text color to default.
      */
     private static final String ANSI_RESET = "\u001B[0m";
+    /**
+     * The port on which the client tries to connect.
+     */
     private static final int PORT = 1337;
     /**
      * Color code to set text color to red.

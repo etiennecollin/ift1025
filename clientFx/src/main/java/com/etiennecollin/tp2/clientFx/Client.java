@@ -25,8 +25,17 @@ import java.net.Socket;
  * communicate with the server.
  */
 public class Client extends Application {
+    /**
+     * Represents the input stream of the client socket.
+     */
     static ObjectInputStream objectInputStream;
+    /**
+     * Represents the output stream of the client socket.
+     */
     static ObjectOutputStream objectOutputStream;
+    /**
+     * Represents the client socket.
+     */
     private static Socket client;
 
     /**

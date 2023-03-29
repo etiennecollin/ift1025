@@ -12,9 +12,21 @@ import java.io.Serializable;
  * It contains the first name, last name, email and student ID of the student.
  */
 public class Student implements Serializable {
+    /**
+     * The first name of the student.
+     */
     private String firstName;
+    /**
+     * The last name of the student.
+     */
     private String lastName;
+    /**
+     * The email address of the student.
+     */
     private String email;
+    /**
+     * The student ID of the student.
+     */
     private String studentID;
 
     /**

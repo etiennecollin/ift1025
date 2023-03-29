@@ -27,8 +27,8 @@
                         </Label>
                         <TableView fx:id="courseTable" layoutX="6.0" layoutY="28.0" prefHeight="279.0" prefWidth="264.0">
                           <columns>
-                            <TableColumn fx:id="tableColumnCode" text="Code" />
-                            <TableColumn fx:id="tableColumnCourse" prefWidth="182.0" text="Course" />
+                            <TableColumn fx:id="courseTableColumnCode" text="Code" />
+                            <TableColumn fx:id="courseTableColumnName" prefWidth="182.0" text="Course" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

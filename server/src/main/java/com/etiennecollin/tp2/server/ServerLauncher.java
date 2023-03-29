@@ -22,6 +22,9 @@ class ServerLauncher {
      * Color code to set text color to blue.
      */
     static final String ANSI_BLUE = "\u001B[34m";
+    /**
+     * The port on which the server is started.
+     */
     private static final int PORT = 1337;
     /**
      * Color code to set text color to red.

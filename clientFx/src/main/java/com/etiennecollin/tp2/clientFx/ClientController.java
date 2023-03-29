@@ -37,27 +37,66 @@ import static com.etiennecollin.tp2.server.Server.*;
  * It implements the Initializable interface, which allows it to initialize components from a JavaFX FXML file.
  */
 public class ClientController implements Initializable {
+    /**
+     * A list of the available semesters.
+     */
     private static final String[] semesters = new String[]{"Automne", "Hiver", "Ete"};
+    /**
+     * A text field in the GUI that displays feedback to the user.
+     */
     @FXML
     private Label labelClientFeedback;
+    /**
+     * A tableView in the GUI used to display the available courses.
+     */
     @FXML
     private TableView<Course> courseTable;
+    /**
+     * A ChoiceBox in the GUI used to get the semester for which to load the available courses.
+     */
     @FXML
     private ChoiceBox choiceBox;
+    /**
+     * A BorderPane in the GUI used to drag the client window.
+     */
     @FXML
     private BorderPane borderPane;
+    /**
+     * Stores the x-coordinate of the client window.
+     */
     private double x = 0;
+    /**
+     * Stores the y-coordinate of the client window.
+     */
     private double y = 0;
+    /**
+     * A TableView column in the GUI that stores the code of a course.
+     */
     @FXML
-    private TableColumn<Course, String> tableColumnCode;
+    private TableColumn<Course, String> courseTableColumnCode;
+    /**
+     * A TableView column in the GUI that stores the name of a course.
+     */
     @FXML
-    private TableColumn<Course, String> tableColumnCourse;
+    private TableColumn<Course, String> courseTableColumnName;
+    /**
+     * A text field in the GUI used to get the first name of the student registering.
+     */
     @FXML
     private TextField textFieldFirstName;
+    /**
+     * A text field in the GUI used to get the last name of the student registering.
+     */
     @FXML
     private TextField textFieldLastName;
+    /**
+     * A text field in the GUI used to get the email of the student registering.
+     */
     @FXML
     private TextField textFieldEmail;
+    /**
+     * A text field in the GUI used to get the student ID of the student registering.
+     */
     @FXML
     private TextField textFieldStudentID;
 
@@ -300,7 +339,7 @@ public class ClientController implements Initializable {
         // Set table placeholder text
         courseTable.setPlaceholder(new Label("No courses loaded"));
         // Initialize table columns
-        tableColumnCode.setCellValueFactory(new PropertyValueFactory<>("Code"));
-        tableColumnCourse.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        courseTableColumnCode.setCellValueFactory(new PropertyValueFactory<>("Code"));
+        courseTableColumnName.setCellValueFactory(new PropertyValueFactory<>("Name"));
     }
 }

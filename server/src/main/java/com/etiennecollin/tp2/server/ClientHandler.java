@@ -24,11 +24,25 @@ import static com.etiennecollin.tp2.server.ServerLauncher.*;
  * disconnecting from the client.
  */
 class ClientHandler implements Runnable {
+    /**
+     * Represents the client socket.
+     */
     private final Socket client;
+    /**
+     * Represents the input stream of the client socket.
+     */
     private final ObjectInputStream objectInputStream;
+    /**
+     * Represents the output stream of the client socket.
+     */
     private final ObjectOutputStream objectOutputStream;
+    /**
+     * Represents the list of event handlers for this ClientHandler.
+     */
     private final ArrayList<EventHandler> handlers;
-    // Tells the handler whether it can stop listening to the client or not
+    /**
+     * Used to tell the handler whether it can stop listening to the client or not.
+     */
     private boolean isClientDisconnecting = false;
 
     /**

@@ -31,6 +31,9 @@ public class ClientLauncher {
      * Prefix for server error status messages.
      */
     static final String CLIENT_ERROR = ANSI_RED + CLIENT + ANSI_RESET;
+    /**
+     * The port on which the client tries to connect.
+     */
     private final static int PORT = 1337;
 
     /**

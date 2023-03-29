@@ -30,11 +30,25 @@ import static com.etiennecollin.tp2.server.Server.*;
  * communicate with the server.
  */
 public class Client {
+    /**
+     * A list of the available semesters.
+     */
     private static final String[] semesters = new String[]{"Automne", "Hiver", "Ete"};
+    /**
+     * Represents the client socket.
+     */
     private static Socket client;
+    /**
+     * Represents the input stream of the client socket.
+     */
     private static ObjectInputStream objectInputStream;
+    /**
+     * Represents the output stream of the client socket.
+     */
     private static ObjectOutputStream objectOutputStream;
-    // Tells the client whether to disconnect from the server or not
+    /**
+     * Used to tell the client whether to disconnect from the server or not
+     */
     private static boolean doDisconnect = false;
 
     /**

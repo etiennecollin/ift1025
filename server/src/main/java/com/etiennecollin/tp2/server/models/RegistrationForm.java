@@ -13,8 +13,14 @@ import java.io.Serializable;
  * last name, email, and student ID. It also includes the course the student is registering for.
  */
 public class RegistrationForm implements Serializable {
-    private Course course;
+    /**
+     * The student to be registered.
+     */
     private Student student;
+    /**
+     * The course the student wants to register for.
+     */
+    private Course course;
 
     /**
      * Constructs a new RegistrationForm for a course for the given student.

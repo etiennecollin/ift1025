@@ -12,8 +12,17 @@ import java.io.Serializable;
  * It contains the name, code and semester of the course.
  */
 public class Course implements Serializable {
+    /**
+     * The name of the course.
+     */
     private String name;
+    /**
+     * The code of the course.
+     */
     private String code;
+    /**
+     * The semester of the course.
+     */
     private String semester;
 
     /**

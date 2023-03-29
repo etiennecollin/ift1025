@@ -321,47 +321,5 @@ public class Client {
         // Return student information
         return new Student(firstName, lastName, email, studentID);
     }
-
-    /**
-     * Validates an email.
-     * <p>
-     * Source of pattern: <a href="https://stackoverflow.com/a/8204716">StackOverflow</a>
-     *
-     * @param email The email to validate.
-     *
-     * @return Whether the email is valid or not.
-     */
-    private static boolean isEmailValid(String email) {
-        // Generate email regex pattern
-        Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-        boolean isValid = pattern.matcher(email).matches();
-
-        // Print message in case of invalid email
-        if (!isValid) {
-            System.out.println(CLIENT_ERROR + "The email is invalid.");
-        }
-
-        return isValid;
-    }
-
-    /**
-     * Validates a student ID.
-     *
-     * @param studentID The student ID to validate.
-     *
-     * @return Whether the student ID is valid or not.
-     */
-    private static boolean isStudentIDValid(String studentID) {
-        // Generate email regex pattern
-        Pattern pattern = Pattern.compile("^\\d{8}$");
-        boolean isValid = pattern.matcher(studentID).matches();
-
-        // Print message in case of invalid student ID
-        if (!isValid) {
-            System.out.println(CLIENT_ERROR + "The student ID is invalid.");
-        }
-
-        return isValid;
-    }
 }
 

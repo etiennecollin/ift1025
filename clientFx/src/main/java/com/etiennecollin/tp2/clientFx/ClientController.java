@@ -260,34 +260,6 @@ public class ClientController implements Initializable {
     }
 
     /**
-     * Validates an email.
-     * <p>
-     * Source of pattern: <a href="https://stackoverflow.com/a/8204716">StackOverflow</a>
-     *
-     * @param email The email to validate.
-     *
-     * @return Whether the email is valid or not.
-     */
-    private boolean isEmailValid(String email) {
-        // Generate email regex pattern
-        Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-        return pattern.matcher(email).matches();
-    }
-
-    /**
-     * Validates a student ID.
-     *
-     * @param studentID The student ID to validate.
-     *
-     * @return Whether the student ID is valid or not.
-     */
-    private boolean isStudentIDValid(String studentID) {
-        // Generate email regex pattern
-        Pattern pattern = Pattern.compile("^\\d{8}$");
-        return pattern.matcher(studentID).matches();
-    }
-
-    /**
      * Allows the dragging of the application window.
      *
      * @param event An event representing the actions of the mouse.

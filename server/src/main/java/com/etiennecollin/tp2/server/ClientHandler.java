@@ -109,7 +109,7 @@ class ClientHandler implements Runnable {
         RegistrationForm form = (RegistrationForm) objectInputStream.readObject();
 
         // Get the file
-        String fileName = "inscription.txt";
+        String fileName = "inscriptions.txt";
         String file = System.getProperty("user.dir") + "/data/" + fileName;
 
         // Create a PrintWriter object that writes to a file
@@ -136,7 +136,7 @@ class ClientHandler implements Runnable {
         ArrayList<Course> courses = new ArrayList<>();
 
         // Read the file
-        String fileName = "cours.txt";
+        String fileName = "courses.txt";
         File file = new File(System.getProperty("user.dir") + "/data/" + fileName);
         Scanner scanner = new Scanner(file);
 

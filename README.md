@@ -11,23 +11,23 @@ This project involves creating a Java client-server application that allows stud
 
 ## Execution
 
-To execute the JAR and to make sure the data files are properly found, make sure that you are inside the repository directory such that your environment variable `$PWD=.../ift1025-tp2/`.
+To execute the JAR and to make sure the data files are properly found, launch your favourite terminal and **make sure that you are inside the repository directory** such that your environment variable `$PWD=.../ift1025-tp2/`. The data files required for the server to properly run are in the `/ift1025-tp2/data/` directory.
 
 To run the jar files, use the command `java -jar jars/theFile.jar`.
 
 ### Example
 
-To launch the server:
+First, launch the server:
 ```bash
 java -jar jars/server.jar
 ```
 
-To launch the CLI client:
+Then, either launch the CLI client:
 ```bash
 java -jar jars/clientCLI.jar
 ```
 
-To lunch the GUI client:
+Or launch the GUI client:
 ```bash
 java -jar jars/clientGUI.jar
 ```

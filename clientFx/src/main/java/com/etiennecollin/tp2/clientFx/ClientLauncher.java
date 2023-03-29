@@ -32,6 +32,14 @@ public class ClientLauncher {
      */
     static final String CLIENT_ERROR = ANSI_RED + CLIENT + ANSI_RESET;
     /**
+     * Color code to set text color to green.
+     */
+    private static final String ANSI_GREEN = "\u001B[32m";
+    /**
+     * Prefix for server success status messages.
+     */
+    static final String CLIENT_SUCCESS = ANSI_GREEN + CLIENT + ANSI_RESET;
+    /**
      * The port on which the client tries to connect.
      */
     private final static int PORT = 1337;
@@ -47,10 +55,10 @@ public class ClientLauncher {
             Client.run(PORT);
         } catch (ConnectException e) {
             // Handle the case where no server is found
-            System.err.println(CLIENT + e.getMessage() + ", no server available on port " + PORT + ".");
+            System.out.println(CLIENT_ERROR + e.getMessage() + ", no server available on port " + PORT + ".");
         } catch (SocketException | EOFException e) {
             // Handle the case where the server crashes without disconnecting
-            System.err.println(CLIENT + e.getMessage() + ", the connection to the server was lost.");
+            System.out.println(CLIENT_ERROR + e.getMessage() + ", the connection to the server was lost.");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

@@ -22,12 +22,12 @@ import java.io.IOException;
 import java.net.SocketException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static com.etiennecollin.tp2.clientFx.Client.objectInputStream;
 import static com.etiennecollin.tp2.clientFx.Client.objectOutputStream;
-import static com.etiennecollin.tp2.clientFx.ClientLauncher.CLIENT;
-import static com.etiennecollin.tp2.clientFx.ClientLauncher.CLIENT_ERROR;
+import static com.etiennecollin.tp2.clientFx.ClientLauncher.*;
 import static com.etiennecollin.tp2.clientFx.Validator.isEmailValid;
 import static com.etiennecollin.tp2.clientFx.Validator.isStudentIDValid;
 import static com.etiennecollin.tp2.server.Server.*;
@@ -134,8 +134,21 @@ public class ClientController implements Initializable {
      * @param message The error message.
      */
     private void displayErrorAlert(String message) {
-        System.err.println(CLIENT_ERROR + message);
+        // Send error message to CLI
+        System.out.println(CLIENT_ERROR + message);
+
+        // Create alert
         Alert alert = new Alert(Alert.AlertType.ERROR, message);
+
+        // Give alert pane some CSS styling
+        alert.getDialogPane().getStylesheets().add(Objects.requireNonNull(getClass().getResource("MainWindowStyle.css")).toExternalForm());
+
+        // Set alert window properties
+        alert.setHeaderText("Error");
+        alert.setTitle("Error");
+        // alert.setGraphic(null);
+
+        // Show alert
         alert.showAndWait();
         Stage stage = (Stage) borderPane.getScene().getWindow();
         stage.close();
@@ -260,12 +273,25 @@ public class ClientController implements Initializable {
     }
 
     /**
-     * Displays an information alert to the user.
+     * Displays an information alert to the user and and also broadcasts the information to the CLI output.
      *
      * @param message The error message.
      */
     private void displayInformationAlert(String message) {
+        // Send information to CLI
+        System.out.println(CLIENT_SUCCESS + message);
+
+        // Create alert
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
+
+        // Give alert pane some CSS styling
+        alert.getDialogPane().getStylesheets().add(Objects.requireNonNull(getClass().getResource("MainWindowStyle.css")).toExternalForm());
+
+        // Set alert window properties
+        alert.setHeaderText("Information");
+        alert.setTitle("Information");
+
+        // Show alert
         alert.showAndWait();
     }
 
@@ -338,6 +364,7 @@ public class ClientController implements Initializable {
 
         // Set table placeholder text
         courseTable.setPlaceholder(new Label("No courses loaded"));
+
         // Initialize table columns
         courseTableColumnCode.setCellValueFactory(new PropertyValueFactory<>("Code"));
         courseTableColumnName.setCellValueFactory(new PropertyValueFactory<>("Name"));

@@ -123,16 +123,11 @@ public class Client {
                 throw new IllegalArgumentException(CLIENT_ERROR + "Input command is invalid.");
             }
         } catch (IllegalArgumentException e) {
+            // Case when the user sends invalid commands
             System.out.println(e.getMessage());
-            // Tell the server that the command was invalid as it expects a command
-            objectOutputStream.writeObject("INVALID");
-            objectOutputStream.flush();
         } catch (InterruptedIOException e) {
             // Case when the user interrupts the registration process
             System.out.println(e.getMessage());
-            // Tell the server that the command was interrupted as it expects a command
-            objectOutputStream.writeObject("INTERRUPTED");
-            objectOutputStream.flush();
         }
     }
 

@@ -307,26 +307,60 @@ public class Client {
      */
     private static Student createStudent(Scanner scanner) {
         // Get first name
-        System.out.print(CLIENT + "Input first name: ");
-        String firstName = scanner.nextLine();
+        String firstName;
+        while (true) {
+            System.out.print(CLIENT + "Input first name: ");
+            firstName = scanner.nextLine();
+
+            if (firstName.isBlank()) {
+                System.out.println(CLIENT_ERROR + "The first name is invalid.");
+                continue;
+            }
+
+            break;
+        }
 
         // Get last name
-        System.out.print(CLIENT + "Input last name: ");
-        String lastName = scanner.nextLine();
+        String lastName;
+        while (true) {
+            System.out.print(CLIENT + "Input last name: ");
+            lastName = scanner.nextLine();
+
+            if (lastName.isBlank()) {
+                System.out.println(CLIENT_ERROR + "The last name is invalid.");
+                continue;
+            }
+
+            break;
+        }
 
         // Get valid email
         String email;
-        do {
+        while (true) {
             System.out.print(CLIENT + "Input email: ");
             email = scanner.nextLine();
-        } while (!isEmailValid(email));
+
+            if (!isEmailValid(email)) {
+                System.out.println(CLIENT_ERROR + "The email is invalid.");
+                continue;
+            }
+
+            break;
+        }
 
         // Get student ID
         String studentID;
-        do {
+        while (true) {
             System.out.print(CLIENT + "Input student ID: ");
             studentID = scanner.nextLine();
-        } while (!isStudentIDValid(studentID));
+
+            if (!isStudentIDValid(studentID)) {
+                System.out.println(CLIENT_ERROR + "The student ID is invalid.");
+                continue;
+            }
+
+            break;
+        }
 
         // Return student information
         return new Student(firstName, lastName, email, studentID);

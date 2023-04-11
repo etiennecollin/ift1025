@@ -300,14 +300,20 @@ public class ClientController implements Initializable {
      *
      * @return A student object.
      *
-     * @throws IllegalArgumentException If the email or student ID of the student is invalid.
+     * @throws IllegalArgumentException If the student information is invalid.
      */
     private Student createStudent() throws IllegalArgumentException {
         // Get first name
         String firstName = textFieldFirstName.getText();
+        if (firstName.isBlank()) {
+            throw new IllegalArgumentException("The first name is invalid.");
+        }
 
         // Get last name
         String lastName = textFieldLastName.getText();
+        if (lastName.isBlank()) {
+            throw new IllegalArgumentException("The last name is invalid.");
+        }
 
         // Get valid email
         String email = textFieldEmail.getText();

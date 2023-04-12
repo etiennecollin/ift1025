@@ -5,8 +5,8 @@
 - [Description](#description)
 - [Launching the server](#launching-the-server)
 - [Launching the clients](#launching-the-clients)
-    - [CLI client:](#cli-client)
-    - [GUI client:](#gui-client)
+    - [CLI client](#cli-client)
+    - [GUI client](#gui-client)
 - [Evaluation](#evaluation)
     - [Text files](#text-files)
     - [JavaDoc](#javadoc)
@@ -38,13 +38,13 @@ java -jar jars/server.jar
 
 You may execute the clients from anywhere (the value of `$PWD` does not matter). Assuming that `$PWD=.../ift1025-tp2/`, then the commands to launch the clients are:
 
-### CLI client:
+### CLI client
 
 ```bash
 java -jar jars/clientCLI.jar
 ```
 
-### GUI client:
+### GUI client
 
 ```bash
 java -jar jars/clientGUI.jar

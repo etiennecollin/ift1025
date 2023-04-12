@@ -90,7 +90,6 @@ class ClientHandler implements Runnable {
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(SERVER_ERROR + e.getMessage());
-            e.getStackTrace();
         }
     }
 
@@ -138,33 +137,40 @@ class ClientHandler implements Runnable {
         // Read the file
         String fileName = "courses.txt";
         File file = new File(System.getProperty("user.dir") + "/data/" + fileName);
-        Scanner scanner = new Scanner(file);
 
-        // Read all the lines in the file
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            // Extract arguments from line. The format is `code \t name \t semester`
-            String[] tokens = line.split("\t");
+        try {
+            // Create the scanner
+            Scanner scanner = new Scanner(file);
 
-            // Make sure three arguments form the course in the file
-            if (tokens.length != 3) {
-                System.out.println(SERVER_ERROR + "The courses in " + fileName + " are not properly formatted. The format is `code\tname\tsemester`");
-                break;
+            // Read all the lines in the file
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                // Extract arguments from line. The format is `code \t name \t semester`
+                String[] tokens = line.split("\t");
+
+                // Make sure three arguments form the course in the file
+                if (tokens.length != 3) {
+                    System.out.println(SERVER_ERROR + "The courses in " + fileName + " are not properly formatted. The format is `code\tname\tsemester`");
+                    break;
+                }
+
+                if (semester.equals("")) {
+                    // If no semester is provided, load all the courses
+                    courses.add(new Course(tokens[1], tokens[0], tokens[2]));
+                } else if (tokens[2].equalsIgnoreCase(semester)) {
+                    // Filter for the right semester
+                    courses.add(new Course(tokens[1], tokens[0], tokens[2]));
+                }
             }
 
-            if (semester.equals("")) {
-                // If no semester is provided, load all the courses
-                courses.add(new Course(tokens[1], tokens[0], tokens[2]));
-            } else if (tokens[2].equalsIgnoreCase(semester)) {
-                // Filter for the right semester
-                courses.add(new Course(tokens[1], tokens[0], tokens[2]));
-            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(SERVER_ERROR + e.getMessage());
+        } finally {
+            // Write the list of courses to the object output stream
+            objectOutputStream.writeObject(courses);
+            objectOutputStream.flush();
         }
-        scanner.close();
-
-        // Write the list of courses to the object output stream
-        objectOutputStream.writeObject(courses);
-        objectOutputStream.flush();
     }
 
     /**

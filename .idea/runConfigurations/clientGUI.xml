@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="clientFx" type="Application" factoryName="Application">
+  <configuration default="false" name="clientGUI" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="com.etiennecollin.tp2.clientGUI.ClientLauncher" />
     <module name="clientGUI" />
     <method v="2">

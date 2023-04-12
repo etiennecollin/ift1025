@@ -108,7 +108,7 @@ class ClientHandler implements Runnable {
         RegistrationForm form = (RegistrationForm) objectInputStream.readObject();
 
         // Get the file
-        String fileName = "inscriptions.txt";
+        String fileName = "registrations.txt";
         String file = System.getProperty("user.dir") + "/data/" + fileName;
 
         // Create a PrintWriter object that writes to a file

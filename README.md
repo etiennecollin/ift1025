@@ -3,6 +3,7 @@
 ## Table of Contents <!-- omit from toc -->
 
 - [Description](#description)
+- [Compatibility](#compatibility)
 - [Launching the server](#launching-the-server)
 - [Launching the clients](#launching-the-clients)
     - [CLI client](#cli-client)
@@ -21,6 +22,12 @@ This project involves creating a Java client-server application that allows stud
 - A GUI client was added using JavaFX
 - The server implements multithreading to support connecting to multiple clients at once
 - Everything was properly documented using JavaDoc
+
+## Compatibility
+
+- Java JDK ≥ 20
+
+_This project was compiled using Java JDK 20 with the JDK 19 feature set due to an incompatibility between JDK 19's JavaFX with Apple M1 Silicon._
 
 ## Launching the server
 

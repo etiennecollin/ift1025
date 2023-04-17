@@ -28,9 +28,9 @@ import java.util.ResourceBundle;
 import static com.etiennecollin.tp2.clientGUI.Client.objectInputStream;
 import static com.etiennecollin.tp2.clientGUI.Client.objectOutputStream;
 import static com.etiennecollin.tp2.clientGUI.ClientLauncher.*;
-import static com.etiennecollin.tp2.clientGUI.Validator.isEmailValid;
-import static com.etiennecollin.tp2.clientGUI.Validator.isStudentIDValid;
 import static com.etiennecollin.tp2.server.Server.*;
+import static com.etiennecollin.tp2.server.models.Validator.isEmailValid;
+import static com.etiennecollin.tp2.server.models.Validator.isStudentIDValid;
 
 /**
  * The ClientController class is responsible for handling user input and communicating with the server.

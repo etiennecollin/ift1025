@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static com.etiennecollin.tp2.clientCLI.ClientLauncher.*;
-import static com.etiennecollin.tp2.clientCLI.Validator.isEmailValid;
-import static com.etiennecollin.tp2.clientCLI.Validator.isStudentIDValid;
 import static com.etiennecollin.tp2.server.Server.*;
+import static com.etiennecollin.tp2.server.models.Validator.isEmailValid;
+import static com.etiennecollin.tp2.server.models.Validator.isStudentIDValid;
 
 /**
  * The Client class represents a client that can interact with a server through a socket connection.

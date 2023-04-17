@@ -2,7 +2,7 @@
  * Copyright (c) 2023. Etienne Collin #20237904
  */
 
-package com.etiennecollin.tp2.clientCLI;
+package com.etiennecollin.tp2.server.models;
 
 import java.util.regex.Pattern;
 

@@ -29,8 +29,16 @@ This project involves creating a Java client-server application that allows stud
 ## Compatibility
 
 - Java JDK ≥ 20
+  - _This project was compiled using Java JDK 20 with the JDK 19 feature set due to an incompatibility between JDK 19's JavaFX and Apple M1 Silicon as of 2022/03/27._
 
-_This project was compiled using Java JDK 20 with the JDK 19 feature set due to an incompatibility between JDK 19's JavaFX with Apple M1 Silicon._
+The JARs were generated and tested on Apple M1 Silicon, running macOS 13.3.1 (22E261), with the following Java version:
+
+```bash
+> java --version
+openjdk 20 2023-03-21
+OpenJDK Runtime Environment (build 20+36-2344)
+OpenJDK 64-Bit Server VM (build 20+36-2344, mixed mode, sharing)
+```
 
 ## Launching the server
 

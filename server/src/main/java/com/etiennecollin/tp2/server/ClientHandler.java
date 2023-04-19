@@ -25,6 +25,10 @@ import static com.etiennecollin.tp2.server.ServerLauncher.*;
  */
 class ClientHandler implements Runnable {
     /**
+     * Used to make sure that only one client at a time writes into the registrations file.
+     */
+    private static final Object syncWrite = new Object();
+    /**
      * Represents the client socket.
      */
     private final Socket client;
@@ -113,9 +117,11 @@ class ClientHandler implements Runnable {
 
         // Create a PrintWriter object that writes to a file
         // Use a FileWriter object to append to the file if it already exists
-        PrintWriter writer = new PrintWriter(new FileWriter(file, true));
-        writer.println(form.getCourse().getSemester() + "\t" + form.getCourse().getCode() + "\t" + form.getStudentID() + "\t" + form.getFirstName() + "\t" + form.getLastName() + "\t" + form.getEmail());
-        writer.close();
+        synchronized (syncWrite) {
+            PrintWriter writer = new PrintWriter(new FileWriter(file, true));
+            writer.println(form.getCourse().getSemester() + "\t" + form.getCourse().getCode() + "\t" + form.getStudentID() + "\t" + form.getFirstName() + "\t" + form.getLastName() + "\t" + form.getEmail());
+            writer.close();
+        }
 
         // Send a confirmation message to the client
         String message = "Registration successful, " + form.getFirstName() + " " + form.getLastName() + ". Thank you for registering to the " + form.getCourse().getSemester() + " " + form.getCourse().getCode() + " course!";

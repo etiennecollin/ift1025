@@ -58,7 +58,7 @@ public class ClientLauncher {
             System.out.println(CLIENT_ERROR + e.getMessage() + ", no server available on port " + PORT + ".");
         } catch (SocketException | EOFException e) {
             // Handle the case where the server crashes without disconnecting
-            System.out.println(CLIENT_ERROR + e.getMessage() + ", the connection to the server was lost.");
+            System.out.println(CLIENT_ERROR + "The connection to the server was lost.");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

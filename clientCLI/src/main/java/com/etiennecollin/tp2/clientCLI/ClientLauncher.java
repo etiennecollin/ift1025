@@ -4,6 +4,7 @@
 
 package com.etiennecollin.tp2.clientCLI;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketException;
@@ -64,9 +65,9 @@ public class ClientLauncher {
         } catch (ConnectException e) {
             // Handle the case where no server is found
             System.out.println(CLIENT_ERROR + e.getMessage() + ", no server available on port " + PORT + ".");
-        } catch (SocketException e) {
+        } catch (SocketException | EOFException e) {
             // Handle the case where the server crashes without disconnecting
-            System.out.println(CLIENT_ERROR + e.getMessage() + ", the connection to the server was lost.");
+            System.out.println(CLIENT_ERROR + "The connection to the server was lost.");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

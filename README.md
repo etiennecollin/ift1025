@@ -128,7 +128,7 @@ Student.java
 
 - Available at https://etiennecollin.com/ift1025-tp2/
 
-_The JavaDoc is placed inside `.../ift1025-tp2/javadoc/` which is a symlink to `.../ift1025-tp2/docs/`._
+_The JavaDoc is placed inside `.../ift1025-tp2/docs/`._
 
 ### Team
 

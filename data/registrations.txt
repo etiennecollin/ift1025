@@ -1,2 +1,0 @@
-Automne	IFT2255	12345678	Michalis	Famelis	mfamelis@iro.umontreal.ca
-Winter	IFT1025	12345678	John	Doe	john.doe@umontreal.ca

@@ -42,7 +42,7 @@ OpenJDK 64-Bit Server VM (build 20+36-2344, mixed mode, sharing)
 
 ## Launching the server
 
-To make sure the data files are properly found, launch your favourite terminal and **make sure that you are inside the repository directory**, such that your environment variable `$PWD=.../ift1025-tp2/`.
+To make sure the data files are properly found, launch your favourite terminal, download the latest [release](https://github.com/etiennecollin/ift1025-tp2/releases/latest) and **make sure that you are inside the downloaded release directory**, such that your environment variable `$PWD=.../ift1025-tp2/`.
 
 _The data files required for the server to properly run are in the `.../ift1025-tp2/data/` directory._
 

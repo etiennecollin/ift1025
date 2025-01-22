@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="server" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.etiennecollin.tp2.server.ServerLauncher" />
+    <module name="server" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

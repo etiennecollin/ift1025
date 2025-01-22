@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"clientCLI","l":"com.etiennecollin.tp2.clientCLI"},{"m":"clientGUI","l":"com.etiennecollin.tp2.clientGUI"},{"m":"server","l":"com.etiennecollin.tp2.server"},{"m":"server","l":"com.etiennecollin.tp2.server.models"}];updateSearchResults();

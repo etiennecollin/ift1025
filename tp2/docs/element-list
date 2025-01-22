@@ -1,0 +1,7 @@
+module:clientCLI
+com.etiennecollin.tp2.clientCLI
+module:clientGUI
+com.etiennecollin.tp2.clientGUI
+module:server
+com.etiennecollin.tp2.server
+com.etiennecollin.tp2.server.models

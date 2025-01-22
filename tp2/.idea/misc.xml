@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/docs" />
+    <option name="OPTION_SCOPE" value="private" />
+    <option name="OPEN_IN_BROWSER" value="false" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/client/pom.xml" />
+        <option value="$PROJECT_DIR$/server/pom.xml" />
+        <option value="$PROJECT_DIR$/clientSimple/pom.xml" />
+        <option value="$PROJECT_DIR$/clientFx/pom.xml" />
+        <option value="$PROJECT_DIR$/clientCLI/pom.xml" />
+        <option value="$PROJECT_DIR$/clientGUI/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_19" project-jdk-name="openjdk-20" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/target/out" />
+  </component>
+</project>

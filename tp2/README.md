@@ -1,4 +1,4 @@
-# ift1025-tp2 <!-- omit from toc -->
+# TP2 <!-- omit from toc -->
 
 ## Table of Contents <!-- omit from toc -->
 
@@ -6,14 +6,14 @@
 - [Compatibility](#compatibility)
 - [Launching the server](#launching-the-server)
 - [Launching the clients](#launching-the-clients)
-    - [CLI client](#cli-client)
-    - [GUI client](#gui-client)
+  - [CLI client](#cli-client)
+  - [GUI client](#gui-client)
 - [Evaluation](#evaluation)
-    - [Bonus](#bonus)
-    - [Demo](#demo)
-    - [GitHub](#github)
-    - [JavaDoc](#javadoc)
-    - [Team](#team)
+  - [Bonus](#bonus)
+  - [Demo](#demo)
+  - [GitHub](#github)
+  - [JavaDoc](#javadoc)
+  - [Team](#team)
 
 ## Description
 
@@ -42,9 +42,9 @@ OpenJDK 64-Bit Server VM (build 20+36-2344, mixed mode, sharing)
 
 ## Launching the server
 
-To make sure the data files are properly found, launch your favourite terminal, download the latest [release](https://github.com/etiennecollin/ift1025-tp2/releases/latest) and **make sure that you are inside the downloaded release directory**, such that your environment variable `$PWD=.../ift1025-tp2/`.
+To make sure the data files are properly found, launch your favourite terminal, download the latest [release](https://github.com/etiennecollin/ift1025/releases/latest) and **make sure that you are inside the downloaded release directory**, such that your environment variable `$PWD=.../tp2/`.
 
-_The data files required for the server to properly run are in the `.../ift1025-tp2/data/` directory._
+_The data files required for the server to properly run are in the `.../tp2/data/` directory._
 
 Then, once in the right directory, launch the server with:
 
@@ -54,7 +54,7 @@ java -jar jars/server.jar
 
 ## Launching the clients
 
-You may execute the clients from anywhere (the value of `$PWD` does not matter). Assuming that `$PWD=.../ift1025-tp2/`, then the commands to launch the clients are:
+You may execute the clients from anywhere (the value of `$PWD` does not matter). Assuming that `$PWD=.../tp2/`, then the commands to launch the clients are:
 
 ### CLI client
 
@@ -116,19 +116,13 @@ Student.java
 
 - The Student class was created to simplify and make clearer some procedures.
 
-### Demo
-
-- Link to demo: https://drive.google.com/file/d/1XeY425WgHUs8P1RyUsaz3EsGp8wnkEkV/view?usp=sharing
-
 ### GitHub
 
-- GitHub Repository: https://github.com/etiennecollin/ift1025-tp2/
+- GitHub Repository: https://github.com/etiennecollin/ift1025/
 
 ### JavaDoc
 
-- Available at https://etiennecollin.com/ift1025-tp2/
-
-_The JavaDoc is placed inside `.../ift1025-tp2/docs/`._
+- The JavaDoc is placed inside `.../ift1025/tp2/docs/`.
 
 ### Team
 
